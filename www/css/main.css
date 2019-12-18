@@ -1,10 +1,18 @@
 :root {
-	--floatMargin: 1px;
+	--borderSize: 2px;
+	--backgroundColor: #33424D;
+	--foregroundColor: #CCCEC7;
+	--textHighlightColor: #EEEF99;
 }
 
 html, body {
-	height: calc(100% - 2*var(--floatMargin));
-	margin: var(--floatMargin);
+	margin: 0px;
+	background-color: var(--backgroundColor);
+}
+
+p, h1, h2, h3, a, .defaultSpan {
+	color: var(--foregroundColor);
+	font-family: "Open Sans", sans-serif;
 }
 
 .mainDiv {
@@ -17,15 +25,14 @@ html, body {
 	order: 1;
 	flex: 1;
 	text-align: center;
-	border: 1px solid;
-	margin-bottom: var(--floatMargin);
+	border-bottom: var(--borderSize) solid var(--foregroundColor);
+	padding: 8px
 }
 
 .bodyDiv {
 	order: 2;
 	flex-basis: 100%;
 	text-align: center;
-	border: 1px solid;
 	overflow: hidden;
 }
 
@@ -43,7 +50,7 @@ th, td {
 
 a {
 	font-size: 20px;
-	color: #008888;
+	color: var(--textHighlightColor);
 	background-color: transparent;
 	text-decoration: none;
 	}
