@@ -3,6 +3,7 @@
 	--backgroundColor: #33424D;
 	--foregroundColor: #CCCEC7;
 	--textHighlightColor: #EEEF99;
+	--listHighlightColor: #97C49A;
 }
 
 html, body {
@@ -10,7 +11,7 @@ html, body {
 	background-color: var(--backgroundColor);
 }
 
-p, h1, h2, h3, a, .defaultSpan {
+p, h1, h2, h3, a, li, .defaultSpan {
 	color: var(--foregroundColor);
 	font-family: "Open Sans", sans-serif;
 }
@@ -48,9 +49,16 @@ th, td {
 	padding: 4px;
 }
 
-a {
-	font-size: 20px;
+.headerLink {
 	color: var(--textHighlightColor);
+	font-size: 20px;
+}
+
+.listLink {
+	color: var(--listHighlightColor);
+}
+
+a {
 	background-color: transparent;
 	text-decoration: none;
 	}
