@@ -59,6 +59,11 @@ p, h1, h2, h3, a, li, .defaultSpan {
 	border-radius: 5px;
 }
 
+.pictureText {
+	margin-top: 0px;
+	color: gray;
+}
+
 #canvas {
 	border-color: var(--foregroundColor);
 }
