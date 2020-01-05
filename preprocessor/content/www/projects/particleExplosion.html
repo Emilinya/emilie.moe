@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+	<head>
+		<meta charset="utf-8">
+		{{head}}
+		<link rel="stylesheet" type="text/css" href="particleExplosion/css/style.css">
+		<title>わが な わ めぐみん</title>
+	</head>
+	<body>
+		<div class="mainDiv">
+			<div class="headerDiv">
+				{{nav?home=projects}}
+			</div>
+			<div class="titleDiv">
+				<h1>Particle explosion simulator</h1>
+			</div>
+			<div class="bodyDiv">
+				<canvas id="canvas"></canvas>
+			</div>
+			</div>
+		</div>
+		<div style="display:none;">
+			<img src="particleExplosion/media/tnt.png" id="tntImg">
+			<img src="particleExplosion/media/megumin.png" id="meguminImg">
+			<img src="particleExplosion/media/megumin-exploding.png" id="explodingMeguminImg">
+			<audio src="particleExplosion/media/megumin-explosion.mp3" id="explodingMeguminSound"></audio>
+		</div>
+		<script src="particleExplosion/main.js" type="module"></script>
+	</body>
+</html>
