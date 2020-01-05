@@ -29,18 +29,22 @@
 		<!-- ****** faviconit.com favicons ****** -->
 	</head>
 	<body>
-		<div class="headerDiv">
-			{{nav?home=games}}
+		<div class="mainDiv">
+			<div class="headerDiv">
+				{{nav?home=games}}
+			</div>
+			<div class="headerDiv">
+				{{gameNav?home=polygonParagon}}
+			</div>
+			<div class="bodyDiv">
+				<canvas id="canvas"></canvas>
+			</div>
 		</div>
-		<div class="headerDiv">
-			{{gameNav?home=polygonParagon}}
-		</div>
-		<canvas id="canvas"></canvas>
-		<script src="polygonParagon/js/noisejs/perlin.js"></script>
-		<script src="polygonParagon/main.js" type="module"></script>
 		<div style="display:none;">
 			<img id="playerWheel" src="polygonParagon/media/playerWheel.png">
 			<img id="fuelCan" src="polygonParagon/media/fuelCan.png">
 		</div>
+		<script src="polygonParagon/js/noisejs/perlin.js"></script>
+		<script src="polygonParagon/main.js" type="module"></script>
 	</body>
 </html>
