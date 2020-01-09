@@ -1,8 +1,34 @@
+.containerDiv {
+	margin-top: 10px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+
 .clickImgDiv {
 	display: inline-block;
 	margin: 5px;
+	width: calc(100%/3 - 5px*3);
+	max-width: calc(1000px/3);
 }
 
-.clickImgDiv:hover {
+.gameIcon {
+	width: 100%;
+	object-fit: contain;
+}
+
+.gameIcon:hover {
 	cursor: pointer;
+}
+
+@media (orientation:portrait) {
+	.clickImgDiv {
+		width: 50%;
+		max-width: 300px;
+		margin: 0px 25% 0px 25%;
+		margin-bottom: 30px;
+	}
+	.containerDiv {
+		display: block;
+	}
 }
