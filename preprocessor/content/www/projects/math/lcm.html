@@ -11,10 +11,10 @@
 				{{nav?home=projects}}
 			</div>
 			<div class="bodyDiv">
-				<h1>Difference Equation Solver</h1>
+				<h1>LCM Finder</h1>
 				<form id="form">
-					<p class="supP">Write a comma-seperated list of whole numbers with 6 or less digits</p>
-					<input id="input" type="text" name="input" required pattern="\d+(,\s*\d+)*" oninput="this.setCustomValidity('')">
+					<p class="supP">Write a comma-seperated list of whole numbers</p>
+					<input id="input" type="text" name="input" required pattern="\d+(\s*,\s*\d+)*" oninput="this.setCustomValidity('')">
 					<button id="solve" type="submit" name="solve">Find lcm</button>
 				</form>
 				<p id="resultP"></p>
