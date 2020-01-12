@@ -5,6 +5,7 @@ const initialsDiv = document.getElementById('initialsDiv');
 const nInput = document.getElementById('nInput');
 const eqSolve = document.getElementById('eqSolve');
 const eqResult = document.getElementById('eqResult');
+const eqValues = document.getElementById('eqValues');
 
 eqInput.addEventListener("keyup", updateData);
 initialsDiv.addEventListener("keyup", updateData);
@@ -160,11 +161,26 @@ function addToForm(i) {
 	initialsDiv.appendChild(input)
 }
 
-form.addEventListener("submit", event => {
+form.addEventListener("submit", async event => {
 	event.preventDefault();
 	if (eqData && eqData.length === initialsData.length) {
-		// Communicate with python
-		console.log(eqData, initialsData, nData);
+		let response = await fetch(`http://api.bendik.moe/diff?initials=${initialsData.join(",")}&functions=${eqData.join(",")}&N=${nData}&rightSide=0&display=full`);
+		let body = await response.text();
+		if (body === "None" || body === "Error") {
+			eqResult.innerText = "";
+		} else {
+			console.log(body);
+			eqResult.innerText = `First ${nData} values in the equation:`;
+			eqValues.innerHTML = "";
+			resultRay = body.replace(/&#39;/g, "").slice(1, -1).split(", ");
+			for (var i = 0; i < resultRay.length; i++) {
+				console.log(resultRay[i]);
+				li = document.createElement("li");
+				li.style.whiteSpace = "pre";
+				li.appendChild(document.createTextNode(resultRay[i]));
+				eqValues.appendChild(li);
+			}
+		}
 	}
 });
 

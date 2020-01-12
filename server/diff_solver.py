@@ -8,11 +8,13 @@ def diff_solver(init_cons, functions, N, right_side=0, display="full"):
 	if not callable(right_side):
 		right_side_num = right_side
 		right_side = lambda n: right_side_num
+
+	output = []
 	if display == "full":
 		for n in range(len(init_cons)):
 			if n < N+1:
 				space_count = len(str(N)) - len(str(n))
-				print(f"x[{n}]: {' '*space_count}{init_cons[n]}")
+				output.append(f"x[{n}]: {' '*space_count}{init_cons[n]}")
 	values = init_cons
 	for n in range(diff_count, N+1):
 		x = right_side(n)
@@ -23,9 +25,7 @@ def diff_solver(init_cons, functions, N, right_side=0, display="full"):
 		values[diff_count-1] = x
 		space_count = len(str(N)) - len(str(n))
 		if display == "full":
-			print(f"x[{n}]: {' '*space_count}{x}")
+			output.append(f"x[{n}]: {' '*space_count}{x}")
 	if display == "result":
-		print(f"x[{N}]: {values[diff_count-1]}")
-
-
-# diff_solver(init_cons, functions, N, right_side, display)
+		output.append(f"x[{N}]: {values[diff_count-1]}")
+	return output
