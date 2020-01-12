@@ -72,6 +72,17 @@ p, h1, h2, h3, a, li, .defaultSpan {
 	border-radius: 5px;
 }
 
+.listDiv {
+	display: inline-block;
+	text-align: left;
+}
+
+.noDotList {
+	margin: 0px;
+	padding: 0px;
+	list-style: none;
+}
+
 .pictureText {
 	margin-top: 0px;
 	color: gray;
