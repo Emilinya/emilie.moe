@@ -3,6 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		{{head}}
+		<link rel="stylesheet" type="text/css" href="css/style.css">
 		<title>Site</title>
 	</head>
 	<body>
@@ -10,25 +11,29 @@
 			<div class="headerDiv">
 				{{nav?home=projects}}
 			</div>
+			<div class="headerDiv">
+				{{mathNav?home=diffSolver}}
+			</div>
 			<div class="bodyDiv">
 				<form id="form">
 					<h1 style="margin-bottom: 0px">Difference Equation Solver</h1>
-					<p class="subP" style="margin-bottom: 30px">(Not to be confuced with Differantial Equations)</p>
-					<p class="supP">Write the equation: (ex: 2x2 + x4 - 8x0)</p>
-					<input id="eqInput" type="text" name="eqInput" required placeholder="axn + bx(n-1) + ... + zx0">
-					<p style="margin-bottom: 5px">Write the initial conditions:</p>
-					<div id="initialsDiv">
-					</div>
+					<p class="subP" style="margin-bottom: 0px">(Not to be confused with Differantial Equations)</p>
+
+					<p class="supP">Write a comma-seperated list of functions:</p>
+					<input id="funcInput" type="text" name="eqInput" required pattern="-?\d+(\s*,\s*-?\d+)*" placeholder="1, 1">
+
+					<p style="margin-bottom: 5px">Write a comma-seperated list of initial conditions:</p>
+					<input id="initInput" type="text" name="initInput" required pattern="\d+(\s*,\s*\d+)*" placeholder="1, 1">
+
 					<p class="supP">How many iterations shall the solver do?</p>
 					<input id="nInput" type="number" name="nInput" required maxlength="6">
+
 					<h2 id="eqOutput"></h2>
 					<button id="eqSolve" type="submit" name="eqSolve">Solve equation</button>
 				</form>
 				<p id="eqResult"></p>
-				<div class="listDiv">
-					<ul id="eqValues" class="noDotList">
-					</ul>
-				</div>
+				<table id="eqValues">
+				</table>
 			</div>
 		</div>
 	</body>
