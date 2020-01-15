@@ -16,13 +16,22 @@
 		</style>
 	</head>
 	<body>
-		<div class="headerDiv">
-			{{nav?home=games}}
+		<div class="mainDiv">
+			<div class="headerDiv">
+				{{nav?home=games}}
+			</div>
+			<div class="headerDiv">
+				{{gameNav?home=decentBendikBros}}
+			</div>
+			<div class="bodyDiv">
+				<canvas id="canvas" style="border-color: black"></canvas>
+			</div>
 		</div>
-		<div class="headerDiv">
-			{{gameNav?home=decentBendikBros}}
-		</div>
-		<canvas id="canvas" width="1100" height="550", style="border-color: black"></canvas>
-		<script src="decentBendikBros/js/proceduralMain.js" type="module"></script>
+		<script src="decentBendikBros/js/main.js" type="module"></script>
+		<script type="text/javascript">
+			const bodyDiv = document.getElementsByClassName("bodyDiv")[0];
+			canvas.width = bodyDiv.offsetWidth * 0.8;
+			canvas.height = bodyDiv.offsetHeight * 0.8;
+		</script>
 	</body>
 </html>
