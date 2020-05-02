@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+	<head>
+		<meta charset="utf-8">
+		{{head}}
+		<title>Site</title>
+		<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+		<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+	</head>
+	<body>
+		<div class="mainDiv">
+			<div class="headerDiv">
+				{{nav?home=projects}}
+			</div>
+			<div class="headerDiv">
+				{{mathNav?home=taylorSeries}}
+			</div>
+			<div class="bodyDiv">
+				<h1 style="margin-bottom: 0px">Taylorinator</h1>
+				<a class="listLink" href="#" target="_blank">Link to source code</a>
+				<form id="form">
+					<p class="supP">Write a function:</p>
+					<span>f(x) = </span><input id="funcInput" type="text" name="funcInput" required oninput="this.setCustomValidity('')"><br>
+					<p class="supP">Series order:
+					<input id="orderInput" type="number" name="orderInput" value=3 size="3" required></p>
+					<p class="supP">Approximation point:
+					<input id="pointInput" type="number" name="pointInput" value=0 size="3" required></p><br><br>
+					<button id="get" type="submit" name="get">Get taylor series</button>
+				</form>
+				<h1 id="resultP"></h1>
+				<img id="resultImg">
+			</div>
+		</div>
+	</body>
+	<script src="taylorSeries.js" charset="utf-8"></script>
+</html>

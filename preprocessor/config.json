@@ -11,7 +11,8 @@
 			"thanks": "//games.bendik.moe/thanks.html",
 			"polygonParagon": "//games.bendik.moe/polygonParagon.html",
 			"diffSolver": "//www.bendik.moe/projects/math/diffSolver.html",
-			"lcmFinder": "//www.bendik.moe/projects/math/lcmFinder.html"
+			"lcmFinder": "//www.bendik.moe/projects/math/lcmFinder.html",
+			"taylorSeries": "//www.bendik.moe/projects/math/taylorSeries.html"
 		},
 		"if": {
 			"home": "path==args['home']"
@@ -29,7 +30,8 @@
 			"thanks": "games/thanks.html",
 			"polygonParagon": "games/polygonParagon.html",
 			"diffSolver": "www/projects/math/diffSolver.html",
-			"lcmFinder": "www/projects/math/lcmFinder.html"
+			"lcmFinder": "www/projects/math/lcmFinder.html",
+			"taylorSeries": "www/projects/math/taylorSeries.html"
 		},
 		"if": {
 			"home": "path==args['home']"
