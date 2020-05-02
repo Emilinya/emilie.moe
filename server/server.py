@@ -2,6 +2,7 @@ from flask import Flask, escape, request
 import threading
 from diff_solver import diff_solver
 from lcm import lcm
+from taylor import taylor
 
 
 def timeout(f, t, *args, **kwargs):
@@ -24,7 +25,8 @@ def lcmify():
 		values = request.args.get("values")
 		values = [int(value) for value in values.split(",")]
 		return f'{escape(timeout(lcm, 1, values))}'
-	except Exception:
+	except Exception as e:
+		print(e)
 		return f'{escape("Error")}'
 
 @app.route('/diff')
@@ -36,6 +38,21 @@ def diffify():
 		right_side = int(request.args.get("rightSide"))
 		display_type = request.args.get("display")
 		return f'{escape(timeout(diff_solver, 1, init_cons, functions, N, right_side, display_type))}'
+	except Exception:
+		return f'{escape("Error")}'
+
+@app.route('/taylor')
+def taylorify():
+	try:
+		function = request.args.get("function")
+		function = function.replace("£", "+")
+		point = int(request.args.get("point"))
+		order = int(request.args.get("order"))
+
+		result = timeout(taylor, 1, function, point, order)
+		if result:
+			return f'{escape(result)}'
+		return f'{escape("FuncError")}'
 	except Exception:
 		return f'{escape("Error")}'
 
