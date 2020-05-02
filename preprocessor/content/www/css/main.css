@@ -12,7 +12,7 @@ html, body {
 	background-color: var(--backgroundColor);
 }
 
-p, h1, h2, h3, a, li, th, td, .defaultSpan {
+p, h1, h2, h3, a, li, th, td, span {
 	color: var(--foregroundColor);
 	font-family: Sans-Serif;
 }
