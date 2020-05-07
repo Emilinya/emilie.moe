@@ -37,7 +37,7 @@ def diffify():
 		N = int(request.args.get("N"))
 		right_side = int(request.args.get("rightSide"))
 		display_type = request.args.get("display")
-		return f'{escape(timeout(diff_solver, 1, init_cons, functions, N, right_side, display_type))}'
+		return f'{escape(timeout(diff_solver, 2, init_cons, functions, N, right_side, display_type))}'
 	except Exception:
 		return f'{escape("Error")}'
 
@@ -48,11 +48,15 @@ def taylorify():
 		function = function.replace("£", "+")
 		point = int(request.args.get("point"))
 		order = int(request.args.get("order"))
+		radius = int(request.args.get("radius"))
 
-		result = timeout(taylor, 1, function, point, order)
-		if result:
+		result = timeout(taylor, 1, function, point, order, radius)
+		if result is None:
+			return f'{escape("TimeoutError")}'
+		elif not result:
+			return f'{escape("FuncError")}'
+		else:
 			return f'{escape(result)}'
-		return f'{escape("FuncError")}'
 	except Exception:
 		return f'{escape("Error")}'
 
