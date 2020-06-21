@@ -1,0 +1,23 @@
+#imgDiv {
+	display: grid
+}
+
+#resultImg {
+	padding-bottom: 0px;
+}
+
+#stripButton {
+	margin-top: 10px;
+}
+
+.noPointer {
+	pointer-events: none
+}
+
+#bar {
+	width: 10px;
+	z-index: 999;
+	background-color: rgba(0, 0, 0, 0.6);
+	grid-area: 1 / 1;
+	cursor: col-resize
+}
