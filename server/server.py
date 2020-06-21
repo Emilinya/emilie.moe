@@ -3,6 +3,7 @@ import threading
 from diff_solver import diff_solver
 from lcm import lcm
 from taylor import taylor
+from strippinator import strip_b64
 
 
 def timeout(f, t, *args, **kwargs):
@@ -50,13 +51,30 @@ def taylorify():
 		order = int(request.args.get("order"))
 		radius = int(request.args.get("radius"))
 
-		result = timeout(taylor, 1, function, point, order, radius)
+		result = timeout(taylor, 2, function, point, order, radius)
 		if result is None:
 			return f'{escape("TimeoutError")}'
 		elif not result:
 			return f'{escape("FuncError")}'
 		else:
 			return f'{escape(result)}'
+	except Exception:
+		return f'{escape("Error")}'
+
+@app.route('/strip', methods=["POST"])
+def strippinator():
+	try:
+		dataURI, src = str(request.data).split(",")
+		datatype = dataURI.split("/")[1].replace(";base64", "")
+		center_frac = request.args.get("center_frac")
+		center_frac = None if center_frac == "None" else float(center_frac)
+		center = bool(request.args.get("center"))
+
+		result = timeout(strip_b64, 1, src, center, center_frac, datatype)
+		if result is None:
+			return f'{escape("TimeoutError")}'
+		else:
+			return f'{escape(f"{dataURI},{str(result)}")}'
 	except Exception:
 		return f'{escape("Error")}'
 
