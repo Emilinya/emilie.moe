@@ -2,8 +2,10 @@
 	display: grid
 }
 
-#resultImg {
-	padding-bottom: 0px;
+.bigImg {
+	max-width: 80vw;
+	height: auto;
+	max-height: 50vh;
 }
 
 #stripButton {
@@ -17,7 +19,10 @@
 #bar {
 	width: 10px;
 	z-index: 999;
-	background-color: rgba(0, 0, 0, 0.6);
 	grid-area: 1 / 1;
 	cursor: col-resize
+}
+
+#precentP {
+	margin-top: 0px;
 }
