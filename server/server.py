@@ -70,7 +70,7 @@ def strippinator():
 		center_frac = None if center_frac == "None" else float(center_frac)
 		center = bool(request.args.get("center"))
 
-		result = timeout(strip_b64, 1, src, center, center_frac, datatype)
+		result = timeout(strip_b64, 3, src, center, center_frac, datatype)
 		if result is None:
 			return f'{escape("TimeoutError")}'
 		else:
