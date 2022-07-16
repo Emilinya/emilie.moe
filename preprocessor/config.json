@@ -1,19 +1,20 @@
 {
 	"prod": {
 		"url": {
-			"www": "//www.bendik.moe",
-			"games": "//games.bendik.moe",
-			"about": "//about.bendik.moe",
-			"projects": "//www.bendik.moe/projects",
-			"math": "//www.bendik.moe/projects/math",
-			"css": "//www.bendik.moe/css/main.css",
-			"icon": "//www.bendik.moe/media/favicon",
-			"decentBendikBros": "//games.bendik.moe/decentBendikBros.html",
-			"thanks": "//games.bendik.moe/thanks.html",
-			"polygonParagon": "//games.bendik.moe/polygonParagon.html",
-			"diffSolver": "//www.bendik.moe/projects/math/diffSolver.html",
-			"lcmFinder": "//www.bendik.moe/projects/math/lcmFinder.html",
-			"taylorSeries": "//www.bendik.moe/projects/math/taylorSeries.html"
+			"www": "//www.emilie.moe",
+			"games": "//games.emilie.moe",
+			"media": "//media.emilie.moe",
+			"about": "//about.emilie.moe",
+			"projects": "//www.emilie.moe/projects",
+			"math": "//www.emilie.moe/projects/math",
+			"css": "//www.emilie.moe/css/main.css",
+			"icon": "//www.emilie.moe/media/favicon",
+			"decentDørumBros": "//games.emilie.moe/decentDørumBros.html",
+			"thanks": "//games.emilie.moe/thanks.html",
+			"polygonParagon": "//games.emilie.moe/polygonParagon.html",
+			"diffSolver": "//www.emilie.moe/projects/math/diffSolver.html",
+			"lcmFinder": "//www.emilie.moe/projects/math/lcmFinder.html",
+			"taylorSeries": "//www.emilie.moe/projects/math/taylorSeries.html"
 		},
 		"if": {
 			"home": "path==args['home']"
@@ -23,12 +24,13 @@
 		"url": {
 			"www": "www/index.html",
 			"games": "games/index.html",
+			"media": "media/index.html",
 			"about": "about/index.html",
 			"projects": "www/projects/index.html",
 			"math": "www/projects/math/index.html",
 			"css": "www/css/main.css",
 			"icon": "www/media/favicon",
-			"decentBendikBros": "games/decentBendikBros.html",
+			"decentDørumBros": "games/decentDørumBros.html",
 			"thanks": "games/thanks.html",
 			"polygonParagon": "games/polygonParagon.html",
 			"diffSolver": "www/projects/math/diffSolver.html",
