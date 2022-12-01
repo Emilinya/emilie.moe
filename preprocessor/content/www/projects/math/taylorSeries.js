@@ -12,7 +12,7 @@ form.addEventListener("submit", async event => {
 	func = funcInput.value.replace(/ /g, "").replace(/\+/g, "£")
 	// start_time = +new Date();
 	let response = await fetch(
-		`http://api.bendik.moe/taylor?function=${func}
+		`http://api.emilie.moe/taylor?function=${func}
 		&order=${orderInput.value}&point=${pointInput.value}
 		&radius=${radiusInput.value}`
 	);

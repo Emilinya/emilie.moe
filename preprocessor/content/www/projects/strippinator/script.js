@@ -49,7 +49,7 @@ async function getImgSrcResult(state) {
 	};
 	try {
 		var response = await fetch(
-			`http://api.bendik.moe/strip?center_frac=${center_frac}&center=${center}`,
+			`http://api.emilie.moe/strip?center_frac=${center_frac}&center=${center}`,
 			options
 		);
 	} catch (e) {
