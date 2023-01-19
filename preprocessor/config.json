@@ -17,6 +17,7 @@
 			"lcmFinder": "//www.emilie.moe/projects/math/lcmFinder.html",
 			"taylorSeries": "//www.emilie.moe/projects/math/taylorSeries.html",
 			"schrodingerMain": "//www.emilie.moe/projects/schrodinger/index.html",
+			"1slit": "//www.emilie.moe/projects/schrodinger/1slit.html",
 			"2slits": "//www.emilie.moe/projects/schrodinger/2slits.html",
 			"3slits": "//www.emilie.moe/projects/schrodinger/3slits.html"
 		},
@@ -42,6 +43,7 @@
 			"lcmFinder": "www/projects/math/lcmFinder.html",
 			"taylorSeries": "www/projects/math/taylorSeries.html",
 			"schrodingerMain": "www/projects/schrodinger/index.html",
+			"1slit": "www/projects/schrodinger/1slit.html",
 			"2slits": "www/projects/schrodinger/2slits.html",
 			"3slits": "www/projects/schrodinger/3slits.html"
 		},
