@@ -1,0 +1,17 @@
+.gridDiv {
+    display: grid;
+    grid-template-columns: 20% auto;
+    grid-template-areas: "left right";
+    padding-bottom: 5px;
+}
+
+.imgDiv {
+    padding-right: 1vw;
+    display: flex;
+    align-items: center;
+    grid-area: "left";
+}
+
+.infoDiv {
+    grid-area: "right";
+}
