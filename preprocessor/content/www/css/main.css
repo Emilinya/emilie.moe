@@ -95,8 +95,8 @@ sub {
 
 .blockDiv {
 	overflow-wrap: break-word;
-	width: 90%;
-	padding-left: 5%;
+	padding-left: 15px;
+	padding-right: 15px;
 	text-align: left;
 }
 
