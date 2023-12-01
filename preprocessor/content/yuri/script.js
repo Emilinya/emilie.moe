@@ -65,7 +65,7 @@ var Manga = (function () {
             comments.innerHTML += " It is officially liscenced by ".concat(link, ".");
         }
         else {
-            comments.innerHTML += " It has no official tranlation, but a fan translation is available at ".concat(link, ".");
+            comments.innerHTML += " It has no official tranlation, but a fan translation is available on ".concat(link, ".");
         }
         var infoDiv = document.createElement("div");
         infoDiv.className = "infoDiv";
@@ -99,19 +99,22 @@ function createYuriList(ranking, mangas) {
 var ranking = [
     "Adachi and Shimamura",
     "Mage & Demon Queen",
-    "Lily",
+    "Blooming Sequence",
     "Bloom Into You",
+    "Doughnuts Under a Crescent Moon",
     "Not so Shoujo Love Story",
-    "Hana ni Arashi",
     "Pulse",
-    "Can't Defy the Lonely Girl",
-    "Anemone Is in Heat",
-    "Wife & Wife",
-    "Cheerful Amnesia",
-    "My Food Looks Very Cute",
     "Ring my Bell",
     "A Joyful Life",
+    "Hana ni Arashi",
+    "Lily",
+    "If We Leave on the Dot",
     "That Time I Was Blackmailed By the Class's Green Tea Bitch",
+    "My Food Looks Very Cute",
+    "Anemone Is in Heat",
+    "Can't Defy the Lonely Girl",
+    "Cheerful Amnesia",
+    "Wife & Wife",
 ];
 var mangas = [
     new Manga("Adachi and Shimamura", "media/adashima.webp", false, "Adachi and Shimamura, two young women who attend the same high school, are inseparable friends. Whether playing table tennis, chatting about favorite TV shows, or just relaxing together, they're happy to share their days. When Adachi's friendship turns into romantic attraction, the relationship begins to change, one day at a time.", "Very cute slow-burn slice of life, do not expect any rapid developments. This story is adapted into an anime, but I recommend reading the original light novels.", new Source(true, new Link("Seven Seas Entertainment", "https://sevenseasentertainment.com/series/adachi-and-shimamura-light-novel/"))),
@@ -128,6 +131,9 @@ var mangas = [
     new Manga("My Food Looks Very Cute", "media/cute_food.png", false, "A vampire that has been asleep for almost two hundred years, Maria, has been awakened by a wolf girl passing by, Xing Lan. When the casket was opened, a curse fell upon Xing Lan. Instead of being scared, the na\u00EFve Xing Lan instead believed she has found an amazing companion, and the two embark on a journey to the city.", "Very cute.", new Source(true, new Link("Bilibili Comics", "https://www.bilibilicomics.com/detail/mc88"))),
     new Manga("Ring my Bell", "media/bell.jpg", true, "Hell yeah! A major publisher wants Mai Sohn to write a webcomic on relationships. But she's struck with heartbreak as her girlfriend abruptly dumps her. It's hard writing about relationships without being in one, so she needs to find the inspiration for love \u2014 and find it fast. And what's up with her possibly homophobic neighbor? Why is she cool with Mai one minute and then so awkward and weird to her the next?! Can't a girl catch a break?", "I read this story long ago, so I don't remember much of it, but I do remember it being good.", new Source(true, new Link("Tapas", "https://tapas.io/series/ringmybell/info"))),
     new Manga("A Joyful Life", "media/joyful_life.png", true, "Joy has been living an \"agreeable\" life as long as she can remember, making way for the happiness of others at the cost of her own emotional well-being. Running into her high school crush, Aerie, and reaching a breaking point with her family and work, Joy's long-overdue goals of leaving home are placed into action. Will Joy be able to find her way in the world, and resolve the long overdue issues that have haunted her ordinary life?", "This story is heavy, with references to sexual assault and familial abuse, but it a very good and touching story.", new Source(true, new Link("Comiko", "https://comiko.net/title/86394-a-joyful-life"))),
-    new Manga("That Time I Was Blackmailed By the Class's Green Tea Bitch", "media/joyful_life.png", true, "Green Tea Bitch (n.): A woman who pretends to be pure and innocent but in fact is manipulative and calculating.\n\nAfter school ends, a good honor student is threatened by the class's green tea bitch.\n\"I never thought you wide-eyed goody-two-shoes would do something like this.\"\n\"If you don't want me to expose your shameful secret\u2026\"\n\nA cute romance that stems from a misunderstanding begins in That Time I Was Blackmailed By the Class's Green Tea Bitch!", "This is a fun and gay story, but it unfortunately suffers from a rushed ending", new Source(false, new Link("MangaDex", "https://mangadex.org/title/73965527-b393-4f65-9bc3-2439ec44935a/that-time-i-was-blackmailed-by-the-class-s-green-tea-bitch"))),
+    new Manga("That Time I Was Blackmailed By the Class's Green Tea Bitch", "media/blackmail.jpg", true, "Green Tea Bitch (n.): A woman who pretends to be pure and innocent but in fact is manipulative and calculating.\n\nAfter school ends, a good honor student is threatened by the class's green tea bitch.\n\"I never thought you wide-eyed goody-two-shoes would do something like this.\"\n\"If you don't want me to expose your shameful secret\u2026\"\n\nA cute romance that stems from a misunderstanding begins in That Time I Was Blackmailed By the Class's Green Tea Bitch!", "This is a fun and gay story, but it unfortunately suffers from a rushed ending", new Source(false, new Link("MangaDex", "https://mangadex.org/title/73965527-b393-4f65-9bc3-2439ec44935a/that-time-i-was-blackmailed-by-the-class-s-green-tea-bitch"))),
+    new Manga("Blooming Sequence", "media/blooming.jpg", true, "    Seowoo, president of the film club, is standing outside in the rain, a welcome break     from the noisy and chaotic bar behind her, when a girl with orange hair stumbles out     the doors and practically into her arms. Then she begins singing \u201CDancing in the Rain\u201D     while\u2026 dancing in the rain. It's a minute encounter, really, but Seowoo has seen the     greatest romances bloom from the smallest moments in the movies. So when Hayoung shows     up to join the film club, Seowoo - who's not even sure what she herself is feeling -     finds her heart skipping a beat.", "", new Source(false, new Link("MangaDex", "https://mangadex.org/title/243711a2-9455-4459-a00d-300e25fd8af0/blooming-sequence"))),
+    new Manga("Doughnuts Under a Crescent Moon", "media/doughnuts.jpg", true, "    Uno Hinako throws herself into makeup, fashion, and falling in love, hoping that will make     her seem \u201Cnormal\u201D to the other people at her job. But no matter how hard she tries, she's     a self-doubting mess inside, and her attempts at \u201Cnormal\u201D romance with men just keep failing.     When she starts to think she might be alone forever, a new normal presents itself in the form of     her relationship with Asahi Sato, a level-headed woman who works at her company. It starts as     respect, and then it becomes far more intimate.", "", new Source(true, new Link("Seven Seas Entertainment", "https://sevenseasentertainment.com/series/doughnuts-under-a-crescent-moon/"))),
+    new Manga("If We Leave on the Dot", "media/on_the_dot.webp", true, "    The woman she's interested in carries around the scent of vanilla.\n    They would always communicate through exchanging pieces of notes that would be placed inside their coats' pockets.\n    'When the weather turns warmer, will everything end?'\n    The quiet and cute, Yukawa-san and the beautiful lady, Mizuki-san, where will their love go?\n    An exciting and heart-pounding OL Yuri Manga", "", new Source(true, new Link("Manga Planet", "https://mangaplanet.com/comic/5fe434a974859"))),
 ];
 createYuriList(ranking, mangas);
