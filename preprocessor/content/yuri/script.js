@@ -22,83 +22,112 @@ var Manga = (function () {
         this.comments = comments;
         this.source = source;
     }
-    Manga.prototype.to_html = function (element) {
-        var gridDiv = document.createElement("div");
-        gridDiv.className = "gridDiv";
-        var split_path = this.image.split(".");
-        var extension = split_path.pop();
-        var body = split_path.join(".");
-        var wide_source = document.createElement("source");
-        wide_source.media = "(orientation: portrait)";
-        wide_source.srcset = "".concat(body, "_wide.").concat(extension);
-        var tall_source = document.createElement("source");
-        tall_source.media = "(orientation: landscape)";
-        tall_source.srcset = "".concat(body, "_tall.").concat(extension);
-        var img = document.createElement("img");
-        img.src = "";
-        img.setAttribute("width", "100%");
-        img.alt = "";
-        var picture = document.createElement("picture");
-        picture.appendChild(wide_source);
-        picture.appendChild(tall_source);
-        picture.appendChild(img);
-        var imageDiv = document.createElement("div");
-        imageDiv.className = "imgDiv";
-        imageDiv.appendChild(picture);
-        gridDiv.appendChild(imageDiv);
-        var finished_str = this.finished ? "Finished" : "Ongoing";
-        var title = document.createElement("h2");
-        title.innerHTML = "<b>".concat(this.title, " (").concat(finished_str, ")</b>");
-        var titleDiv = document.createElement("div");
-        titleDiv.className = "titleDiv";
-        titleDiv.appendChild(title);
-        gridDiv.appendChild(titleDiv);
-        var synopsisTitle = document.createElement("h3");
-        synopsisTitle.innerHTML = "<em>Synopsis</em>";
-        var synopsis = document.createElement("p");
-        synopsis.innerHTML = this.synopsis.replace(/\n/g, "<br>");
-        var commentsTitle = document.createElement("h3");
-        commentsTitle.innerHTML = "<em>Comments</em>";
-        var comments = document.createElement("p");
-        comments.innerHTML = this.comments.replace(/\n/g, "<br>");
-        var pronoun = " It";
-        if (this.comments == "") {
-            pronoun = "This manga";
-        }
-        var link = "<a target=\"_blank\" class=\"listLink\" href=\"".concat(this.source.link.link, "\">").concat(this.source.link.name, "</a>");
-        if (this.source.licensed) {
-            comments.innerHTML += "".concat(pronoun, " is officially licensed by ").concat(link, ".");
-        }
-        else {
-            comments.innerHTML += "".concat(pronoun, " has no official translation, but a fan translation is available on ").concat(link, ".");
-        }
-        var infoDiv = document.createElement("div");
-        infoDiv.className = "infoDiv";
-        infoDiv.appendChild(synopsisTitle);
-        infoDiv.appendChild(synopsis);
-        infoDiv.appendChild(commentsTitle);
-        infoDiv.appendChild(comments);
-        gridDiv.appendChild(infoDiv);
-        element.appendChild(gridDiv);
-        var hr = document.createElement("hr");
-        element.appendChild(hr);
-    };
     return Manga;
 }());
-function createYuriList(ranking, mangas) {
-    var div = document.getElementById("yuriList");
-    if (div === null) {
-        throw new Error("Could not fid element with id 'yuriList'");
+function getElementById(id) {
+    var element = document.getElementById(id);
+    if (element === null) {
+        throw new Error("Could not fid element with id ".concat(id));
     }
+    return element;
+}
+function escapeTitle(title) {
+    return title.toLowerCase().replace(" ", "_");
+}
+function addLinkToList(manga, list) {
+    var item = document.createElement("li");
+    item.style.margin = "3px 0px 3px 0px";
+    var link = document.createElement("a");
+    link.className = "listLink";
+    link.href = "#".concat(escapeTitle(manga.title));
+    link.appendChild(document.createTextNode(manga.title));
+    item.appendChild(link);
+    list.appendChild(item);
+}
+function addMangaToDiv(manga, div) {
+    var gridDiv = document.createElement("div");
+    gridDiv.className = "gridDiv";
+    gridDiv.id = escapeTitle(manga.title);
+    var split_path = manga.image.split(".");
+    var extension = split_path.pop();
+    var body = split_path.join(".");
+    var wide_source = document.createElement("source");
+    wide_source.media = "(orientation: portrait)";
+    wide_source.srcset = "".concat(body, "_wide.").concat(extension);
+    var tall_source = document.createElement("source");
+    tall_source.media = "(orientation: landscape)";
+    tall_source.srcset = "".concat(body, "_tall.").concat(extension);
+    var img = document.createElement("img");
+    img.src = "";
+    img.setAttribute("width", "100%");
+    img.alt = "";
+    var picture = document.createElement("picture");
+    picture.appendChild(wide_source);
+    picture.appendChild(tall_source);
+    picture.appendChild(img);
+    var imageDiv = document.createElement("div");
+    imageDiv.className = "imgDiv";
+    imageDiv.appendChild(picture);
+    gridDiv.appendChild(imageDiv);
+    var finished_str = manga.finished ? "Finished" : "Ongoing";
+    var title = document.createElement("h2");
+    title.innerHTML = "<b>".concat(manga.title, " (").concat(finished_str, ")</b>");
+    var titleDiv = document.createElement("div");
+    titleDiv.className = "titleDiv";
+    titleDiv.appendChild(title);
+    gridDiv.appendChild(titleDiv);
+    var synopsisTitle = document.createElement("h3");
+    synopsisTitle.innerHTML = "<em>Synopsis</em>";
+    var synopsis = document.createElement("p");
+    synopsis.innerHTML = manga.synopsis.replace(/\n/g, "<br>");
+    var commentsTitle = document.createElement("h3");
+    commentsTitle.innerHTML = "<em>Comments</em>";
+    var comments = document.createElement("p");
+    comments.innerHTML = manga.comments.replace(/\n/g, "<br>");
+    var pronoun = " It";
+    if (manga.comments == "") {
+        pronoun = "This manga";
+    }
+    var link = "<a target=\"_blank\" class=\"listLink\" href=\"".concat(manga.source.link.link, "\">").concat(manga.source.link.name, "</a>");
+    if (manga.source.licensed) {
+        comments.innerHTML += "".concat(pronoun, " is officially licensed by ").concat(link, ".");
+    }
+    else {
+        comments.innerHTML += "".concat(pronoun, " has no official translation, but a fan translation is available on ").concat(link, ".");
+    }
+    var infoDiv = document.createElement("div");
+    infoDiv.className = "infoDiv";
+    infoDiv.appendChild(synopsisTitle);
+    infoDiv.appendChild(synopsis);
+    infoDiv.appendChild(commentsTitle);
+    infoDiv.appendChild(comments);
+    gridDiv.appendChild(infoDiv);
+    div.appendChild(gridDiv);
+    var hr = document.createElement("hr");
+    div.appendChild(hr);
+}
+function createYuriList(ranking, mangas) {
+    var list = getElementById("summaryList");
+    var div = getElementById("yuriList");
     for (var _i = 0, ranking_1 = ranking; _i < ranking_1.length; _i++) {
         var name_1 = ranking_1[_i];
         for (var _a = 0, mangas_1 = mangas; _a < mangas_1.length; _a++) {
             var manga = mangas_1[_a];
             if (manga.title === name_1) {
-                manga.to_html(div);
+                addLinkToList(manga, list);
+                addMangaToDiv(manga, div);
                 break;
             }
         }
+    }
+}
+function toggleSummaryDiv() {
+    var summaryDiv = getElementById("summaryDiv");
+    if (summaryDiv.style.display === "none") {
+        summaryDiv.style.display = "block";
+    }
+    else {
+        summaryDiv.style.display = "none";
     }
 }
 var ranking = [
@@ -157,7 +186,7 @@ var ranking = [
 ];
 var mangas = [
     new Manga("Adachi and Shimamura", "media/adashima.webp", false, "Adachi and Shimamura, two young women who attend the same high school, are inseparable friends. Whether playing table tennis, chatting about favorite TV shows, or just relaxing together, they're happy to share their days. When Adachi's friendship turns into romantic attraction, the relationship begins to change, one day at a time.", "Very cute slow-burn slice of life, do not expect any rapid developments. This story is adapted into an anime, but I recommend reading the original light novels.", new Source(true, new Link("Seven Seas Entertainment", "https://sevenseasentertainment.com/series/adachi-and-shimamura-light-novel/"))),
-    new Manga("Mage & Demon Queen", "media/mageQueen.jpg", true, "Adventurers seek to take the demon queen's head, but a love-struck young female mage wishes to take her hand. Join us won't you, for this bawdy tale of love and persistence set inside a real-life RPG.", "This webcomic has a trans princess as a side character.", new Source(true, new Link("WebToons", "https://www.webtoons.com/en/comedy/mage-and-demon-queen/list?title_no=1438"))),
+    new Manga("Mage & Demon Queen", "media/mageQueen.jpg", true, "Adventurers seek to take the demon queen's head, but a love-struck young female mage wishes to take her hand. Join us won't you, for this bawdy tale of love and persistence set inside a real-life RPG.", "In addition to the gay main character, this webcomic also features a trans princess as a side character.", new Source(true, new Link("WebToons", "https://www.webtoons.com/en/comedy/mage-and-demon-queen/list?title_no=1438"))),
     new Manga("Lily", "media/lily.jpg", false, "Prim and proper honors student Fan Yilin and the mysterious and charismatic Lan Ruoxi met through a stroke of fate and a misunderstanding, and only got further involved with each other from that point on. The more they came to know each other, the more something different started blooming between the two. \"I like you, only because it's you.\"", "This is an exceptionally slow-burn slice of life romance. The main pair does eventually become a couple, but it takes several hundred chapters. The story is officially published by Bilibili Comics, and while I do recommend supporting the creator, the reading experience on there is not great. It is also available on MangaDex, which has a better reading experience and more translated chapters, but it suddenly stops and has not been updated in over two years.", new Source(true, new Link("Bilibili Comics", "https://www.bilibilicomics.com/detail/mc82"))),
     new Manga("Bloom Into You", "media/bloom_into_you.jpg", true, "Yuu has always loved shoujo manga and awaits the day she gets a love confession that sends her heart aflutter with bubbles and hearts, and yet when a junior high classmate confesses his feelings to her...she feels nothing. Disappointed and confused, Yuu enters high school still unsure how to respond. That's when Yuu sees the beautiful student council president Nanami turn down a suitor with such maturity that she's inspired to ask her for help. But when the next person to confess to Yuu is Nanami herself, has her shoujo romance finally begun?", "This is one of the most famous lesbian manga. It is also adapted into a very good anime, which covers about half of the story.", new Source(true, new Link("Seven Seas Entertainment", "https://sevenseasentertainment.com/series/bloom-into-you/"))),
     new Manga("Not so Shoujo Love Story", "media/not_shoujo.jpg", false, "Romance-super-fan Rei Chan is ready for her first boyfriend and she knows just who it'll be: the most handsome boy in school, Hansum Ochinchin. But her plans for the perfect love story are derailed when the most popular girl in class declares herself a rival....for Rei's heart?! This is the year her not so shoujo love story begins!", "", new Source(true, new Link("WebToons", "https://www.webtoons.com/en/comedy/not-so-shoujo-love-story/list?title_no=2189"))),

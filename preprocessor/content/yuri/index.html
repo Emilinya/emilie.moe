@@ -12,15 +12,27 @@
         <div class="bodyDiv">
             <div class="titleBoxDiv">
                 <img src="media/lesbiflag.png" class="flagImg left" alt="">
-                <h1 style="padding: 5px">The best lesbian media</h1>
+                <h1 style="padding: 5px 10px 5px 10px">The Best Lesbian Media</h1>
                 <img src="media/lesbiflag.png" class="flagImg right" alt="">
             </div>
             <div class="blockDiv" , id="yuriList">
-                <h3 style="margin-bottom: 50px">
-                    This is a list of the subjectively best lesbian media. Note that I exclusively consume
-                    anime-adjacent media, so don't expect to see anything else. The list is ordered from best to worst,
-                    but I recommend everything in this list.
-                </h3>
+                <div class="titleBoxDiv" style="margin-bottom: 15px">
+                    <div class="textDiv">
+                        <h3>
+                            This is a list of the subjectively best lesbian media. Note that I exclusively consume
+                            anime-adjacent media, so don't expect to see anything else. The list is ordered from best to worst,
+                            but I recommend everything in this list.
+                        </h3>
+                    </div>
+                </div>
+
+                <div class="titleBoxDiv" style="flex-direction: column">
+                    <button class="listToggleButton" onclick="toggleSummaryDiv()">Show compact list</button>
+                    <div class="textDiv" id="summaryDiv" style="display: none">
+                        <ul id="summaryList"></ul>
+                    </div>
+                </div>
+                <hr>
 
                 <script src="script.js" type="text/javascript""></script>
 
