@@ -9,6 +9,13 @@ parser.add_argument("mode", help="build mode", choices=("dev", "prod"))
 parser.add_argument(
     "-f", "--fast", help="speed up program by not copying images", action="store_true"
 )
+parser.add_argument(
+    "-d",
+    "--directories",
+    nargs="+",
+    required=False,
+    help="the directories you want to copy over. If not set, all directories will be copied.",
+)
 cmd_args = parser.parse_args()
 
 # Get build mode:
@@ -158,29 +165,30 @@ def get_args(args_list: list[str]):
 
 
 def main():
+    base = f"../{output_folder}"
     for file_name in content:
+        # see if directory should be copied
         folders = file_name.split("/")
-        for i in range(1, len(folders)):
-            folder = "/".join(folders[:i])
-            try:
-                os.makedirs(f"../{output_folder}/{folder}")
-            except FileExistsError:
-                pass
+        if cmd_args.directories and folders[0] not in cmd_args.directories:
+            continue
 
-        extension = os.path.splitext(file_name)[1].lower()
+        # create necessary folders
+        os.makedirs(f"{base}/{'/'.join(folders[:-1])}", exist_ok=True)
 
         # If the file is a html file, read line for line, else copy bytes
+        extension = os.path.splitext(file_name)[1].lower()
         if extension == ".html":
-            outfile = open(f"../{output_folder}/{file_name}", "w", encoding="utf-8")
-            with open(f"{content_path}/{file_name}", "r", encoding="utf-8") as infile:
-                for line in infile:
-                    outfile.write(parse_line(line, file_name))
-            outfile.close()
+            with open(f"{base}/{file_name}", "w", encoding="utf-8") as outfile:
+                with open(
+                    f"{content_path}/{file_name}", "r", encoding="utf-8"
+                ) as infile:
+                    for line in infile:
+                        outfile.write(parse_line(line, file_name))
         else:
             # for faster execution, ignore images
             if cmd_args.fast and extension in (".jpg", ".jpeg", ".png", ".webp"):
                 continue
-            with open(f"../{output_folder}/{file_name}", "wb") as outfile:
+            with open(f"{base}/{file_name}", "wb") as outfile:
                 with open(f"{content_path}/{file_name}", "rb") as infile:
                     outfile.write(infile.read())
 
