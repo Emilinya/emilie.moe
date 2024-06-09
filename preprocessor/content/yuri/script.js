@@ -69,38 +69,41 @@ function addMangaToDiv(manga, div) {
     imageDiv.className = "imgDiv";
     imageDiv.appendChild(picture);
     gridDiv.appendChild(imageDiv);
-    var finished_str = manga.finished ? "Finished" : "Ongoing";
     var title = document.createElement("h2");
-    title.innerHTML = "<b>".concat(manga.title, " (").concat(finished_str, ")</b>");
+    title.innerHTML = "<b>".concat(manga.title, "</b>");
     var titleDiv = document.createElement("div");
     titleDiv.className = "titleDiv";
     titleDiv.appendChild(title);
     gridDiv.appendChild(titleDiv);
+    var infoDiv = document.createElement("div");
+    infoDiv.className = "infoDiv";
     var synopsisTitle = document.createElement("h3");
     synopsisTitle.innerHTML = "<em>Synopsis</em>";
     var synopsis = document.createElement("p");
     synopsis.innerHTML = manga.synopsis.replace(/\n/g, "<br>");
-    var commentsTitle = document.createElement("h3");
-    commentsTitle.innerHTML = "<em>Comments</em>";
-    var comments = document.createElement("p");
-    comments.innerHTML = manga.comments.replace(/\n/g, "<br>");
-    var pronoun = " It";
-    if (manga.comments == "") {
-        pronoun = "This manga";
-    }
-    var link = "<a target=\"_blank\" class=\"listLink\" href=\"".concat(manga.source.link.link, "\">").concat(manga.source.link.name, "</a>");
-    if (manga.source.licensed) {
-        comments.innerHTML += "".concat(pronoun, " is officially licensed by ").concat(link, ".");
-    }
-    else {
-        comments.innerHTML += "".concat(pronoun, " has no official translation, but a fan translation is available on ").concat(link, ".");
-    }
-    var infoDiv = document.createElement("div");
-    infoDiv.className = "infoDiv";
     infoDiv.appendChild(synopsisTitle);
     infoDiv.appendChild(synopsis);
-    infoDiv.appendChild(commentsTitle);
-    infoDiv.appendChild(comments);
+    if (manga.comments.length !== 0) {
+        var commentsTitle = document.createElement("h3");
+        commentsTitle.innerHTML = "<em>Comments</em>";
+        var comments = document.createElement("p");
+        comments.innerHTML = manga.comments.replace(/\n/g, "<br>");
+        infoDiv.appendChild(commentsTitle);
+        infoDiv.appendChild(comments);
+    }
+    var statusTitle = document.createElement("h3");
+    statusTitle.innerHTML = "<em>Publication Status</em>";
+    var status = document.createElement("p");
+    status.innerText = "This story is ".concat(manga.finished ? "complete" : "ongoing");
+    var link = "<a target=\"_blank\" class=\"listLink\" href=\"".concat(manga.source.link.link, "\">").concat(manga.source.link.name, "</a>");
+    if (manga.source.licensed) {
+        status.innerHTML += ", and is officially licensed by ".concat(link, ".");
+    }
+    else {
+        status.innerHTML += ". It has no official translation, but a fan translation is available on ".concat(link, ".");
+    }
+    infoDiv.appendChild(statusTitle);
+    infoDiv.appendChild(status);
     gridDiv.appendChild(infoDiv);
     div.appendChild(gridDiv);
     var hr = document.createElement("hr");
@@ -179,6 +182,8 @@ var ranking = [
     "Failed Princesses",
     "Girl Friends",
     "Come Rain or Shine",
+    "Girls Wedding Omnibus",
+    "White Lilies in Love - BRIDE's Newlywed Yuri Anthology",
     "Pocha Climb!",
     "Cooking in Summer",
     "Ayaka is in Love with Hiroko!",
@@ -236,5 +241,7 @@ var mangas = [
     new Manga("Come Rain or Shine", "media/shine.jpg", true, "Country-born Mikoto and student council member Ren have always spent their time after school together. But one day, that ordinary routine suddenly comes to an end\u2026 With Uchouten High School as the stage, the love and youth of these impressionable young girls is about to begin!", "", new Source(false, new Link("Mangadex", "https://mangadex.org/title/43df19d5-0990-46ec-9367-ea29c502e7bb/ame-demo-hare-demo"))),
     new Manga("Uniformed Vampiress Lord", "media/vampiress.jpg", true, "Normal high school girl Irie Yuunagi suddenly has her blood sucked by a strange man one night. Yuunagi wakes up as a vampire and learns that she has been added to the man who bit her, Rin's, family. She begins to learn about the rules of the vampire world from Rin.", "The synopsis makes it seem like this is a heterosexual story, but I promise it is not.", new Source(false, new Link("Mangadex", "https://mangadex.org/title/6cac6915-b058-43b0-ad6c-305144c78627/seifuku-no-vampiress-lord"))),
     new Manga("Pocha Climb!", "media/pocha.jpg", true, "Tsugumi is a high school girl trapped between her desire to lose weight and her love for doughnuts. She has an unexpected reunion with Aira, her childhood friend, and joins the bouldering club with her to rekindle their (more than?) friendship.", "This manga suffers from a somewhat rushed ending, but is otherwise good.", new Source(false, new Link("Mangadex", "https://mangadex.org/title/b553b7c3-cee3-4689-aa54-fbc1bc1da71d/pocha-climb"))),
+    new Manga("Girls Wedding Omnibus", "media/yurikon.jpg", true, "Omnibus series about several lesbian marriages.", "", new Source(false, new Link("Mangadex", "https://mangadex.org/title/e7d79572-4b27-4c1e-befa-3d310e7c81fe/yurikon"))),
+    new Manga("White Lilies in Love - BRIDE's Newlywed Yuri Anthology", "media/brides.jpg", true, "This is an anthology full of newlywed yuri themed stories.", "", new Source(false, new Link("Mangadex", "https://mangadex.org/title/5c68f443-2153-42ed-b835-3c3962ad088b/white-lilies-in-love-bride-s-newlywed-yuri-anthology"))),
 ];
 createYuriList(ranking, mangas);
