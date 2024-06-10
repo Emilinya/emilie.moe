@@ -1,34 +1,31 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-    <head>
-        <meta charset="utf-8" />
-        {{head}}
-        <link rel="stylesheet" type="text/css" href="../../css/style.css" />
-    </head>
-    <body>
-        <div class="mainDiv">
-            <div id="topDiv">
-                <div class="headerDiv">{{nav?home=projects}}</div>
-                <div class="headerDiv">{{schrodingerNav?home=1slit}}</div>
-                <div class="bodyDiv">
-                    <h1>Single-slit experiment simulation</h1>
-                </div>
-            </div>
-            <div class="bodyDiv" style="overflow: hidden">
-                <video
-                    onloadeddata="resize()"
-                    id="animVideo"
-                    autoplay
-                    muted
-                    loop
-                    playsinline
-                >
-                    <source src="1slit_anim.mp4" type="video/mp4" />
-                    Your browser does not support the video tag.
-                </video>
-            </div>
-        </div>
-    </body>
+	<head>
+		<meta charset="utf-8">
+		{{head}}
+		<link rel="stylesheet" type="text/css" href="../../css/style.css">
+	</head>
+	<body>
+		<div class="mainDiv">
+			<div id="topDiv">
+				<div class="headerDiv">
+					{{nav?home=projects}}
+				</div>
+				<div class="headerDiv">
+					{{schrodingerNav?home=1slit}}
+				</div>
+				<div class="bodyDiv">
+					<h1>Single-slit experiment simulation</h1>
+				</div>
+			</div>
+			<div class="bodyDiv" style="overflow: hidden;">
+				<video style="display: none;" id="animVideo" autoplay muted loop playsinline>
+				<source src="1slit_anim.mp4" type="video/mp4">
+				Your browser does not support the video tag.
+				</video>
+			</div>
+		</div>
+	</body>
 
-    <script src="sizing.js"></script>
+	<script src="sizing.js"></script>
 </html>
