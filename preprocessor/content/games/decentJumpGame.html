@@ -4,33 +4,13 @@
 		<meta charset="utf-8">
 		<title>GoodGameFollowMyPatreon</title>
 		{{head}}
-		<style>
-			canvas {
-				margin: auto;
-				margin-top: 5px;
-				display: block;
-				border: 2px solid #000000;
-				border-radius: 16px;
-			}
-		</style>
 	</head>
 	<body>
 		<div class="mainDiv">
-			<div class="headerDiv">
-				{{nav?home=games}}
-			</div>
-			<div class="headerDiv">
-				{{gameNav?home=decentDørumBros}}
-			</div>
-			<div class="bodyDiv">
-				<canvas id="canvas" style="border-color: black"></canvas>
+			<div class="bodyDiv" style="overflow:hidden">
+				<canvas id="canvas"></canvas>
 			</div>
 		</div>
-		<script src="decentDørumBros/js/main.js" type="module"></script>
-		<script type="text/javascript">
-			const bodyDiv = document.getElementsByClassName("bodyDiv")[0];
-			canvas.width = bodyDiv.offsetWidth * 0.8;
-			canvas.height = bodyDiv.offsetHeight * 0.8;
-		</script>
+		<script src="DecentJumpGame/js/main.js" type="module"></script>
 	</body>
 </html>
