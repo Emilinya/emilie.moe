@@ -1,18 +1,5 @@
-p { text-align: justify; }
-
-table {
-    display: table !important;
-    width: auto !important;
-    margin-left: auto !important;
-    margin-right: auto !important; 
-    border-collapse: collapse !important;
-}
-
-table th, table td {
-    border-left: none !important;
-    border-right: none !important;
-    border-top: 1px solid #000 !important;
-    border-bottom: 1px solid #000 !important;
+a {
+    color: var(--listHighlightColor);
 }
 
 img {
@@ -20,16 +7,30 @@ img {
     margin-left: 12.5%;
 }
 
-figure {
-    margin: 0.5em auto;
+blockquote {
+    background-color: #23323D;
+    border: 8px solid #23323D;
+    border-radius: 8px;
+    margin: 8px;
+    overflow-x: scroll;
+    overflow-y: hidden;
 }
-figure > img {
-    display: block;
-    margin: 0 auto;
-    page-break-inside: avoid;
+
+blockquote > blockquote {
+    border: 0px solid #23323D;
+    margin: 0px 0px 0px 16px;
+    overflow: visible;
 }
-figcaption { 
-    display: block;
-    text-align: center;
-    margin-top: 0.5em;
+
+blockquote > p {
+    margin: 8px 0px 8px 0px;
+}
+
+pre.sourceCode {
+    padding: 3px;
+}
+
+mjx-container {
+    overflow-x: scroll;
+    overflow-y: hidden;
 }

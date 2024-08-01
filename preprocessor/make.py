@@ -66,9 +66,10 @@ def add(
     return new_line
 
 
-def add_blog(file_name: str, name: str, section: str, whitespace: str):
+def add_blog(file_name: str, name: str, section: str, _whitespace: str):
     text = ""
     path = "/".join(file_name.split("/")[:-1])
+    start_writing = False
     with open(f"content/{path}/{name}.html", encoding="utf-8") as blogfile:
         while True:
             line = blogfile.readline()
@@ -76,15 +77,15 @@ def add_blog(file_name: str, name: str, section: str, whitespace: str):
                 break
 
             if f"<{section}" in line:
+                start_writing = True
                 continue
             if f"</{section}" in line:
+                start_writing = False
                 break
 
-            if "<img" in line:
-                line = line.replace("<img", "<img width=100%")
+            if not start_writing:
+                continue
 
-            if text != "":
-                text += whitespace
             text += line
 
     return text.strip("\n")
