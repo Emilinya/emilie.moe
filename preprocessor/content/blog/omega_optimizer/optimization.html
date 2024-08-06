@@ -22,7 +22,6 @@
     }
   </style>
   <link rel="stylesheet" href="ss=style.css" />
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
   type="text/javascript"></script>
@@ -38,9 +37,10 @@
 optimize parameters?</a></li>
 <li><a href="#mortivation">Mortivation</a></li>
 </ul></li>
-<li><a href="#theory">Theory</a>
+<li><a href="#numerical-methods">Numerical methods</a>
 <ul>
 <li><a href="#newtons-method">Newton’s method</a></li>
+<li><a href="#damped-newton">Damped Newton</a></li>
 <li><a href="#gradient-descent">Gradient descent</a></li>
 <li><a href="#backtracking-line-search">Backtracking line
 search</a></li>
@@ -142,7 +142,7 @@ manually instead. This was a big part of my motivation for this new
 parameter optimizer, and I am happy to report that <em>Omega
 Optimizer</em> managed to find better parameters than I found
 manually.</p>
-<h2 id="theory">Theory</h2>
+<h2 id="numerical-methods">Numerical methods</h2>
 <h3 id="newtons-method">Newton’s method</h3>
 <p>Parameter optimization, unsurprisingly, involves optimizing some
 function, that is, we need to find its minimum. So, how do you minimize
@@ -204,6 +204,78 @@ f^2}{\partial y \partial x} &amp; \frac{\partial f^2}{\partial y^2}
 to be positive-definite at <span class="math inline">\(x_0\)</span>,
 which is just multivariable extension of <span
 class="math inline">\(f&#39;&#39;(x_0) &gt; 0\)</span>.</p>
+<h3 id="damped-newton">Damped Newton</h3>
+<p>One problem with Newton’s method is that it can be unstable. For some
+functions, there are initial values that causes the iteration to
+diverge. One such function is <span class="math inline">\(f(x) =
+\arctan(x)\)</span>, where any initial point <span
+class="math inline">\(|x_0| \gtrsim 1.5\)</span> causes divergence. The
+problem is that arctan is a very flat function for large values of <span
+class="math inline">\(x\)</span>, so <span
+class="math inline">\(f&#39;\)</span> is very small, and the Newton step
+<span class="math inline">\(\frac{f}{f&#39;}\)</span> becomes very
+large, overshooting the root at <span
+class="math inline">\(x=0\)</span>. Starting at <span
+class="math inline">\(x_0=1.5\)</span>, we get <span
+class="math inline">\(\frac{f}{f&#39;} \approx -3.19\)</span>, so <span
+class="math inline">\(x_1 = -1.69\)</span>. This leads to an even larger
+step of 4.02, so the next value is <span class="math inline">\(x_2 =
+2.32\)</span>, and so on. The problem is caused by the steps being too
+large, so an idea for a fix is to simply decrease the step sizes by
+multiplying with some factor <span class="math inline">\(0 &lt; \gamma
+&lt; 1\)</span>, called a damping factor. This works, a factor is 0.5 is
+enough for Newton to converge in this case, but there are some
+drawbacks. A value of 0.5 is not always enough, Newton still diverges
+for <span class="math inline">\(|x_0| \gtrsim 3\)</span>. To ensure
+convergence, we need <span class="math inline">\(\gamma \approx
+0\)</span>, but then the method would become unreasonably slow.</p>
+<p>For a smarter approach, we can use the fact that a set of points
+<span class="math inline">\(\{x_0,x_1,\ldots,x_n\}\)</span> converges to
+the root of <span class="math inline">\(f\)</span> if <span
+class="math inline">\(|f(x_0)| &gt; |f(x_1)| &gt; \cdots &gt;
+|f(x_n)|.\)</span> That is, the method will converge a root if every
+iteration decreases the absolute value of the function. What we need to
+do then is, for each iteration, see if the function deceased, and if
+not, multiply with a damping factor small enough such that the function
+does decrease. This ensures that most steps are not dampened, so we keep
+Newton’s speed, but by ensuring that each step decreases the function,
+we also guarantee that the method will converge. This method is called
+the global Newton’s method.</p>
+<p>The global Newton’s method is aimed at finding roots, but we want to
+minimize a function. The equivalent of ensuring <span
+class="math inline">\(|f|\)</span> decreases now ensuring <span
+class="math inline">\(||\nabla f||\)</span> decreases, but we can
+instead use <span class="math inline">\(f\)</span> as the condition.
+This ensures that each iteration decreases the function value, and
+therefore that the iteration converges to a minimum. Allowing <span
+class="math inline">\(||\nabla f||\)</span> to increase restricts
+Newton’s method less, which I have found to speed up convergence in some
+cases. The global Newton’s method for minimization can be described
+algorithmically as</p>
+<blockquote>
+<p>Set <span class="math inline">\(\mathbf{x}=\mathbf{x}_0\)</span>, for
+some initial value <span
+class="math inline">\(\mathbf{x}_0\)</span>.</p>
+<p><strong>while</strong> <span class="math inline">\(||\nabla
+f(\mathbf{x})|| &lt; \epsilon\)</span> <strong>do</strong></p>
+<blockquote>
+<p>Solve <span class="math inline">\(\mathbf{H}f(\mathbf{x})\Delta x =
+\nabla f(\mathbf{x})\)</span> for <span class="math inline">\(\Delta
+x\)</span>.</p>
+<p>Set <span class="math inline">\(f_{\text{prev}} = f(x)\)</span> and
+<span class="math inline">\(\gamma = 1\)</span>.</p>
+<p><strong>while</strong> <span class="math inline">\(f(x - \gamma\Delta
+x) &gt; f_{\text{prev}}\)</span> <strong>do</strong></p>
+<blockquote>
+<p>Set <span class="math inline">\(\gamma =
+\frac{\gamma}{2}\)</span></p>
+</blockquote>
+<p><strong>end while</strong></p>
+<p>Set <span class="math inline">\(x = x - \gamma\Delta x\)</span></p>
+</blockquote>
+<p><strong>end while</strong></p>
+<p>Return <span class="math inline">\(\mathbf{x}\)</span></p>
+</blockquote>
 <h3 id="gradient-descent">Gradient descent</h3>
 <p>Newton’s method converges very quickly, it has quadratic convergence,
 but it is also quite unstable. If the initial value is too far from the
@@ -336,7 +408,7 @@ algorithm:</p>
 <blockquote>
 <p>Set <span class="math inline">\(x_{best} = x_0\)</span>.</p>
 <p><strong>for</strong> <span
-class="math inline">\(N=10^1,10^2,\ldots,10^5\)</span>
+class="math inline">\(N=10^1,10^2,\ldots,10^4\)</span>
 <strong>do</strong></p>
 <blockquote>
 <p>Do gradient descent with <span class="math inline">\(N\)</span> steps
@@ -360,7 +432,7 @@ f(x_{GD})\)</span> <strong>do</strong></p>
 </blockquote>
 <p><strong>else</strong></p>
 <blockquote>
-<p>Do Newton again with <span class="math inline">\(10^5\)</span> steps,
+<p>Do Newton again with <span class="math inline">\(10^4\)</span> steps,
 return result.</p>
 </blockquote>
 <p><strong>end if</strong></p>
@@ -466,10 +538,10 @@ is the standard deviation, and we write a measurement of a resistance
 <span class="math inline">\(\hat{R}\)</span> with corresponding standard
 deviation <span class="math inline">\(\Delta R\)</span> as <span
 class="math inline">\(\hat{R} \pm \Delta R\)</span>, which tells us that
-there is a 68 % probability of the true resistance <span
+there is a 68 % probability that the true resistance <span
 class="math inline">\(R^*\)</span> is in the interval <span
 class="math inline">\([\hat{R} - \Delta R, \hat{R} + \Delta
-R]\)</span>.</p>
+R].\)</span></p>
 <p>For a practical example, let us say we are doing quality control on a
 resistor we know should be <span class="math inline">\(3.0\
 \Omega\)</span>. We measured <span class="math inline">\(3.1\
@@ -478,11 +550,11 @@ to deviate by <span class="math inline">\(0.1\ \Omega\)</span> or more.
 If the probability is very low, we can safely say the resistor is
 manufactured incorrectly. Let’s say we got a standard deviation of <span
 class="math inline">\(0.2\ \Omega\)</span>. In this case, the
-probability of the deviation is 62 %, so it is plausible for the
-resistor to be manufactured correctly. If, on the other hand, we get a
-standard deviation of <span class="math inline">\(0.04\ \Omega\)</span>,
-the probability of the deviation is only 1.2 %, and the resistor is
-likely manufactured incorrectly.</p>
+probability of the deviation is 62 %, so it is plausible the resistor is
+manufactured correctly. If, on the other hand, we get a standard
+deviation of <span class="math inline">\(0.04\ \Omega\)</span>, the
+probability of the deviation is only 1.2 %, and the resistor is likely
+manufactured incorrectly.</p>
 <h4 id="assumptions">Assumptions</h4>
 <p>To begin estimating our uncertainties, we must make some assumptions.
 Namely, we assume our results <span class="math inline">\(f_i\)</span>
@@ -614,29 +686,9 @@ naturally converges to.</p>
 for all. We have the data:</p>
 <p><img src="media/mort_data.png" /></p>
 <p>To which we want to fit <span class="math inline">\(f(x; a, b, c, n)
-= \frac{ax^n}{bx^n + 1} + c\)</span>. If we try with all parameters
-equal to 1, we get</p>
-<p><img src="media/mort_line.png" /></p>
-<p>which has the parameters</p>
-<blockquote>
-<p>(<span class="math inline">\(a\)</span>, <span
-class="math inline">\(b\)</span>, <span
-class="math inline">\(c\)</span>, <span
-class="math inline">\(n\)</span>) = (1.8±0.3, 0.0019±0.0003, 32±7,
-1.63±0.03)</p>
-</blockquote>
-<p>and an error of 326. This is a good result, but clearly not optimal,
-so we must again use the gui to find some initial parameters. This is
-actually quite difficult as the program struggles to improve for many
-sets of seemingly decent parameters. However, with a bit of
-perseverance, I eventually found the parameters</p>
-<blockquote>
-<p>(<span class="math inline">\(a\)</span>, <span
-class="math inline">\(b\)</span>, <span
-class="math inline">\(c\)</span>, <span
-class="math inline">\(n\)</span>) = (0.26, 0.0003, 95, 2)</p>
-</blockquote>
-<p>Starting with these, the program manages to converge, giving</p>
+= \frac{ax^n}{bx^n + 1} + c\)</span>. For this function, <em>Omega
+Optimizer</em> can once again find the global minimum starting with all
+parameters equal to 1, giving</p>
 <p><img src="media/mort_fit.png" /></p>
 <p>which has the parameters</p>
 <blockquote>
@@ -653,28 +705,25 @@ was</p>
 <blockquote>
 <p>(a, b, c, n) = (0.09, 0.000106, 98, 2.32)</p>
 </blockquote>
-<p>which has an error of 343. This means <em>Omega Optimizer</em>
-managed to find parameters that are more than twice as good as those I
-found manually.</p>
+<p>which has an error of 343. This means <em>Omega Optimizer</em> not
+only found the minimum with no manual input, the parameters it found are
+also more than twice as good as those I found manually.</p>
 <p>Looking at the best fit curve, it is obvious it does not actually fit
 the data perfectly. I don’t think this is a problem with the parameters,
-I think that the data does not actually follow the curve I hypothesized,
-it is just quite close. There are other functions which have a similar
-shape, such as the logistic function or the error function. However, the
-function I have found is a good enough approximation of the true
-function that I don’t think it is necessary to use more time on this
-particular problem.</p>
+I think that the data does not actually follow the curve I hypothesized.
+There are other functions which have a similar shape, such as the
+logistic function or the error function. However, the function I have
+found is a good enough approximation of the true function that I don’t
+think it is necessary to use more time on this particular problem.</p>
 <h3 id="conclusion-and-further-developments">Conclusion and further
 developments</h3>
 <p>From the examples I have shown, it is clear that <em>Omega
 Optimizer</em> works well. It is written entirely in rust, so it is very
-fast; for the normal distribution example, it used just 0.05 ms to
-converge to the solution. It can be a bit slow when it does not reach a
-good minimum, the sine example takes 237 ms to converge to the straight
-line, but this is just because I try <span
-class="math inline">\(10^5\)</span> steps of gradient descent before
-giving up. Reducing this number would obviously make the program
-faster.</p>
+fast; for the normal distribution example, it used just 0.884 ms to
+converge to the solution. It is a bit slower when it does not reach a
+good minimum since I try <span class="math inline">\(10^4\)</span>
+gradient descent steps before giving up, with the sine example taking
+66.4 ms when trying to converge to a straight line.</p>
 <p>However, there are two downsides to the program, which are the two
 manual parts; calculating the gradient and hessian, and finding good
 initial parameters. The first problem could be fixed using automatic
@@ -683,12 +732,10 @@ function, I don’t think it is that big of a problem. The other problem
 has no good solution that I know of. The program is fast enough that I
 could try many sets of initial parameters, but as we don’t have a
 bounded search space, I don’t know how this could be done. The only
-approach I think might work is a sort of barrier method, where you add a
-term to the error function that penalizes minima the program has
-previously converged to. With this, the program should hopefully
-eventually converge to the global minimum from any starting point, but I
-don’t know how realistic that actually is. At the end of the day, using
-the gui is not that difficult, so that is a fine solution for now.</p>
+approach I think might work is a sort of deflation method, but I have
+not gotten it to work. At the end of the day, using the gui is not that
+difficult and it is often not necessary, so I think it is a fine
+solution for now.</p>
 <p>If you want to look at the source code for <em>Omega Optimizer</em>,
 it is available at <a
 href="https://github.com/Emilinya/OmegaOptimizer">my github</a>.</p>
