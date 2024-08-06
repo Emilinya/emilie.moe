@@ -40,7 +40,7 @@ optimize parameters?</a></li>
 <li><a href="#numerical-methods">Numerical methods</a>
 <ul>
 <li><a href="#newtons-method">Newton’s method</a></li>
-<li><a href="#damped-newton">Damped Newton</a></li>
+<li><a href="#global-newton">Global Newton</a></li>
 <li><a href="#gradient-descent">Gradient descent</a></li>
 <li><a href="#backtracking-line-search">Backtracking line
 search</a></li>
@@ -204,7 +204,7 @@ f^2}{\partial y \partial x} &amp; \frac{\partial f^2}{\partial y^2}
 to be positive-definite at <span class="math inline">\(x_0\)</span>,
 which is just multivariable extension of <span
 class="math inline">\(f&#39;&#39;(x_0) &gt; 0\)</span>.</p>
-<h3 id="damped-newton">Damped Newton</h3>
+<h3 id="global-newton">Global Newton</h3>
 <p>One problem with Newton’s method is that it can be unstable. For some
 functions, there are initial values that causes the iteration to
 diverge. One such function is <span class="math inline">\(f(x) =
@@ -231,19 +231,19 @@ convergence, we need <span class="math inline">\(\gamma \approx
 0\)</span>, but then the method would become unreasonably slow.</p>
 <p>For a smarter approach, we can use the fact that a set of points
 <span class="math inline">\(\{x_0,x_1,\ldots,x_n\}\)</span> converges to
-the root of <span class="math inline">\(f\)</span> if <span
+a root of <span class="math inline">\(f\)</span> if <span
 class="math inline">\(|f(x_0)| &gt; |f(x_1)| &gt; \cdots &gt;
-|f(x_n)|.\)</span> That is, the method will converge a root if every
+|f(x_n)|.\)</span> That is, the method will converge to a root if every
 iteration decreases the absolute value of the function. What we need to
-do then is, for each iteration, see if the function deceased, and if
-not, multiply with a damping factor small enough such that the function
-does decrease. This ensures that most steps are not dampened, so we keep
-Newton’s speed, but by ensuring that each step decreases the function,
-we also guarantee that the method will converge. This method is called
-the global Newton’s method.</p>
+do then is, for each iteration, see if the function value deceased, and
+if not, multiply with a damping factor small enough such that the
+function does decrease. This ensures that most steps are not dampened,
+so we keep Newton’s speed, but by ensuring that each step decreases the
+function, we also guarantee that the iteration will converge. This
+approach is called the global Newton’s method.</p>
 <p>The global Newton’s method is aimed at finding roots, but we want to
 minimize a function. The equivalent of ensuring <span
-class="math inline">\(|f|\)</span> decreases now ensuring <span
+class="math inline">\(|f|\)</span> decreases is then ensuring <span
 class="math inline">\(||\nabla f||\)</span> decreases, but we can
 instead use <span class="math inline">\(f\)</span> as the condition.
 This ensures that each iteration decreases the function value, and

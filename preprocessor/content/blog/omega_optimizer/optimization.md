@@ -10,7 +10,7 @@
   - [Mortivation](#mortivation)
 - [Numerical methods](#numerical-methods)
   - [Newton's method](#newtons-method)
-  - [Damped Newton](#damped-newton)
+  - [Global Newton](#global-newton)
   - [Gradient descent](#gradient-descent)
   - [Backtracking line search](#backtracking-line-search)
   - [Improved backtracking line search](#improved-backtracking-line-search)
@@ -100,14 +100,14 @@ This obviously extends to more variables.
 
 To ensure Newton's method reaches a minimum, we now need the hessian to be positive-definite at $x_0$, which is just multivariable extension of $f''(x_0) > 0$.
 
-### Damped Newton
+### Global Newton
 
 One problem with Newton's method is that it can be unstable. For some functions, there are initial values that causes the iteration to diverge. One such function is $f(x) = \arctan(x)$, where any initial point $|x_0| \gtrsim 1.5$ causes divergence. The problem is that arctan is a very flat function for large values of $x$, so $f'$ is very small, and the Newton step $\frac{f}{f'}$ becomes very large, overshooting the root at $x=0$. Starting at
 $x_0=1.5$, we get $\frac{f}{f'} \approx -3.19$, so $x_1 = -1.69$. This leads to an even larger step of 4.02, so the next value is $x_2 = 2.32$, and so on. The problem is caused by the steps being too large, so an idea for a fix is to simply decrease the step sizes by multiplying with some factor $0 < \gamma < 1$, called a damping factor. This works, a factor is 0.5 is enough for Newton to converge in this case, but there are some drawbacks. A value of 0.5 is not always enough, Newton still diverges for $|x_0| \gtrsim 3$. To ensure convergence, we need $\gamma \approx 0$, but then the method would become unreasonably slow.
 
-For a smarter approach, we can use the fact that a set of points $\{x_0,x_1,\ldots,x_n\}$ converges to the root of $f$ if $|f(x_0)| > |f(x_1)| > \cdots > |f(x_n)|.$ That is, the method will converge a root if every iteration decreases the absolute value of the function. What we need to do then is, for each iteration, see if the function deceased, and if not, multiply with a damping factor small enough such that the function does decrease. This ensures that most steps are not dampened, so we keep Newton's speed, but by ensuring that each step decreases the function, we also guarantee that the method will converge. This method is called the global Newton's method.
+For a smarter approach, we can use the fact that a set of points $\{x_0,x_1,\ldots,x_n\}$ converges to a root of $f$ if $|f(x_0)| > |f(x_1)| > \cdots > |f(x_n)|.$ That is, the method will converge to a root if every iteration decreases the absolute value of the function. What we need to do then is, for each iteration, see if the function value deceased, and if not, multiply with a damping factor small enough such that the function does decrease. This ensures that most steps are not dampened, so we keep Newton's speed, but by ensuring that each step decreases the function, we also guarantee that the iteration will converge. This approach is called the global Newton's method.
 
-The global Newton's method is aimed at finding roots, but we want to minimize a function. The equivalent of ensuring $|f|$ decreases now ensuring $||\nabla f||$ decreases, but we can instead use $f$ as the condition. This ensures that each iteration decreases the function value, and therefore that the iteration converges to a minimum. Allowing $||\nabla f||$ to increase restricts Newton's method less, which I have found to speed up convergence in some cases. The global Newton's method for minimization can be described algorithmically as
+The global Newton's method is aimed at finding roots, but we want to minimize a function. The equivalent of ensuring $|f|$ decreases is then ensuring $||\nabla f||$ decreases, but we can instead use $f$ as the condition. This ensures that each iteration decreases the function value, and therefore that the iteration converges to a minimum. Allowing $||\nabla f||$ to increase restricts Newton's method less, which I have found to speed up convergence in some cases. The global Newton's method for minimization can be described algorithmically as
 
 > Set $\mathbf{x}=\mathbf{x}_0$, for some initial value $\mathbf{x}_0$.
 >
