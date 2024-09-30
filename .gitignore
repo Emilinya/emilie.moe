@@ -4,5 +4,6 @@ output
 image_manager/many_imgs
 preprocessor/content/media/compressed_imgs
 .vscode
+.DS_Store
 
 __pycache__
