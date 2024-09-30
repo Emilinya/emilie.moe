@@ -4,7 +4,7 @@ let gridColumns = 1;
 
 function resize() {
 	let windowRatio = window.innerWidth / window.innerHeight;
-	gridColumns = Math.floor(1.3 * windowRatio);
+	gridColumns = Math.floor(1.7 * windowRatio);
 	root.style.setProperty("--grid-columns", gridColumns);
 }
 window.addEventListener('resize', resize);
