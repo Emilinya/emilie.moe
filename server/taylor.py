@@ -30,14 +30,27 @@ def taylorinator(f, x, a, N):
 			Tf_latex = Tf_latex[1:]
 	return Tf, Tf_latex.replace("log", "ln")
 
-def plot_taylor(f, Tf, x, a, N):
-	range = 5
-	x_ray = np.linspace(a-range, a+range, 1000)
+def get_figsize(radius):
+	min_size = 8
+	max_size = 16
+
+	default_radius = 5
+	scale_factor = 30
+
+	return min_size + (max_size - min_size)*max(radius - default_radius, 0)/(radius + scale_factor)
+
+def plot_taylor(f, Tf, x, a, N, radius):
+	x_ray = np.linspace(a-radius, a+radius, 10000)
 	f_latex = sp.latex(f)
 	f = sp.lambdify(x, f)
 	Tf = sp.lambdify(x, Tf)
 
-	plt.figure(figsize=(8, 6))
+	plt.figure(figsize=(get_figsize(radius), 6))
+
+	f_ray = f(x_ray)
+	if max(f_ray) > 10000:
+		plt.yscale("log")
+
 	plt.plot(x_ray, f(x_ray), label=f"${f_latex}$")
 	axis = plt.axis()
 	plt.plot(x_ray, [Tf(x) for x in x_ray], "--", label=f"$T_{{{N}}}({f_latex},\\ {a})$")
@@ -52,14 +65,13 @@ def plot_taylor(f, Tf, x, a, N):
 	pic_str = str(pic_hash)[2:-1]
 	return pic_str
 
-def taylor(f_str, a, N):
+def taylor(f_str, a, N, radius):
 	x = sp.symbols("x")
 	transformations = (standard_transformations + (implicit_multiplication_application,) + (convert_xor,))
 	try:
 		f = parse_expr(f_str, local_dict={"x": x}, transformations=transformations)
 		Tf, Tf_latex = taylorinator(f, x, a, N)
-		Tf_img_hash = plot_taylor(f, Tf, x, a, N)
+		Tf_img_hash = plot_taylor(f, Tf, x, a, N, radius)
 		return Tf_latex, Tf_img_hash
-	except Exception as e:
-		print(e)
+	except Exception:
 		return False
