@@ -112,15 +112,17 @@ function addMangaToDiv(manga, div) {
 function createYuriList(ranking, mangas) {
     var list = getElementById("summaryList");
     var div = getElementById("yuriList");
-    for (var _i = 0, ranking_1 = ranking; _i < ranking_1.length; _i++) {
-        var name_1 = ranking_1[_i];
-        for (var _a = 0, mangas_1 = mangas; _a < mangas_1.length; _a++) {
-            var manga = mangas_1[_a];
-            if (manga.title === name_1) {
-                addLinkToList(manga, list);
-                addMangaToDiv(manga, div);
-                break;
-            }
+    var manga_map = {};
+    for (var _i = 0, mangas_1 = mangas; _i < mangas_1.length; _i++) {
+        var manga_1 = mangas_1[_i];
+        manga_map[manga_1.title] = manga_1;
+    }
+    for (var _a = 0, ranking_1 = ranking; _a < ranking_1.length; _a++) {
+        var name_1 = ranking_1[_a];
+        var manga = manga_map[name_1];
+        if (manga != undefined) {
+            addLinkToList(manga, list);
+            addMangaToDiv(manga, div);
         }
     }
 }
@@ -136,10 +138,12 @@ function toggleSummaryDiv() {
 var ranking = [
     "Adachi and Shimamura",
     "I'm in Love with the Villainess",
+    "Highway Blossoms",
+    "Bloom Into You: Regarding Saeki Sayaka",
+    "Bloom Into You",
     "The Magical Revolution of the Reincarnated Princess and the Genius Young Lady",
     "Mage & Demon Queen",
     "Blooming Sequence",
-    "Bloom Into You",
     "Doughnuts Under a Crescent Moon",
     "Not so Shoujo Love Story",
     "Pulse",
@@ -193,9 +197,11 @@ var ranking = [
 ];
 var mangas = [
     new Manga("Adachi and Shimamura", "media/adashima.webp", false, "Adachi and Shimamura, two young women who attend the same high school, are inseparable friends. Whether playing table tennis, chatting about favorite TV shows, or just relaxing together, they're happy to share their days. When Adachi's friendship turns into romantic attraction, the relationship begins to change, one day at a time.", "Very cute slow-burn slice of life, do not expect any rapid developments. This story is adapted into an anime which covers the first four volumes, but I recommend reading the original light novels.", new Source(true, new Link("Seven Seas Entertainment", "https://sevenseasentertainment.com/series/adachi-and-shimamura-light-novel/"))),
+    new Manga("Highway Blossoms", "media/blossoms.jpg", true, "Highway Blossoms is a short yuri kinetic novel set in the American Southwest. After an old gold rush miner's journal is discovered, supposedly detailing where he hid parts of his stash, a nationwide craze begins as would-be prospectors try to solve its clues and strike it rich.\n\nAmber couldn't care less. Wandering the desert in a recently-inherited motorhome, she mourns the loss of her grandfather - indifferent and unaware of the hunt happening around her. It's not until she meets Marina, a young hitchhiker lost in New Mexico, that the girls get swept up in the rush.", "    Very cute slow-burn slice of life, do not expect any rapid developments. This story is adapted     into an anime which covers the first four volumes, but I recommend reading the original light novels.", new Source(true, new Link("Steam", "https://store.steampowered.com/app/451760/Highway_Blossoms/"))),
     new Manga("Mage & Demon Queen", "media/mageQueen.jpg", true, "Adventurers seek to take the demon queen's head, but a love-struck young female mage wishes to take her hand. Join us won't you, for this bawdy tale of love and persistence set inside a real-life RPG.", "In addition to the gay main character, this webcomic also features a trans princess as a side character.", new Source(true, new Link("WebToons", "https://www.webtoons.com/en/comedy/mage-and-demon-queen/list?title_no=1438"))),
     new Manga("Lily", "media/lily.jpg", false, "Prim and proper honors student Fan Yilin and the mysterious and charismatic Lan Ruoxi met through a stroke of fate and a misunderstanding, and only got further involved with each other from that point on. The more they came to know each other, the more something different started blooming between the two. \"I like you, only because it's you.\"", "This is an exceptionally slow-burn slice of life romance. The main pair does eventually become a couple, but it takes several hundred chapters. The story is officially published by Bilibili Comics, and while I do recommend supporting the creator, the reading experience on there is not great. It is also available on MangaDex, which has a better reading experience and more translated chapters, but it suddenly stops and has not been updated in over two years.", new Source(true, new Link("Bilibili Comics", "https://www.bilibilicomics.com/detail/mc82"))),
     new Manga("Bloom Into You", "media/bloom_into_you.jpg", true, "Yuu has always loved shoujo manga and awaits the day she gets a love confession that sends her heart aflutter with bubbles and hearts, and yet when a junior high classmate confesses his feelings to her...she feels nothing. Disappointed and confused, Yuu enters high school still unsure how to respond. That's when Yuu sees the beautiful student council president Nanami turn down a suitor with such maturity that she's inspired to ask her for help. But when the next person to confess to Yuu is Nanami herself, has her shoujo romance finally begun?", "This is one of the most famous lesbian manga. It is also adapted into a very good anime, which covers about half of the story.", new Source(true, new Link("Seven Seas Entertainment", "https://sevenseasentertainment.com/series/bloom-into-you/"))),
+    new Manga("Bloom Into You: Regarding Saeki Sayaka", "media/sayaka.jpg", true, "Saeki Sayaka has always been an old soul - serious and reserved, preferring to focus on her studies rather than make friends. Until, that is, a romantic confession from another girl in middle school turns her carefully ordered world upside down. Though none of her classes have prepared her for this, Saeki must now come to terms with her sexuality in this gentle, coming-of-age novel about grappling with first love, growing up, and relating to other people.", "This is a light novel spin-off for Bloom Into You, focusing on one of the side characters. It is written by the same author of Adachi and Shimamura, and is therefore very good. You should read the original series first, as this spin-off assumes you know what happened in those books.", new Source(true, new Link("Seven Seas Entertainment", "https://sevenseasentertainment.com/series/bloom-into-you-light-novel/"))),
     new Manga("Not so Shoujo Love Story", "media/not_shoujo.jpg", false, "Romance-super-fan Rei Chan is ready for her first boyfriend and she knows just who it'll be: the most handsome boy in school, Hansum Ochinchin. But her plans for the perfect love story are derailed when the most popular girl in class declares herself a rival....for Rei's heart?! This is the year her not so shoujo love story begins!", "", new Source(true, new Link("WebToons", "https://www.webtoons.com/en/comedy/not-so-shoujo-love-story/list?title_no=2189"))),
     new Manga("Hana ni Arashi", "media/hana_ni.jpg", true, "Nanoha and Chidori are students at an all-girls school who are dating but trying to keep this a secret from all of their classmates.", "", new Source(false, new Link("MangaDex", "https://mangadex.org/title/bc86a871-ddc5-4e42-812a-ccd38101d82e/hana-ni-arashi"))),
     new Manga("Pulse", "media/pulse.jpg", false, "Mel, a renowned heart surgeon, lives a carefree life with sex being a tool for joy rather than a show of affection. Then she meets someone that turns her view of love and life upside down. This story is about two people that meet with minimal expectations but soon become enthralled in a relationship that changes everything about themselves.", "This series has a lot of explicit lesbian sex, so keep that in mind.", new Source(true, new Link("Seven Seas Entertainment", "https://sevenseasentertainment.com/series/pulse/"))),
@@ -246,6 +252,6 @@ var mangas = [
     new Manga("Girls Wedding Omnibus", "media/yurikon.jpg", true, "Omnibus series about several lesbian marriages.", "", new Source(false, new Link("Mangadex", "https://mangadex.org/title/e7d79572-4b27-4c1e-befa-3d310e7c81fe/yurikon"))),
     new Manga("White Lilies in Love - BRIDE's Newlywed Yuri Anthology", "media/brides.jpg", true, "This is an anthology full of newlywed yuri themed stories.", "", new Source(false, new Link("Mangadex", "https://mangadex.org/title/5c68f443-2153-42ed-b835-3c3962ad088b/white-lilies-in-love-bride-s-newlywed-yuri-anthology"))),
     new Manga("The Magical Revolution of the Reincarnated Princess and the Genius Young Lady", "media/magirevo.jpg", false, "As a young girl, Princess Anisphia regained her memories of her past life in another world, and ever since, those memories have inspired her. Though her inability to use magic has affected her reputation, she has dealt with this shortcoming by researching and harnessing the arcane in her own way. When her brother breaks off his engagement with Euphyllia, the daughter of a duke, Anisphia suggests the two move in together and study magicology to restore Euphyllia's honor-thus beginning a tale that will shape the realm, the world, and their futures!", "This story is adapted into an anime which covers the first three volumes. The anime is good, but not as good as the source material.", new Source(true, new Link("Yen Press", "https://yenpress.com/series/the-magical-revolution-of-the-reincarnated-princess-and-the-genius-young-lady-light-novel"))),
-    new Manga("I'm in Love with the Villainess", "media/villainess.jpg", false, "Ordinary office worker Ohashi Rei wakes up in the body of the protagonist of her favorite otome game, Revolution. To her delight, the first person to greet her is also her favorite character, Claire Francois\u2014the main antagonist of the story! Now, Rei is determined to romance Claire instead of the game's male leads. But how will her villainous ladylove react to this new courtship?!", "Not only is the main character a lesbian, she is also a canonical trans ally. The story is adapted into an anime which covers the first volume and the first chapter of the second one. The anime is good, but as always, the original light novels are better.", new Source(true, new Link("Seven Seas Entertainment", "https://sevenseasentertainment.com/series/im-in-love-with-the-villainess-light-novel/"))),
+    new Manga("I'm in Love with the Villainess", "media/villainess.jpg", false, "Ordinary office worker Ohashi Rei wakes up in the body of the protagonist of her favorite otome game, Revolution. To her delight, the first person to greet her is also her favorite character, Claire Francois\u2014the main antagonist of the story! Now, Rei is determined to romance Claire instead of the game's male leads. But how will her villainous ladylove react to this new courtship?!", "Not only is the main character a lesbian, she is also canonically a trans ally. The story is adapted into an anime which covers the first volume and the first chapter of the second one. The anime is good, but as always, the original light novels are better.", new Source(true, new Link("Seven Seas Entertainment", "https://sevenseasentertainment.com/series/im-in-love-with-the-villainess-light-novel/"))),
 ];
 createYuriList(ranking, mangas);
