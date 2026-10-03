@@ -53,33 +53,15 @@ def strip_img(img, center=True, center_frac=None):
 	if center_frac is not None:
 		leftx = get_left(pix, w, h)
 		rightx = get_right(pix, w, h) + 1
-		overfill = [False, False]
-
 		if center:
-			img = img.convert("RGB")
 			dir, padding = get_new_padding(w, leftx, w - rightx, center_frac)
 			if dir == "left":
-				leftx -= padding
-				if leftx < 0:
-					overfill[0] = -leftx
+				leftx -= int(padding)
 			else:
-				rightx += padding
-				if w - rightx < 0:
-					overfill[1] = rightx - w
+				rightx += int(padding)
 
-		new_img = img.crop([leftx, topy, rightx, bottomy])
-
-		if overfill[0] or overfill[1]:
-			new_w, new_h = new_img.size
-			new_pix = new_img.load()
-		if overfill[0]:
-			for x in range(0, int(overfill[0]) + 1):
-				for y in range(0, new_h):
-					new_pix[x, y] = (255, 255, 255)
-		if overfill[1]:
-			for x in range(new_w - int(overfill[1]) - 1, new_w):
-				for y in range(0, new_h):
-					new_pix[x, y] = (255, 255, 255)
+		new_img = image.new('RGB', (rightx - leftx, bottomy - topy), (255, 255, 255))
+		new_img.paste(img, (-leftx, -topy))
 	else:
 		new_img = img.crop([0, topy, w, bottomy])
 
