@@ -12,7 +12,7 @@ html, body {
 	background-color: var(--backgroundColor);
 }
 
-p, h1, h2, h3, a, li, th, td, span {
+p, h1, h2, h3, a, li, th, td, span, label {
 	color: var(--foregroundColor);
 	font-family: Sans-Serif;
 }
@@ -102,6 +102,13 @@ sub {
 	margin-bottom: 0px;
 }
 
+#resultImg {
+	max-width: 90%;
+	height: auto;
+	max-height: 90%;
+	padding-bottom: 1%;
+}
+
 #canvas {
 	border-color: var(--foregroundColor);
 }
@@ -146,6 +153,10 @@ button {
 	background: var(--backgroundColor);
 	color: var(--textHighlightColor);
 	cursor: pointer;
+}
+
+button:disabled {
+	color: gray;
 }
 
 table {
