@@ -1,3 +1,10 @@
 #eqValues {
 	margin-bottom: 16px;
 }
+
+#resultImg {
+	max-width: 90%;
+	height: auto;
+	max-height: 90%;
+	padding-bottom: 1%;
+}
