@@ -37,7 +37,7 @@
 optimize parameters?</a></li>
 <li><a href="#mortivation">Mortivation</a></li>
 </ul></li>
-<li><a href="#numerical-methods">Numerical methods</a>
+<li><a href="#numerical-optimization">Numerical optimization</a>
 <ul>
 <li><a href="#newtons-method">Newton’s method</a></li>
 <li><a href="#global-newton">Global Newton</a></li>
@@ -72,10 +72,10 @@ further developments</a></li>
 </ul>
 <h2 id="introduction">Introduction</h2>
 <p>I have long been interested in how to find the optimal parameters to
-approximate experimental data. I have created many projects with the
-goal of optimizing parameters automatically, and with my latest version,
-aptly named <em>Omega Optimizer</em>, I feel like I finally have
-something that works. In this blog post I want to explain what parameter
+model experimental data. I have created many projects with the goal of
+optimizing parameters automatically, and with my latest version, aptly
+named <em>Omega Optimizer</em>, I feel like I finally have something
+that works. In this blog post I want to explain what parameter
 optimization is, how you can do it numerically, and how my <em>Omega
 Optimizer</em> works.</p>
 <h2 id="motivation">Motivation</h2>
@@ -116,9 +116,9 @@ are in another function, like <span class="math inline">\(f(t; \omega) =
 \sin(\omega t)\)</span>? In this particular case you can use a Fourier
 transform to find <span class="math inline">\(\omega\)</span>, and in
 general there are often approaches that give you the parameters, but
-they are heavily dependent on the specific optimization problem you
-have. To create a general non-linear parameter optimizer, we must
-instead turn to numerical methods.</p>
+they are heavily dependent on the specific problem you are working with.
+To create a general non-linear parameter optimizer, we must instead turn
+to numerical methods.</p>
 <h3 id="mortivation">Mortivation</h3>
 <p>In this blog post I want to use a real-world example to show how a
 parameter optimizer can be useful. One day my brother sent me this
@@ -142,7 +142,7 @@ manually instead. This was a big part of my motivation for this new
 parameter optimizer, and I am happy to report that <em>Omega
 Optimizer</em> managed to find better parameters than I found
 manually.</p>
-<h2 id="numerical-methods">Numerical methods</h2>
+<h2 id="numerical-optimization">Numerical optimization</h2>
 <h3 id="newtons-method">Newton’s method</h3>
 <p>Parameter optimization, unsurprisingly, involves optimizing some
 function, that is, we need to find its minimum. So, how do you minimize
@@ -151,7 +151,7 @@ is Newton’s method, which is more commonly known in its root-finding
 form. Newton’s method finds the solution <span
 class="math inline">\(x_{\text{root}}\)</span> to the equation <span
 class="math inline">\(f(x_{\text{root}}) = 0\)</span> using the sequence
-<span class="math display">\[x_{n+1} = x_n +
+<span class="math display">\[x_{n+1} = x_n -
 \frac{f(x_n)}{f&#39;(x_n)},\]</span> starting at some initial value
 <span class="math inline">\(x_0\)</span>. We know that this converges to
 <span class="math inline">\(x_{\text{root}}\)</span> in the limit as
@@ -169,20 +169,21 @@ class="math inline">\(f&#39;(x_{\min}) = 0\)</span>, that is, minimizing
 a function is the same as finding the roots of its derivative. By
 substituting <span class="math inline">\(f&#39;\)</span> for <span
 class="math inline">\(f\)</span> in Newton’s method, we get its
-minimization form: <span class="math display">\[x_{n+1} = x_n +
+minimization form: <span class="math display">\[x_{n+1} = x_n -
 \frac{f&#39;(x_n)}{f&#39;&#39;(x_n)}.\]</span> Here we could again stop
 if the step is sufficiently small, but I will instead stop if <span
 class="math inline">\(|f&#39;(x_n)| &lt; \epsilon\)</span>, as that is
 the stopping criterion for the other method I will use as well.</p>
 <p>One important thing to note is that <span
 class="math inline">\(f&#39;(x) = 0\)</span> does not imply that <span
-class="math inline">\(x\)</span> is a minimum, it can also be a maximum.
+class="math inline">\(x\)</span> is a minimum; it can also be a maximum.
 To ensure that we converge to a minimum we need <span
-class="math inline">\(f&#39;&#39;(x_0) &gt; 0\)</span>.</p>
+class="math inline">\(f&#39;&#39;(x_0) &gt; 0\)</span>, that is, the
+function must be locally convex.</p>
 <p>Newton’s method also works for multivariable functions. If we
 substitute the gradient for the derivative and the hessian for the
 double derivative, we get the sequence <span
-class="math display">\[\mathbf{x}_{n+1} = \mathbf{x}_n +
+class="math display">\[\mathbf{x}_{n+1} = \mathbf{x}_n -
 (\mathbf{H}f(\mathbf{x}_n))^{-1}\nabla f(\mathbf{x}_n),\]</span> which
 converges to <span class="math inline">\(\mathbf{x}_{\min}\)</span> from
 some initial point <span class="math inline">\(\mathbf{x}_0\)</span>,
@@ -202,12 +203,12 @@ f^2}{\partial y \partial x} &amp; \frac{\partial f^2}{\partial y^2}
 \]</span> This obviously extends to more variables.</p>
 <p>To ensure Newton’s method reaches a minimum, we now need the hessian
 to be positive-definite at <span class="math inline">\(x_0\)</span>,
-which is just multivariable extension of <span
+which is just the multivariable extension of <span
 class="math inline">\(f&#39;&#39;(x_0) &gt; 0\)</span>.</p>
 <h3 id="global-newton">Global Newton</h3>
 <p>One problem with Newton’s method is that it can be unstable. For some
-functions, there are initial values that causes the iteration to
-diverge. One such function is <span class="math inline">\(f(x) =
+functions, there are initial values which makes the iteration diverge.
+One such function is <span class="math inline">\(f(x) =
 \arctan(x)\)</span>, where any initial point <span
 class="math inline">\(|x_0| \gtrsim 1.5\)</span> causes divergence. The
 problem is that arctan is a very flat function for large values of <span
@@ -224,10 +225,9 @@ step of 4.02, so the next value is <span class="math inline">\(x_2 =
 large, so an idea for a fix is to simply decrease the step sizes by
 multiplying with some factor <span class="math inline">\(0 &lt; \gamma
 &lt; 1\)</span>, called a damping factor. This works, a factor is 0.5 is
-enough for Newton to converge in this case, but there are some
-drawbacks. A value of 0.5 is not always enough, Newton still diverges
-for <span class="math inline">\(|x_0| \gtrsim 3\)</span>. To ensure
-convergence, we need <span class="math inline">\(\gamma \approx
+enough for Newton’s method to converge in this case, but it still
+diverges for <span class="math inline">\(|x_0| \gtrsim 3\)</span>. To
+ensure convergence, we need <span class="math inline">\(\gamma \approx
 0\)</span>, but then the method would become unreasonably slow.</p>
 <p>For a smarter approach, we can use the fact that a set of points
 <span class="math inline">\(\{x_0,x_1,\ldots,x_n\}\)</span> converges to
@@ -257,7 +257,7 @@ algorithmically as</p>
 some initial value <span
 class="math inline">\(\mathbf{x}_0\)</span>.</p>
 <p><strong>while</strong> <span class="math inline">\(||\nabla
-f(\mathbf{x})|| &lt; \epsilon\)</span> <strong>do</strong></p>
+f(\mathbf{x})|| &gt; \epsilon\)</span> <strong>do</strong></p>
 <blockquote>
 <p>Solve <span class="math inline">\(\mathbf{H}f(\mathbf{x})\Delta x =
 \nabla f(\mathbf{x})\)</span> for <span class="math inline">\(\Delta
@@ -277,37 +277,33 @@ x) &gt; f_{\text{prev}}\)</span> <strong>do</strong></p>
 <p>Return <span class="math inline">\(\mathbf{x}\)</span></p>
 </blockquote>
 <h3 id="gradient-descent">Gradient descent</h3>
-<p>Newton’s method converges very quickly, it has quadratic convergence,
-but it is also quite unstable. If the initial value is too far from the
-minimum, the iteration can diverge, leaving us with no usable
-parameters. We do not always know a good initial value a priori, so we
-need a more stable method that can handle less optimal initial
-values.</p>
-<p>If you have ever had a linear algebra course, you probably know that
-the gradient of a function points in the direction of steepest ascent.
-Conversely, the negative of the gradient points in the direction of
-steepest descent. We can use this to find the minimum of a function; if
-we calculate the gradient at a point, we can follow the negative of the
-gradient to find a new point, which will have a lower function value.
-Repeat this enough times, and you will reach the minimum, an approach
-called gradient descent.</p>
+<p>The global Newton’s method works well in most cases, but it has a
+major flaw; it does not work if the hessian is not positive-definite. To
+avoid this problem, we need a method that does not use the hessian, such
+as gradient descent. If you have ever had a vector calculus course, you
+probably know that the gradient of a function points in the direction of
+steepest ascent. Conversely, the negative of the gradient points in the
+direction of steepest descent. We can use this to find the minimum of a
+function; if we calculate the gradient at a point, we can follow the
+negative of the gradient to find a new point, which will have a lower
+function value. Repeat this enough times, and you will reach the
+minimum.</p>
 <p>Gradient descent works using the sequence <span
 class="math display">\[\mathbf{x}_{n+1} = \mathbf{x}_n - t\nabla
-f(\mathbf{x}_n).\]</span> The value <span
+f(\mathbf{x}_n),\]</span> where the value <span
 class="math inline">\(t\)</span> is the size of the step you take along
 the gradient at each point. This value is very important; if it is too
 small, the iteration will converge very slowly, but if it is too large,
-the iteration will diverge.</p>
-<p>You might notice that this is very similar to Newton’s method.
-Indeed, another way of motivating gradient descent is to say we are
-approximating the inverse of the hessian with some scalar <span
-class="math inline">\(t\)</span>.</p>
+the iteration will diverge. You might notice that this is very similar
+to Newton’s method, and indeed, another way of motivating gradient
+descent is to say we are approximating the inverse of the hessian with
+some positive scalar <span class="math inline">\(t\)</span>.</p>
 <h3 id="backtracking-line-search">Backtracking line search</h3>
 <p>As mentioned, the step size <span class="math inline">\(t\)</span> in
 gradient descent is very important. It can be left as a constant value,
 but this often leads to slow convergence. Instead, you can find an
-optimal value at each iteration by finding some step size <span
-class="math inline">\(t_n\)</span> that minimizes <span
+optimal value at each iteration by finding the step size <span
+class="math inline">\(t_n\)</span> which minimizes <span
 class="math inline">\(f(\mathbf{x}_n - t\nabla f(\mathbf{x}_n))\)</span>
 with respect to <span class="math inline">\(t\)</span>. This is called a
 line search as you are minimizing a linear cross-section instead of the
@@ -365,8 +361,8 @@ class="math inline">\(t=t_0\)</span>, where <span
 class="math inline">\(t_0\)</span> is the previous best <span
 class="math inline">\(t\)</span> if this is not the first iteration, and
 <span class="math inline">\(1\)</span> if it is.</p>
-<p>Define <span class="math inline">\(\text{accept}(t) := f(\mathbf{x})
-− f(\mathbf{x} - t\nabla f(\mathbf{x})) \geq tm.\)</span></p>
+<p>Define <span class="math inline">\(\text{accept}(t) := (f(\mathbf{x})
+− f(\mathbf{x} - t\nabla f(\mathbf{x})) \geq tm).\)</span></p>
 <p>Set <code>increased_t</code> to false.</p>
 <p><strong>while</strong> <span
 class="math inline">\(\text{accept}(t)\)</span> <strong>do</strong></p>
@@ -397,13 +393,13 @@ come up with the idea.</p>
 <h3 id="a-combined-approach">A combined approach</h3>
 <p>I have now described two optimization algorithms with complimentary
 benefits and drawbacks. Gradient descent is a robust algorithm, it will
-typically converge to a minimum even if your initial value is far away,
-but it converges to the minimum relatively slowly. On the other hand,
-Newton’s method converges very quickly if the initial value is close,
-but if it is not, it will act erratically. The logical thing to do is
-then to use both methods, where you start with a few steps of gradient
-descent to get a value close to the minimum, and then use Newton’s
-method to quickly converge to the minimum. This leads to the following
+typically converge to a minimum even for a bad initial value, but it
+converges to the minimum relatively slowly. On the other hand, the
+global Newton’s method converges very quickly if the hessian at the
+initial value is positive-definite, but if it is not, it will not work.
+The logical thing to do is then to use both methods, where you do
+gradient descent steps while the hessian is negative, and then switch to
+Newton to quickly converge to the minimum. This leads to the following
 algorithm:</p>
 <blockquote>
 <p>Set <span class="math inline">\(x_{best} = x_0\)</span>.</p>
@@ -450,7 +446,7 @@ result. Unfortunately, this is most often not the case. We want to reach
 the minimum with the lowest value, called the global minimum, but there
 are also many non-optimal minima, called local minima. There are many
 ways of avoiding local minima, but the most reliable method is starting
-at an initial set of parameters that are reasonable close to the global
+at an initial set of parameters that are reasonably close to the global
 minimum. Luckily, for parameter optimization, it is quite easy to tell
 visually how good a set of parameters are by plotting the resulting
 function together with the data points. This means a simple gui that
@@ -465,30 +461,33 @@ want to find the minimum of?</p>
 a set of results <span class="math inline">\(\{f_i\}\)</span> at
 positions <span class="math inline">\(\{x_i\}\)</span>. We know that the
 data should conform to some function <span class="math inline">\(f(x;
-a_1, a_2, \ldots, a_n).\)</span> We define the parameter vector <span
-class="math inline">\(\mathbf{a} = (a_1, a_2, \ldots, a_n),\)</span> and
-want to find the parameter vector <span
-class="math inline">\(\mathbf{a}_{\min}\)</span> such that <span
-class="math inline">\(f(x_i; \mathbf{a}_{\min})\)</span> most closely
-matches <span class="math inline">\(f_i\)</span> for each <span
+\theta_1, \theta_2, \ldots, \theta_n).\)</span> We define the parameter
+vector <span class="math inline">\(\boldsymbol{\theta} = (\theta_1,
+\theta_2, \ldots, \theta_n),\)</span> and want to find the parameter
+vector <span class="math inline">\(\hat{\boldsymbol{\theta}}\)</span>
+such that <span class="math inline">\(f(x_i;
+\hat{\boldsymbol{\theta}})\)</span> most closely matches <span
+class="math inline">\(f_i\)</span> for each <span
 class="math inline">\(i\)</span>. More specifically, we want to minimize
 the average of the distances <span class="math inline">\(|f_i - f(x_i;\
-\mathbf{a})|\)</span> for every <span class="math inline">\(i\)</span>.
-If we have <span class="math inline">\(N\)</span> data points, we can
-define the mean difference as <span class="math display">\[
-e(\mathbf{a}) = \frac{1}{N}\sum\limits_{i=1}^N |f_i - f(x_i;\
-\mathbf{a})|.
+\boldsymbol{\theta})|\)</span> for every <span
+class="math inline">\(i\)</span>. If we have <span
+class="math inline">\(N\)</span> data points, we can define the mean
+difference as <span class="math display">\[
+e(\boldsymbol{\theta}) = \frac{1}{N}\sum\limits_{i=1}^N |f_i - f(x_i;\
+\boldsymbol{\theta})|.
 \]</span> This is almost the function we want to minimize, but there is
 one problem; we need to differentiate the error function, but the
 absolute value function does not have a continuous derivative. We
 therefore want to minimize the mean squared differences instead, giving
 us <span class="math display">\[
-   E(\mathbf{a}) = \frac{1}{N}\sum\limits_{i=1}^N (f_i - f(x_i;\
-\mathbf{a}))^2.
+   E(\boldsymbol{\theta}) = \frac{1}{N}\sum\limits_{i=1}^N (f_i -
+f(x_i;\ \boldsymbol{\theta}))^2.
 \]</span> Note that although this is not the same function as <span
-class="math inline">\(e(\mathbf{a})\)</span>, any minima of <span
-class="math inline">\(e(\mathbf{a})\)</span> will also be minima of
-<span class="math inline">\(E(\mathbf{a})\)</span>.</p>
+class="math inline">\(e(\boldsymbol{\theta})\)</span>, any minima of
+<span class="math inline">\(e(\boldsymbol{\theta})\)</span> will also be
+minima of <span
+class="math inline">\(E(\boldsymbol{\theta})\)</span>.</p>
 <h3 id="differentiating-the-error-function">Differentiating the error
 function</h3>
 <p>To use gradient descent and Newton’s method, we need to find both
@@ -497,33 +496,35 @@ class="math inline">\(\mathbf{H} E\)</span>. We start with the
 gradient:</p>
 <p><span class="math display">\[
     \begin{align*}
-        \frac{\partial E}{\partial a_k} &amp;= \frac{\partial}{\partial
-a_k}
+        \frac{\partial E}{\partial \theta_k} &amp;=
+\frac{\partial}{\partial \theta_k}
         \left(\frac{1}{N}\sum\limits_{i=1}^N (f_i - f(x_i;\
-\mathbf{a}))^2\right) \\
+\boldsymbol{\theta}))^2\right) \\
         &amp;= \frac{1}{N}\sum\limits_{i=1}^N \frac{\partial}{\partial
-a_k}(f_i - f(x_i;\ \mathbf{a}))^2 \\
+\theta_k}(f_i - f(x_i;\ \boldsymbol{\theta}))^2 \\
         &amp;= -\frac{2}{N}\sum\limits_{i=1}^N (f_i - f(x_i;\
-\mathbf{a}))\frac{\partial f}{\partial a_k} \\
-        \implies \nabla E(\mathbf{a}) &amp;=
--\frac{2}{N}\sum\limits_{i=1}^N (f_i - f(x_i;\ \mathbf{a}))\nabla
-f(x_i;\ \mathbf{a}) \\
+\boldsymbol{\theta}))\frac{\partial f}{\partial \theta_k} \\
+        \implies \nabla E(\boldsymbol{\theta}) &amp;=
+-\frac{2}{N}\sum\limits_{i=1}^N (f_i - f(x_i;\
+\boldsymbol{\theta}))\nabla f(x_i;\ \boldsymbol{\theta}) \\
     \end{align*}
 \]</span></p>
 <p>We can then find the hessian: <span class="math display">\[
     \begin{align*}
-        \frac{\partial E}{\partial a_l \partial a_k} &amp;=
-\frac{\partial }{\partial a_l}\left(-\frac{2}{N}\sum\limits_{i=1}^N (f_i
-- f(x_i;\ \mathbf{a}))\frac{\partial f}{\partial a_k}\right) \\
+        \frac{\partial E}{\partial \theta_l \partial \theta_k} &amp;=
+\frac{\partial }{\partial \theta_l}\left(-\frac{2}{N}\sum\limits_{i=1}^N
+(f_i - f(x_i;\ \boldsymbol{\theta}))\frac{\partial f}{\partial
+\theta_k}\right) \\
         &amp;= -\frac{2}{N}\sum\limits_{i=1}^N \frac{\partial}{\partial
-a_l}\left((f_i - f(x_i;\ \mathbf{a}))\frac{\partial f}{\partial
-a_k}\right) \\
+\theta_l}\left((f_i - f(x_i;\ \boldsymbol{\theta}))\frac{\partial
+f}{\partial \theta_k}\right) \\
         &amp;= -\frac{2}{N}\sum\limits_{i=1}^N -\frac{\partial
-f}{\partial a_l}\frac{\partial f}{\partial a_k} + (f_i - f(x_i;\
-\mathbf{a}))\frac{\partial f}{\partial a_l \partial a_k} \\
-        \implies \mathbf{H} E(\mathbf{a}) &amp;=
+f}{\partial \theta_l}\frac{\partial f}{\partial \theta_k} + (f_i -
+f(x_i;\ \boldsymbol{\theta}))\frac{\partial f}{\partial \theta_l
+\partial \theta_k} \\
+        \implies \mathbf{H} E(\boldsymbol{\theta}) &amp;=
 \frac{2}{N}\sum\limits_{i=1}^N \nabla f(\nabla f)^T - (f_i - f(x_i;\
-\mathbf{a}))\mathbf{H}f(x_i;\ \mathbf{a}) \\
+\boldsymbol{\theta}))\mathbf{H}f(x_i;\ \boldsymbol{\theta}) \\
     \end{align*}
 \]</span></p>
 <h3 id="uncertainty-estimation">Uncertainty estimation</h3>
@@ -560,16 +561,16 @@ manufactured incorrectly.</p>
 Namely, we assume our results <span class="math inline">\(f_i\)</span>
 are related to the positions <span class="math inline">\(x_i\)</span> by
 the relation <span class="math display">\[
-  f_i = f(x_i, \mathbf{a}^*) + e_i,
-\]</span> where <span class="math inline">\(\mathbf{a}^*\)</span> are
-the optimal parameters and <span class="math inline">\(e_i\)</span> are
-some unknown errors resulting from, for instance, imprecise
-measurements. Further, we assume that the <span
-class="math inline">\(e_i\)</span>-values are independent, meaning they
-don’t depend on each other, and that they follow a normal distribution
-with a mean of zero and an unknown variance <span
-class="math inline">\(\sigma^2\)</span>. This is not always true, but
-the central limit theorem guarantees that the errors will be
+  f_i = f(x_i, \boldsymbol{\theta}^*) + e_i,
+\]</span> where <span
+class="math inline">\(\boldsymbol{\theta}^*\)</span> are the optimal
+parameters and <span class="math inline">\(e_i\)</span> are some unknown
+errors resulting from, for instance, imprecise measurements. Further, we
+assume that the <span class="math inline">\(e_i\)</span>-values are
+independent, meaning they don’t depend on each other, and that they
+follow a normal distribution with a mean of zero and an unknown variance
+<span class="math inline">\(\sigma^2\)</span>. This is not always true,
+but the central limit theorem guarantees that the errors will be
 approximately normally distributed if we have a large amount of data
 points.</p>
 <h4 id="covariance">Covariance</h4>
@@ -582,36 +583,39 @@ As we are not interested in the covariance between the parameters, I
 will not explain what that is.</p>
 <p>From the paper <em>Nonlinear Regression</em> by A. R. Gallant, we get
 that the covariance matrix is given by <span class="math display">\[
-  V = \sigma^2\left[F^T(\mathbf{a}^*)F(\mathbf{a}^*)\right]^{-1},
+  V =
+\sigma^2\left[F^T(\boldsymbol{\theta}^*)F(\boldsymbol{\theta}^*)\right]^{-1},
 \]</span> where <span class="math display">\[
-  F(\mathbf{a}) = \begin{bmatrix}
-    \big(\nabla f(x_1; \mathbf{a})\big)^T \\
+  F(\boldsymbol{\theta}) = \begin{bmatrix}
+    \big(\nabla f(x_1; \boldsymbol{\theta})\big)^T \\
     \vdots \\
-    \big(\nabla f(x_N; \mathbf{a})\big)^T
+    \big(\nabla f(x_N; \boldsymbol{\theta})\big)^T
   \end{bmatrix}.
 \]</span></p>
 <p>We don’t know <span class="math inline">\(\sigma^2\)</span> or <span
-class="math inline">\(\mathbf{a}^*\)</span>, but we have our calculated
-optimal parameters <span
-class="math inline">\(\hat{\mathbf{a}}\)</span>, and we can estimate the
-variance of <span class="math inline">\(e_i\)</span> using the formula
-<span class="math display">\[
+class="math inline">\(\boldsymbol{\theta}^*\)</span>, but we have our
+calculated optimal parameters <span
+class="math inline">\(\hat{\boldsymbol{\theta}}\)</span>, and we can
+estimate the variance of <span class="math inline">\(e_i\)</span> using
+the formula <span class="math display">\[
   \sigma^2 \approx s^2 = \frac{1}{N-n}\sum\limits_{i=1}^N (f_i - f(x_i;\
-\hat{\mathbf{a}}))^2.
+\hat{\boldsymbol{\theta}}))^2.
 \]</span> This gives the estimated covariance matrix <span
 class="math display">\[
 \begin{align*}
   \hat{V} &amp;=
-s^2\left[F^T(\hat{\mathbf{a}})F(\hat{\mathbf{a}})\right]^{-1} \\
+s^2\left[F^T(\hat{\boldsymbol{\theta}})F(\hat{\boldsymbol{\theta}})\right]^{-1}
+\\
   &amp;= s^2\left[\sum\limits_{i=1}^N\nabla f(x_i;
-\hat{\mathbf{a}})\big(\nabla f(x_i;
-\hat{\mathbf{a}})\big)^T\right]^{-1},
+\hat{\boldsymbol{\theta}})\big(\nabla f(x_i;
+\hat{\boldsymbol{\theta}})\big)^T\right]^{-1},
 \end{align*}
 \]</span> which has the diagonal elements <span
-class="math inline">\((\Delta_{a_1}^2, \ldots, \Delta_{a_n}^2).\)</span>
-We can the present our calculated optimal parameters as <span
-class="math inline">\((\hat{a}_1\pm\Delta_{a_1}, \ldots,
-\hat{a}_n\pm\Delta_{a_n}).\)</span></p>
+class="math inline">\(\left((\Delta \theta_1)^2, \ldots, (\Delta
+\theta_n)^2\right).\)</span> We can then present our calculated optimal
+parameters as <span
+class="math inline">\((\hat{\theta}_1\pm\Delta\theta_1, \ldots,
+\hat{\theta}_n\pm\Delta\theta_n).\)</span></p>
 <h2 id="omega-optimizer">Omega Optimizer</h2>
 <h3 id="normal-distribution">Normal distribution</h3>
 <p>To test <em>Omega Optimizer</em>, we start with a simple case: a
@@ -677,10 +681,10 @@ class="math inline">\(29.7\pm 0.9\)</span>)</p>
 <p>and an error of 77.4.</p>
 <p>For this example, it is only the frequency which made convergence
 difficult. Even starting at <span class="math inline">\((10, 1, 1,
-1)\)</span> converges to the correct solution. This makes sense, the
-local line minimum is much closer than the true minimum in <span
-class="math inline">\(\omega\)</span>-space, so that is what the program
-naturally converges to.</p>
+1)\)</span>, the program converges to the correct solution. This makes
+sense, the local line minimum is much closer than the true minimum in
+<span class="math inline">\(\omega\)</span>-space, so that is what the
+program naturally converges to.</p>
 <h3 id="mortivated">Mortivated</h3>
 <p>It is now time to answer the question my brother asked me once and
 for all. We have the data:</p>
@@ -719,11 +723,12 @@ think it is necessary to use more time on this particular problem.</p>
 developments</h3>
 <p>From the examples I have shown, it is clear that <em>Omega
 Optimizer</em> works well. It is written entirely in rust, so it is very
-fast; for the normal distribution example, it used just 0.884 ms to
-converge to the solution. It is a bit slower when it does not reach a
-good minimum since I try <span class="math inline">\(10^4\)</span>
-gradient descent steps before giving up, with the sine example taking
-66.4 ms when trying to converge to a straight line.</p>
+fast; for the normal distribution example, it used just <span
+class="math inline">\(0.9\)</span> ms to converge to the solution. It is
+a bit slower when it does not reach a good minimum since I try <span
+class="math inline">\(10^4\)</span> gradient descent steps before giving
+up, with the sine example taking <span class="math inline">\(66\)</span>
+ms when trying to converge to a straight line.</p>
 <p>However, there are two downsides to the program, which are the two
 manual parts; calculating the gradient and hessian, and finding good
 initial parameters. The first problem could be fixed using automatic
@@ -741,10 +746,10 @@ it is available at <a
 href="https://github.com/Emilinya/OmegaOptimizer">my github</a>.</p>
 <h2 id="how-it-is-actually-done">How it is actually done</h2>
 <p>As I mentioned in the introduction, non-linear parameter optimization
-is typically done with an approach that dependents on the specific
-optimization problem. Here, I want to show how this would be used to
-find the parameters for the function <span class="math display">\[f(x;
-a, b, c, n) = \frac{ax^n}{bx^n + 1} + c.\]</span></p>
+is typically done with an approach that depends on the specific problem.
+Here, I want to show how this would be used to find the parameters for
+the function <span class="math display">\[f(x; a, b, c, n) =
+\frac{ax^n}{bx^n + 1} + c.\]</span></p>
 <p>The general idea is to go from <span class="math inline">\(y =
 f(x)\)</span> to <span class="math inline">\(y&#39; = \alpha x&#39; +
 \beta\)</span>, where <span class="math inline">\(y&#39;\)</span> and

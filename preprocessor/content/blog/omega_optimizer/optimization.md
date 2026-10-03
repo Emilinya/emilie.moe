@@ -8,7 +8,7 @@
   - [What is a parameter?](#what-is-a-parameter)
   - [Why do we want to optimize parameters?](#why-do-we-want-to-optimize-parameters)
   - [Mortivation](#mortivation)
-- [Numerical methods](#numerical-methods)
+- [Numerical optimization](#numerical-optimization)
   - [Newton's method](#newtons-method)
   - [Global Newton](#global-newton)
   - [Gradient descent](#gradient-descent)
@@ -31,7 +31,7 @@
 
 ## Introduction
 
-I have long been interested in how to find the optimal parameters to approximate experimental data. I have created many projects with the goal of optimizing parameters automatically, and with my latest version, aptly named *Omega Optimizer*, I feel like I finally have something that works. In this blog post I want to explain what parameter optimization is, how you can do it numerically, and how my *Omega Optimizer* works.
+I have long been interested in how to find the optimal parameters to model experimental data. I have created many projects with the goal of optimizing parameters automatically, and with my latest version, aptly named *Omega Optimizer*, I feel like I finally have something that works. In this blog post I want to explain what parameter optimization is, how you can do it numerically, and how my *Omega Optimizer* works.
 
 ## Motivation
 
@@ -51,7 +51,7 @@ $$
 $$
 where $a_1, a_2, \ldots, a_n$ are parameters and $g_1, g_2, \ldots, g_n$ are functions that only depend on $x$.
 
-The problem is then non-linear regression. What if your parameters are in another function, like $f(t; \omega) = \sin(\omega t)$? In this particular case you can use a Fourier transform to find $\omega$, and in general there are often approaches that give you the parameters, but they are heavily dependent on the specific optimization problem you have. To create a general non-linear parameter optimizer, we must instead turn to numerical methods.
+The problem is then non-linear regression. What if your parameters are in another function, like $f(t; \omega) = \sin(\omega t)$? In this particular case you can use a Fourier transform to find $\omega$, and in general there are often approaches that give you the parameters, but they are heavily dependent on the specific problem you are working with. To create a general non-linear parameter optimizer, we must instead turn to numerical methods.
 
 ### Mortivation
 
@@ -68,24 +68,24 @@ $$f(x; a, b, c, n) = \frac{ax^n}{bx^n + 1} + c.$$
 
 This is a non-linear regression problem! When I solved this problem for my brother initially, I used my then newly developed parameter optimizer, but it could not find the optimal parameters, so I found them manually instead. This was a big part of my motivation for this new parameter optimizer, and I am happy to report that *Omega Optimizer* managed to find better parameters than I found manually.
 
-## Numerical methods
+## Numerical optimization
 
 ### Newton's method
 
 Parameter optimization, unsurprisingly, involves optimizing some function, that is, we need to find its minimum. So, how do you minimize a function numerically? One of the most popular optimization algorithms is Newton's method, which is more commonly known in its root-finding form. Newton's method finds the solution $x_{\text{root}}$ to the equation $f(x_{\text{root}}) = 0$ using the sequence 
-$$x_{n+1} = x_n + \frac{f(x_n)}{f'(x_n)},$$
+$$x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)},$$
 starting at some initial value $x_0$. We know that this converges to $x_{\text{root}}$ in the limit as $n\rightarrow\infty$, but numerically, we typically don't want our program to run forever. We must therefore also add some stopping condition, which is typically if
 $$|x_{n+1} - x_{n}| = \left|\frac{f(x_n)}{f'(x_n)}\right| < \epsilon,$$
 where $\epsilon$ is some small value within numerical accuracy.
 
 To convert this method into a minimization algorithm, we can use the fact that the minimum $x_{\min}$ of some function $f$ satisfies $f'(x_{\min}) = 0$, that is, minimizing a function is the same as finding the roots of its derivative. By substituting $f'$ for $f$ in Newton's method, we get its minimization form:
-$$x_{n+1} = x_n + \frac{f'(x_n)}{f''(x_n)}.$$
+$$x_{n+1} = x_n - \frac{f'(x_n)}{f''(x_n)}.$$
 Here we could again stop if the step is sufficiently small, but I will instead stop if $|f'(x_n)| < \epsilon$, as that is the stopping criterion for the other method I will use as well.
 
-One important thing to note is that $f'(x) = 0$ does not imply that $x$ is a minimum, it can also be a maximum. To ensure that we converge to a minimum we need $f''(x_0) > 0$.
+One important thing to note is that $f'(x) = 0$ does not imply that $x$ is a minimum; it can also be a maximum. To ensure that we converge to a minimum we need $f''(x_0) > 0$, that is, the function must be locally convex.
 
 Newton's method also works for multivariable functions. If we substitute the gradient for the derivative and the hessian for the double derivative, we get the sequence 
-$$\mathbf{x}_{n+1} = \mathbf{x}_n + (\mathbf{H}f(\mathbf{x}_n))^{-1}\nabla f(\mathbf{x}_n),$$
+$$\mathbf{x}_{n+1} = \mathbf{x}_n - (\mathbf{H}f(\mathbf{x}_n))^{-1}\nabla f(\mathbf{x}_n),$$
 which converges to $\mathbf{x}_{\min}$ from some initial point $\mathbf{x}_0$, stopping once $||\nabla f(\mathbf{x}_n)|| < \epsilon$. To recap, if you have a multivariable function $f(x, y)$, the gradient is 
 $$
 \def\arraystretch{1.4}
@@ -98,12 +98,12 @@ Hf(x, y) = \begin{bmatrix} \frac{\partial ^2f}{\partial x^2} & \frac{\partial ^2
 $$
 This obviously extends to more variables.
 
-To ensure Newton's method reaches a minimum, we now need the hessian to be positive-definite at $x_0$, which is just multivariable extension of $f''(x_0) > 0$.
+To ensure Newton's method reaches a minimum, we now need the hessian to be positive-definite at $x_0$, which is just the multivariable extension of $f''(x_0) > 0$.
 
 ### Global Newton
 
-One problem with Newton's method is that it can be unstable. For some functions, there are initial values that causes the iteration to diverge. One such function is $f(x) = \arctan(x)$, where any initial point $|x_0| \gtrsim 1.5$ causes divergence. The problem is that arctan is a very flat function for large values of $x$, so $f'$ is very small, and the Newton step $\frac{f}{f'}$ becomes very large, overshooting the root at $x=0$. Starting at
-$x_0=1.5$, we get $\frac{f}{f'} \approx -3.19$, so $x_1 = -1.69$. This leads to an even larger step of 4.02, so the next value is $x_2 = 2.32$, and so on. The problem is caused by the steps being too large, so an idea for a fix is to simply decrease the step sizes by multiplying with some factor $0 < \gamma < 1$, called a damping factor. This works, a factor is 0.5 is enough for Newton to converge in this case, but there are some drawbacks. A value of 0.5 is not always enough, Newton still diverges for $|x_0| \gtrsim 3$. To ensure convergence, we need $\gamma \approx 0$, but then the method would become unreasonably slow.
+One problem with Newton's method is that it can be unstable. For some functions, there are initial values which makes the iteration diverge. One such function is $f(x) = \arctan(x)$, where any initial point $|x_0| \gtrsim 1.5$ causes divergence. The problem is that arctan is a very flat function for large values of $x$, so $f'$ is very small, and the Newton step $\frac{f}{f'}$ becomes very large, overshooting the root at $x=0$. Starting at
+$x_0=1.5$, we get $\frac{f}{f'} \approx -3.19$, so $x_1 = -1.69$. This leads to an even larger step of 4.02, so the next value is $x_2 = 2.32$, and so on. The problem is caused by the steps being too large, so an idea for a fix is to simply decrease the step sizes by multiplying with some factor $0 < \gamma < 1$, called a damping factor. This works, a factor is 0.5 is enough for Newton's method to converge in this case, but it still diverges for $|x_0| \gtrsim 3$. To ensure convergence, we need $\gamma \approx 0$, but then the method would become unreasonably slow.
 
 For a smarter approach, we can use the fact that a set of points $\{x_0,x_1,\ldots,x_n\}$ converges to a root of $f$ if $|f(x_0)| > |f(x_1)| > \cdots > |f(x_n)|.$ That is, the method will converge to a root if every iteration decreases the absolute value of the function. What we need to do then is, for each iteration, see if the function value deceased, and if not, multiply with a damping factor small enough such that the function does decrease. This ensures that most steps are not dampened, so we keep Newton's speed, but by ensuring that each step decreases the function, we also guarantee that the iteration will converge. This approach is called the global Newton's method.
 
@@ -111,7 +111,7 @@ The global Newton's method is aimed at finding roots, but we want to minimize a 
 
 > Set $\mathbf{x}=\mathbf{x}_0$, for some initial value $\mathbf{x}_0$.
 >
-> **while** $||\nabla f(\mathbf{x})|| < \epsilon$ **do**
+> **while** $||\nabla f(\mathbf{x})|| > \epsilon$ **do**
 >
 >> Solve $\mathbf{H}f(\mathbf{x})\Delta x = \nabla f(\mathbf{x})$ for $\Delta x$.
 >>
@@ -130,19 +130,15 @@ The global Newton's method is aimed at finding roots, but we want to minimize a 
 > Return $\mathbf{x}$
 
 ### Gradient descent
-Newton's method converges very quickly, it has quadratic convergence, but it is also quite unstable. If the initial value is too far from the minimum, the iteration can diverge, leaving us with no usable parameters. We do not always know a good initial value a priori, so we need a more stable method that can handle less optimal initial values.
-
-If you have ever had a linear algebra course, you probably know that the gradient of a function points in the direction of steepest ascent. Conversely, the negative of the gradient points in the direction of steepest descent. We can use this to find the minimum of a function; if we calculate the gradient at a point, we can follow the negative of the gradient to find a new point, which will have a lower function value. Repeat this enough times, and you will reach the minimum, an approach called gradient descent.
+The global Newton's method works well in most cases, but it has a major flaw; it does not work if the hessian is not positive-definite. To avoid this problem, we need a method that does not use the hessian, such as gradient descent. If you have ever had a vector calculus course, you probably know that the gradient of a function points in the direction of steepest ascent. Conversely, the negative of the gradient points in the direction of steepest descent. We can use this to find the minimum of a function; if we calculate the gradient at a point, we can follow the negative of the gradient to find a new point, which will have a lower function value. Repeat this enough times, and you will reach the minimum.
 
 Gradient descent works using the sequence
-$$\mathbf{x}_{n+1} = \mathbf{x}_n - t\nabla f(\mathbf{x}_n).$$
-The value $t$ is the size of the step you take along the gradient at each point. This value is very important; if it is too small, the iteration will converge very slowly, but if it is too large, the iteration will diverge.
-
-You might notice that this is very similar to Newton's method. Indeed, another way of motivating gradient descent is to say we are approximating the inverse of the hessian with some scalar $t$.
+$$\mathbf{x}_{n+1} = \mathbf{x}_n - t\nabla f(\mathbf{x}_n),$$
+where the value $t$ is the size of the step you take along the gradient at each point. This value is very important; if it is too small, the iteration will converge very slowly, but if it is too large, the iteration will diverge. You might notice that this is very similar to Newton's method, and indeed, another way of motivating gradient descent is to say we are approximating the inverse of the hessian with some positive scalar $t$.
 
 ### Backtracking line search
 
-As mentioned, the step size $t$ in gradient descent is very important. It can be left as a constant value, but this often leads to slow convergence. Instead, you can find an optimal value at each iteration by finding some step size $t_n$ that minimizes $f(\mathbf{x}_n - t\nabla f(\mathbf{x}_n))$ with respect to $t$. This is called a line search as you are minimizing a linear cross-section instead of the full function. Finding the exact solution to the line search equation is both costly and often unnecessary, so many methods for quickly finding approximate solutions have been developed. One such method is called backtracking line search, which takes in an initial step size $t_0$ and two control parameters $\tau\in(0, 1)$ and $c\in(0, 1)$, and then performs the following steps:
+As mentioned, the step size $t$ in gradient descent is very important. It can be left as a constant value, but this often leads to slow convergence. Instead, you can find an optimal value at each iteration by finding the step size $t_n$ which minimizes $f(\mathbf{x}_n - t\nabla f(\mathbf{x}_n))$ with respect to $t$. This is called a line search as you are minimizing a linear cross-section instead of the full function. Finding the exact solution to the line search equation is both costly and often unnecessary, so many methods for quickly finding approximate solutions have been developed. One such method is called backtracking line search, which takes in an initial step size $t_0$ and two control parameters $\tau\in(0, 1)$ and $c\in(0, 1)$, and then performs the following steps:
 
 > Set $m = c||\nabla f(\mathbf{x})||^2$ and $t=t_0$.
 >
@@ -162,7 +158,7 @@ While playing around with backtracking line search, I found two problems. The fi
 
 > Set $m = c||\nabla f(\mathbf{x})||^2$ and $t=t_0$, where $t_0$ is the previous best $t$ if this is not the first iteration, and $1$ if it is.
 >
-> Define $\text{accept}(t) := f(\mathbf{x}) − f(\mathbf{x} - t\nabla f(\mathbf{x})) \geq tm.$
+> Define $\text{accept}(t) := (f(\mathbf{x}) − f(\mathbf{x} - t\nabla f(\mathbf{x})) \geq tm).$
 >
 > Set `increased_t` to false.
 >
@@ -192,7 +188,7 @@ This lets $t$ increase as long as the acceptance criterion is fulfilled, which m
 
 ### A combined approach
 
-I have now described two optimization algorithms with complimentary benefits and drawbacks. Gradient descent is a robust algorithm, it will typically converge to a minimum even if your initial value is far away, but it converges to the minimum relatively slowly. On the other hand, Newton's method converges very quickly if the initial value is close, but if it is not, it will act erratically. The logical thing to do is then to use both methods, where you start with a few steps of gradient descent to get a value close to the minimum, and then use Newton's method to quickly converge to the minimum. This leads to the following algorithm:
+I have now described two optimization algorithms with complimentary benefits and drawbacks. Gradient descent is a robust algorithm, it will typically converge to a minimum even for a bad initial value, but it converges to the minimum relatively slowly. On the other hand, the global Newton's method converges very quickly if the hessian at the initial value is positive-definite, but if it is not, it will not work. The logical thing to do is then to use both methods, where you do gradient descent steps while the hessian is negative, and then switch to Newton to quickly converge to the minimum. This leads to the following algorithm:
 
 > Set $x_{best} = x_0$. 
 >
@@ -230,7 +226,7 @@ I have now described two optimization algorithms with complimentary benefits and
 
 ### Local vs global minima
 
-For now, I have assumed that the function we are minimizing has only one minimum, so if the optimization methods converge, they give a good result. Unfortunately, this is most often not the case. We want to reach the minimum with the lowest value, called the global minimum, but there are also many non-optimal minima, called local minima. There are many ways of avoiding local minima, but the most reliable method is starting at an initial set of parameters that are reasonable close to the global minimum. Luckily, for parameter optimization, it is quite easy to tell visually how good a set of parameters are by plotting the resulting function together with the data points. This means a simple gui that lets you vary parameters and visually see how the function changes is good enough to avoid local minima, although it is a manual approach.  
+For now, I have assumed that the function we are minimizing has only one minimum, so if the optimization methods converge, they give a good result. Unfortunately, this is most often not the case. We want to reach the minimum with the lowest value, called the global minimum, but there are also many non-optimal minima, called local minima. There are many ways of avoiding local minima, but the most reliable method is starting at an initial set of parameters that are reasonably close to the global minimum. Luckily, for parameter optimization, it is quite easy to tell visually how good a set of parameters are by plotting the resulting function together with the data points. This means a simple gui that lets you vary parameters and visually see how the function changes is good enough to avoid local minima, although it is a manual approach.  
 
 ## Parameter optimization
 
@@ -238,15 +234,15 @@ For now, I have assumed that the function we are minimizing has only one minimum
 
 I have now written a lot about general multivariable functions, but how will this help us with parameter optimization? Which function do we want to find the minimum of?
 
-Let's say we have experimentally measured some data. We have measured a set of results $\{f_i\}$ at positions $\{x_i\}$. We know that the data should conform to some function $f(x; a_1, a_2, \ldots, a_n).$ We define the parameter vector $\mathbf{a} = (a_1, a_2, \ldots, a_n),$ and want to find the parameter vector $\mathbf{a}_{\min}$ such that $f(x_i; \mathbf{a}_{\min})$ most closely matches $f_i$ for each $i$. More specifically, we want to minimize the average of the distances $|f_i - f(x_i;\ \mathbf{a})|$ for every $i$. If we have $N$ data points, we can define the mean difference as 
+Let's say we have experimentally measured some data. We have measured a set of results $\{f_i\}$ at positions $\{x_i\}$. We know that the data should conform to some function $f(x; \theta_1, \theta_2, \ldots, \theta_n).$ We define the parameter vector $\boldsymbol{\theta} = (\theta_1, \theta_2, \ldots, \theta_n),$ and want to find the parameter vector $\hat{\boldsymbol{\theta}}$ such that $f(x_i; \hat{\boldsymbol{\theta}})$ most closely matches $f_i$ for each $i$. More specifically, we want to minimize the average of the distances $|f_i - f(x_i;\ \boldsymbol{\theta})|$ for every $i$. If we have $N$ data points, we can define the mean difference as 
 $$
-e(\mathbf{a}) = \frac{1}{N}\sum\limits_{i=1}^N |f_i - f(x_i;\ \mathbf{a})|.
+e(\boldsymbol{\theta}) = \frac{1}{N}\sum\limits_{i=1}^N |f_i - f(x_i;\ \boldsymbol{\theta})|.
 $$
 This is almost the function we want to minimize, but there is one problem; we need to differentiate the error function, but the absolute value function does not have a continuous derivative. We therefore want to minimize the mean squared differences instead, giving us
 $$
-   E(\mathbf{a}) = \frac{1}{N}\sum\limits_{i=1}^N (f_i - f(x_i;\ \mathbf{a}))^2.
+   E(\boldsymbol{\theta}) = \frac{1}{N}\sum\limits_{i=1}^N (f_i - f(x_i;\ \boldsymbol{\theta}))^2.
 $$
-Note that although this is not the same function as $e(\mathbf{a})$, any minima of $e(\mathbf{a})$ will also be minima of $E(\mathbf{a})$.  
+Note that although this is not the same function as $e(\boldsymbol{\theta})$, any minima of $e(\boldsymbol{\theta})$ will also be minima of $E(\boldsymbol{\theta})$.  
 
 ### Differentiating the error function
 
@@ -254,21 +250,21 @@ To use gradient descent and Newton's method, we need to find both $\nabla E$ and
 
 $$
     \begin{align*}
-        \frac{\partial E}{\partial a_k} &= \frac{\partial}{\partial a_k}
-        \left(\frac{1}{N}\sum\limits_{i=1}^N (f_i - f(x_i;\ \mathbf{a}))^2\right) \\
-        &= \frac{1}{N}\sum\limits_{i=1}^N \frac{\partial}{\partial a_k}(f_i - f(x_i;\ \mathbf{a}))^2 \\
-        &= -\frac{2}{N}\sum\limits_{i=1}^N (f_i - f(x_i;\ \mathbf{a}))\frac{\partial f}{\partial a_k} \\
-        \implies \nabla E(\mathbf{a}) &= -\frac{2}{N}\sum\limits_{i=1}^N (f_i - f(x_i;\ \mathbf{a}))\nabla f(x_i;\ \mathbf{a}) \\
+        \frac{\partial E}{\partial \theta_k} &= \frac{\partial}{\partial \theta_k}
+        \left(\frac{1}{N}\sum\limits_{i=1}^N (f_i - f(x_i;\ \boldsymbol{\theta}))^2\right) \\
+        &= \frac{1}{N}\sum\limits_{i=1}^N \frac{\partial}{\partial \theta_k}(f_i - f(x_i;\ \boldsymbol{\theta}))^2 \\
+        &= -\frac{2}{N}\sum\limits_{i=1}^N (f_i - f(x_i;\ \boldsymbol{\theta}))\frac{\partial f}{\partial \theta_k} \\
+        \implies \nabla E(\boldsymbol{\theta}) &= -\frac{2}{N}\sum\limits_{i=1}^N (f_i - f(x_i;\ \boldsymbol{\theta}))\nabla f(x_i;\ \boldsymbol{\theta}) \\
     \end{align*}
 $$
 
 We can then find the hessian:
 $$
     \begin{align*}
-        \frac{\partial E}{\partial a_l \partial a_k} &= \frac{\partial }{\partial a_l}\left(-\frac{2}{N}\sum\limits_{i=1}^N (f_i - f(x_i;\ \mathbf{a}))\frac{\partial f}{\partial a_k}\right) \\
-        &= -\frac{2}{N}\sum\limits_{i=1}^N \frac{\partial}{\partial a_l}\left((f_i - f(x_i;\ \mathbf{a}))\frac{\partial f}{\partial a_k}\right) \\
-        &= -\frac{2}{N}\sum\limits_{i=1}^N -\frac{\partial f}{\partial a_l}\frac{\partial f}{\partial a_k} + (f_i - f(x_i;\ \mathbf{a}))\frac{\partial f}{\partial a_l \partial a_k} \\
-        \implies \mathbf{H} E(\mathbf{a}) &= \frac{2}{N}\sum\limits_{i=1}^N \nabla f(\nabla f)^T - (f_i - f(x_i;\ \mathbf{a}))\mathbf{H}f(x_i;\ \mathbf{a}) \\
+        \frac{\partial E}{\partial \theta_l \partial \theta_k} &= \frac{\partial }{\partial \theta_l}\left(-\frac{2}{N}\sum\limits_{i=1}^N (f_i - f(x_i;\ \boldsymbol{\theta}))\frac{\partial f}{\partial \theta_k}\right) \\
+        &= -\frac{2}{N}\sum\limits_{i=1}^N \frac{\partial}{\partial \theta_l}\left((f_i - f(x_i;\ \boldsymbol{\theta}))\frac{\partial f}{\partial \theta_k}\right) \\
+        &= -\frac{2}{N}\sum\limits_{i=1}^N -\frac{\partial f}{\partial \theta_l}\frac{\partial f}{\partial \theta_k} + (f_i - f(x_i;\ \boldsymbol{\theta}))\frac{\partial f}{\partial \theta_l \partial \theta_k} \\
+        \implies \mathbf{H} E(\boldsymbol{\theta}) &= \frac{2}{N}\sum\limits_{i=1}^N \nabla f(\nabla f)^T - (f_i - f(x_i;\ \boldsymbol{\theta}))\mathbf{H}f(x_i;\ \boldsymbol{\theta}) \\
     \end{align*}
 $$
 
@@ -283,9 +279,9 @@ For a practical example, let us say we are doing quality control on a resistor w
 
 To begin estimating our uncertainties, we must make some assumptions. Namely, we assume our results $f_i$ are related to the positions $x_i$ by the relation
 $$
-  f_i = f(x_i, \mathbf{a}^*) + e_i,
+  f_i = f(x_i, \boldsymbol{\theta}^*) + e_i,
 $$
-where $\mathbf{a}^*$ are the optimal parameters and $e_i$ are some unknown errors resulting from, for instance, imprecise measurements. Further, we assume that the $e_i$-values are independent, meaning they don't depend on each other, and that they follow a normal distribution with a mean of zero and an unknown variance $\sigma^2$. This is not always true, but the central limit theorem guarantees that the errors will be approximately normally distributed if we have a large amount of data points.
+where $\boldsymbol{\theta}^*$ are the optimal parameters and $e_i$ are some unknown errors resulting from, for instance, imprecise measurements. Further, we assume that the $e_i$-values are independent, meaning they don't depend on each other, and that they follow a normal distribution with a mean of zero and an unknown variance $\sigma^2$. This is not always true, but the central limit theorem guarantees that the errors will be approximately normally distributed if we have a large amount of data points.
 
 #### Covariance
 
@@ -293,30 +289,30 @@ To get an estimate of the uncertainty of our optimal parameters, we need to calc
 
 From the paper *Nonlinear Regression* by A. R. Gallant, we get that the covariance matrix is given by
 $$
-  V = \sigma^2\left[F^T(\mathbf{a}^*)F(\mathbf{a}^*)\right]^{-1},
+  V = \sigma^2\left[F^T(\boldsymbol{\theta}^*)F(\boldsymbol{\theta}^*)\right]^{-1},
 $$
 where
 $$
-  F(\mathbf{a}) = \begin{bmatrix}
-    \big(\nabla f(x_1; \mathbf{a})\big)^T \\
+  F(\boldsymbol{\theta}) = \begin{bmatrix}
+    \big(\nabla f(x_1; \boldsymbol{\theta})\big)^T \\
     \vdots \\
-    \big(\nabla f(x_N; \mathbf{a})\big)^T
+    \big(\nabla f(x_N; \boldsymbol{\theta})\big)^T
   \end{bmatrix}.
 $$
 
-We don't know $\sigma^2$ or $\mathbf{a}^*$,
-but we have our calculated optimal parameters $\hat{\mathbf{a}}$, and we can estimate the variance of $e_i$ using the formula
+We don't know $\sigma^2$ or $\boldsymbol{\theta}^*$,
+but we have our calculated optimal parameters $\hat{\boldsymbol{\theta}}$, and we can estimate the variance of $e_i$ using the formula
 $$
-  \sigma^2 \approx s^2 = \frac{1}{N-n}\sum\limits_{i=1}^N (f_i - f(x_i;\ \hat{\mathbf{a}}))^2.
+  \sigma^2 \approx s^2 = \frac{1}{N-n}\sum\limits_{i=1}^N (f_i - f(x_i;\ \hat{\boldsymbol{\theta}}))^2.
 $$
 This gives the estimated covariance matrix
 $$
 \begin{align*}
-  \hat{V} &= s^2\left[F^T(\hat{\mathbf{a}})F(\hat{\mathbf{a}})\right]^{-1} \\
-  &= s^2\left[\sum\limits_{i=1}^N\nabla f(x_i; \hat{\mathbf{a}})\big(\nabla f(x_i; \hat{\mathbf{a}})\big)^T\right]^{-1},
+  \hat{V} &= s^2\left[F^T(\hat{\boldsymbol{\theta}})F(\hat{\boldsymbol{\theta}})\right]^{-1} \\
+  &= s^2\left[\sum\limits_{i=1}^N\nabla f(x_i; \hat{\boldsymbol{\theta}})\big(\nabla f(x_i; \hat{\boldsymbol{\theta}})\big)^T\right]^{-1},
 \end{align*}
 $$
-which has the diagonal elements $(\Delta_{a_1}^2, \ldots, \Delta_{a_n}^2).$ We can the present our calculated optimal parameters as $(\hat{a}_1\pm\Delta_{a_1}, \ldots, \hat{a}_n\pm\Delta_{a_n}).$
+which has the diagonal elements $\left((\Delta \theta_1)^2, \ldots, (\Delta \theta_n)^2\right).$ We can then present our calculated optimal parameters as $(\hat{\theta}_1\pm\Delta\theta_1, \ldots, \hat{\theta}_n\pm\Delta\theta_n).$
 
 ## Omega Optimizer
 
@@ -364,7 +360,7 @@ which has the parameters
 
 and an error of 77.4.
 
-For this example, it is only the frequency which made convergence difficult. Even starting at $(10, 1, 1, 1)$ converges to the correct solution. This makes sense, the local line minimum is much closer than the true minimum in $\omega$-space, so that is what the program naturally converges to.
+For this example, it is only the frequency which made convergence difficult. Even starting at $(10, 1, 1, 1)$, the program converges to the correct solution. This makes sense, the local line minimum is much closer than the true minimum in $\omega$-space, so that is what the program naturally converges to.
 
 ### Mortivated
 
@@ -391,7 +387,7 @@ Looking at the best fit curve, it is obvious it does not actually fit the data p
 
 ### Conclusion and further developments
 
-From the examples I have shown, it is clear that *Omega Optimizer* works well. It is written entirely in rust, so it is very fast; for the normal distribution example, it used just 0.884 ms to converge to the solution. It is a bit slower when it does not reach a good minimum since I try $10^4$ gradient descent steps before giving up, with the sine example taking 66.4 ms when trying to converge to a straight line.
+From the examples I have shown, it is clear that *Omega Optimizer* works well. It is written entirely in rust, so it is very fast; for the normal distribution example, it used just $0.9$ ms to converge to the solution. It is a bit slower when it does not reach a good minimum since I try $10^4$ gradient descent steps before giving up, with the sine example taking $66$ ms when trying to converge to a straight line.
 
 However, there are two downsides to the program, which are the two manual parts; calculating the gradient and hessian, and finding good initial parameters. The first problem could be fixed using automatic differentiation, but as the calculation only has to be done once per function, I don't think it is that big of a problem. The other problem has no good solution that I know of. The program is fast enough that I could try many sets of initial parameters, but as we don't have a bounded search space, I don't know how this could be done. The only approach I think might work is a sort of deflation method, but I have not gotten it to work. At the end of the day, using the gui is not that difficult and it is often not necessary, so I think it is a fine solution for now.
 
@@ -399,7 +395,7 @@ If you want to look at the source code for *Omega Optimizer*, it is available at
 
 ## How it is actually done
 
-As I mentioned in the introduction, non-linear parameter optimization is typically done with an approach that dependents on the specific optimization problem. Here, I want to show how this would be used to find the parameters for the function
+As I mentioned in the introduction, non-linear parameter optimization is typically done with an approach that depends on the specific problem. Here, I want to show how this would be used to find the parameters for the function
 $$f(x; a, b, c, n) = \frac{ax^n}{bx^n + 1} + c.$$
 
 The general idea is to go from $y = f(x)$ to $y' = \alpha x' + \beta$, where $y'$ and $x'$ are some transformations of $y$ and $x$. Once the data follows a linear relationship, you can use linear regression to find $\alpha$ and $\beta$, which you can then use to recover your parameters. For example, for data that follows some power law 
