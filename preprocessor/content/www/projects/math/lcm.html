@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+	<head>
+		<meta charset="utf-8">
+		{{head}}
+		<title>Site</title>
+	</head>
+	<body>
+		<div class="mainDiv">
+			<div class="headerDiv">
+				{{nav?home=projects}}
+			</div>
+			<div class="bodyDiv">
+				<h1>Difference Equation Solver</h1>
+				<form id="form">
+					<p class="supP">Write a comma-seperated list of whole numbers with 6 or less digits</p>
+					<input id="input" type="text" name="input" required pattern="\d+(,\s*\d+)*" oninput="this.setCustomValidity('')">
+					<button id="solve" type="submit" name="solve">Find lcm</button>
+				</form>
+				<p id="resultP"></p>
+			</div>
+		</div>
+	</body>
+	<script src="lcm.js" charset="utf-8"></script>
+</html>
