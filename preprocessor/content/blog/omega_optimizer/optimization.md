@@ -8,8 +8,9 @@
   - [What is a parameter?](#what-is-a-parameter)
   - [Why do we want to optimize parameters?](#why-do-we-want-to-optimize-parameters)
   - [Mortivation](#mortivation)
-- [Theory](#theory)
+- [Numerical methods](#numerical-methods)
   - [Newton's method](#newtons-method)
+  - [Damped Newton](#damped-newton)
   - [Gradient descent](#gradient-descent)
   - [Backtracking line search](#backtracking-line-search)
   - [Improved backtracking line search](#improved-backtracking-line-search)
@@ -67,7 +68,7 @@ $$f(x; a, b, c, n) = \frac{ax^n}{bx^n + 1} + c.$$
 
 This is a non-linear regression problem! When I solved this problem for my brother initially, I used my then newly developed parameter optimizer, but it could not find the optimal parameters, so I found them manually instead. This was a big part of my motivation for this new parameter optimizer, and I am happy to report that *Omega Optimizer* managed to find better parameters than I found manually.
 
-## Theory
+## Numerical methods
 
 ### Newton's method
 
@@ -98,6 +99,35 @@ $$
 This obviously extends to more variables.
 
 To ensure Newton's method reaches a minimum, we now need the hessian to be positive-definite at $x_0$, which is just multivariable extension of $f''(x_0) > 0$.
+
+### Damped Newton
+
+One problem with Newton's method is that it can be unstable. For some functions, there are initial values that causes the iteration to diverge. One such function is $f(x) = \arctan(x)$, where any initial point $|x_0| \gtrsim 1.5$ causes divergence. The problem is that arctan is a very flat function for large values of $x$, so $f'$ is very small, and the Newton step $\frac{f}{f'}$ becomes very large, overshooting the root at $x=0$. Starting at
+$x_0=1.5$, we get $\frac{f}{f'} \approx -3.19$, so $x_1 = -1.69$. This leads to an even larger step of 4.02, so the next value is $x_2 = 2.32$, and so on. The problem is caused by the steps being too large, so an idea for a fix is to simply decrease the step sizes by multiplying with some factor $0 < \gamma < 1$, called a damping factor. This works, a factor is 0.5 is enough for Newton to converge in this case, but there are some drawbacks. A value of 0.5 is not always enough, Newton still diverges for $|x_0| \gtrsim 3$. To ensure convergence, we need $\gamma \approx 0$, but then the method would become unreasonably slow.
+
+For a smarter approach, we can use the fact that a set of points $\{x_0,x_1,\ldots,x_n\}$ converges to the root of $f$ if $|f(x_0)| > |f(x_1)| > \cdots > |f(x_n)|.$ That is, the method will converge a root if every iteration decreases the absolute value of the function. What we need to do then is, for each iteration, see if the function deceased, and if not, multiply with a damping factor small enough such that the function does decrease. This ensures that most steps are not dampened, so we keep Newton's speed, but by ensuring that each step decreases the function, we also guarantee that the method will converge. This method is called the global Newton's method.
+
+The global Newton's method is aimed at finding roots, but we want to minimize a function. The equivalent of ensuring $|f|$ decreases now ensuring $||\nabla f||$ decreases, but we can instead use $f$ as the condition. This ensures that each iteration decreases the function value, and therefore that the iteration converges to a minimum. Allowing $||\nabla f||$ to increase restricts Newton's method less, which I have found to speed up convergence in some cases. The global Newton's method for minimization can be described algorithmically as
+
+> Set $\mathbf{x}=\mathbf{x}_0$, for some initial value $\mathbf{x}_0$.
+>
+> **while** $||\nabla f(\mathbf{x})|| < \epsilon$ **do**
+>
+>> Solve $\mathbf{H}f(\mathbf{x})\Delta x = \nabla f(\mathbf{x})$ for $\Delta x$.
+>>
+>> Set $f_{\text{prev}} = f(x)$ and $\gamma = 1$.
+>>
+>> **while** $f(x - \gamma\Delta x) > f_{\text{prev}}$ **do**
+>>
+>>> Set $\gamma = \frac{\gamma}{2}$ 
+>>
+>> **end while**
+>>
+>> Set $x = x - \gamma\Delta x$
+>
+> **end while**
+>
+> Return $\mathbf{x}$
 
 ### Gradient descent
 Newton's method converges very quickly, it has quadratic convergence, but it is also quite unstable. If the initial value is too far from the minimum, the iteration can diverge, leaving us with no usable parameters. We do not always know a good initial value a priori, so we need a more stable method that can handle less optimal initial values.
@@ -166,7 +196,7 @@ I have now described two optimization algorithms with complimentary benefits and
 
 > Set $x_{best} = x_0$. 
 >
-> **for** $N=10^1,10^2,\ldots,10^5$ **do**
+> **for** $N=10^1,10^2,\ldots,10^4$ **do**
 >
 >> Do gradient descent with $N$ steps and initial value $x_{best}$ to get result $x_{GD}$.
 >>
@@ -186,7 +216,7 @@ I have now described two optimization algorithms with complimentary benefits and
 >>>
 >>> **else**
 >>>
->>>> Do Newton again with $10^5$ steps, return result.
+>>>> Do Newton again with $10^4$ steps, return result.
 >>>
 >>> **end if**
 >>
@@ -245,9 +275,9 @@ $$
 ### Uncertainty estimation
 
 We now have everything we need to create a program that calculates optimal parameters,
-but there is still something we need to add. Going back to the example of estimating resistance using Ohm's law, our program would currently just give some value, like "$3.1\ \Omega$". This is fine in a casual context, but for the result to be truly useful, we need to estimate the uncertainty of the measurement. A standard estimate for the uncertainty is the standard deviation, and we write a measurement of a resistance $\hat{R}$ with corresponding standard deviation $\Delta R$ as $\hat{R} \pm \Delta R$, which tells us that there is a 68 % probability of the true resistance $R^*$ is in the interval $[\hat{R} - \Delta R, \hat{R} + \Delta R]$.
+but there is still something we need to add. Going back to the example of estimating resistance using Ohm's law, our program would currently just give some value, like "$3.1\ \Omega$". This is fine in a casual context, but for the result to be truly useful, we need to estimate the uncertainty of the measurement. A standard estimate for the uncertainty is the standard deviation, and we write a measurement of a resistance $\hat{R}$ with corresponding standard deviation $\Delta R$ as $\hat{R} \pm \Delta R$, which tells us that there is a 68 % probability that the true resistance $R^*$ is in the interval $[\hat{R} - \Delta R, \hat{R} + \Delta R].$
 
-For a practical example, let us say we are doing quality control on a resistor we know should be $3.0\ \Omega$. We measured $3.1\ \Omega$, so we need to know how likely it is for a measurement to deviate by $0.1\ \Omega$ or more. If the probability is very low, we can safely say the resistor is manufactured incorrectly. Let's say we got a standard deviation of $0.2\ \Omega$. In this case, the probability of the deviation is 62 %, so it is plausible for the resistor to be manufactured correctly. If, on the other hand, we get a standard deviation of $0.04\ \Omega$, the probability of the deviation is only 1.2 %, and the resistor is likely manufactured incorrectly.
+For a practical example, let us say we are doing quality control on a resistor we know should be $3.0\ \Omega$. We measured $3.1\ \Omega$, so we need to know how likely it is for a measurement to deviate by $0.1\ \Omega$ or more. If the probability is very low, we can safely say the resistor is manufactured incorrectly. Let's say we got a standard deviation of $0.2\ \Omega$. In this case, the probability of the deviation is 62 %, so it is plausible the resistor is manufactured correctly. If, on the other hand, we get a standard deviation of $0.04\ \Omega$, the probability of the deviation is only 1.2 %, and the resistor is likely manufactured incorrectly.
 
 #### Assumptions
 
@@ -342,19 +372,7 @@ It is now time to answer the question my brother asked me once and for all. We h
 
 ![](media/mort_data.png)
 
-To which we want to fit $f(x; a, b, c, n) = \frac{ax^n}{bx^n + 1} + c$. If we try with all parameters equal to 1, we get
-
-![](media/mort_line.png)
-
-which has the parameters
-
->($a$, $b$, $c$, $n$) = (1.8±0.3, 0.0019±0.0003, 32±7, 1.63±0.03)
-
-and an error of 326. This is a good result, but clearly not optimal, so we must again use the gui to find some initial parameters. This is actually quite difficult as the program struggles to improve for many sets of seemingly decent parameters. However, with a bit of perseverance, I eventually found the parameters
-
->($a$, $b$, $c$, $n$) = (0.26, 0.0003, 95, 2)
-
-Starting with these, the program manages to converge, giving
+To which we want to fit $f(x; a, b, c, n) = \frac{ax^n}{bx^n + 1} + c$. For this function, *Omega Optimizer* can once again find the global minimum starting with all parameters equal to 1, giving
 
 ![](media/mort_fit.png)
 
@@ -367,15 +385,15 @@ and an error of 141. The parameters I found manually way back when was
 
 > (a, b, c, n) = (0.09, 0.000106, 98, 2.32)
 
-which has an error of 343. This means *Omega Optimizer* managed to find parameters that are more than twice as good as those I found manually.
+which has an error of 343. This means *Omega Optimizer* not only found the minimum with no manual input, the parameters it found are also more than twice as good as those I found manually.
 
-Looking at the best fit curve, it is obvious it does not actually fit the data perfectly. I don't think this is a problem with the parameters, I think that the data does not actually follow the curve I hypothesized, it is just quite close. There are other functions which have a similar shape, such as the logistic function or the error function. However, the function I have found is a good enough approximation of the true function that I don't think it is necessary to use more time on this particular problem.
+Looking at the best fit curve, it is obvious it does not actually fit the data perfectly. I don't think this is a problem with the parameters, I think that the data does not actually follow the curve I hypothesized. There are other functions which have a similar shape, such as the logistic function or the error function. However, the function I have found is a good enough approximation of the true function that I don't think it is necessary to use more time on this particular problem.
 
 ### Conclusion and further developments
 
-From the examples I have shown, it is clear that *Omega Optimizer* works well. It is written entirely in rust, so it is very fast; for the normal distribution example, it used just 0.05 ms to converge to the solution. It can be a bit slow when it does not reach a good minimum, the sine example takes 237 ms to converge to the straight line, but this is just because I try $10^5$ steps of gradient descent before giving up. Reducing this number would obviously make the program faster.
+From the examples I have shown, it is clear that *Omega Optimizer* works well. It is written entirely in rust, so it is very fast; for the normal distribution example, it used just 0.884 ms to converge to the solution. It is a bit slower when it does not reach a good minimum since I try $10^4$ gradient descent steps before giving up, with the sine example taking 66.4 ms when trying to converge to a straight line.
 
-However, there are two downsides to the program, which are the two manual parts; calculating the gradient and hessian, and finding good initial parameters. The first problem could be fixed using automatic differentiation, but as the calculation only has to be done once per function, I don't think it is that big of a problem. The other problem has no good solution that I know of. The program is fast enough that I could try many sets of initial parameters, but as we don't have a bounded search space, I don't know how this could be done. The only approach I think might work is a sort of barrier method, where you add a term to the error function that penalizes minima the program has previously converged to. With this, the program should hopefully eventually converge to the global minimum from any starting point, but I don't know how realistic that actually is. At the end of the day, using the gui is not that difficult, so that is a fine solution for now.
+However, there are two downsides to the program, which are the two manual parts; calculating the gradient and hessian, and finding good initial parameters. The first problem could be fixed using automatic differentiation, but as the calculation only has to be done once per function, I don't think it is that big of a problem. The other problem has no good solution that I know of. The program is fast enough that I could try many sets of initial parameters, but as we don't have a bounded search space, I don't know how this could be done. The only approach I think might work is a sort of deflation method, but I have not gotten it to work. At the end of the day, using the gui is not that difficult and it is often not necessary, so I think it is a fine solution for now.
 
 If you want to look at the source code for *Omega Optimizer*, it is available at [my github](https://github.com/Emilinya/OmegaOptimizer).
 
