@@ -5,10 +5,13 @@
 			"games": "//games.bendik.moe",
 			"about": "//about.bendik.moe",
 			"projects": "//www.bendik.moe/projects",
+			"math": "//www.bendik.moe/projects/math",
 			"css": "//www.bendik.moe/css/main.css",
 			"decentBendikBros": "//games.bendik.moe/decentBendikBros.html",
 			"thanks": "//games.bendik.moe/thanks.html",
-			"polygonParagon": "//games.bendik.moe/polygonParagon.html"
+			"polygonParagon": "//games.bendik.moe/polygonParagon.html",
+			"diffSolver": "//www.bendik.moe/projects/math/diffSolver.html",
+			"lcmFinder": "//www.bendik.moe/projects/math/lcmFinder.html"
 		},
 		"if": {
 			"home": "path==args['home']"
@@ -20,10 +23,13 @@
 			"games": "games/index.html",
 			"about": "about/index.html",
 			"projects": "www/projects/index.html",
+			"math": "www/projects/math/index.html",
 			"css": "www/css/main.css",
 			"decentBendikBros": "games/decentBendikBros.html",
 			"thanks": "games/thanks.html",
-			"polygonParagon": "games/polygonParagon.html"
+			"polygonParagon": "games/polygonParagon.html",
+			"diffSolver": "www/projects/math/diffSolver.html",
+			"lcmFinder": "www/projects/math/lcmFinder.html"
 		},
 		"if": {
 			"home": "path==args['home']"
