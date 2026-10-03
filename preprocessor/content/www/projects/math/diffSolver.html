@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+	<head>
+		<meta charset="utf-8">
+		{{head}}
+		<title>Site</title>
+	</head>
+	<body>
+		<div class="mainDiv">
+			<div class="headerDiv">
+				{{nav?home=projects}}
+			</div>
+			<div class="bodyDiv">
+				<form id="form">
+					<h1 style="margin-bottom: 0px">Difference Equation Solver</h1>
+					<p style="margin-top: 0px; margin-bottom: 30px">(Not to be confuced with Differantial Equations)</p>
+					<p style="margin-bottom: 5px">Write the equation: (ex: 2x2 + x4 - 8x0)</p>
+					<input id="eqInput" type="text" name="eqInput" required placeholder="axn + bx(n-1) + ... + zx0">
+					<p style="margin-bottom: 5px">Write the initial conditions:</p>
+					<div id="initialsDiv">
+					</div>
+					<p style="margin-bottom: 5px">How many iterations shall the solver do?</p>
+					<input id="nInput" type="number" name="nInput" required maxlength="6">
+					<h2 id="eqOutput"></h2>
+					<button id="eqSolve" type="submit" name="eqSolve">Solve equation</button>
+				</form>
+				<p id="eqResult"></p>
+			</div>
+		</div>
+	</body>
+	<script src="diffSolver.js" charset="utf-8"></script>
+</html>

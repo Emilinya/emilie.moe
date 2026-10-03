@@ -12,9 +12,46 @@
 				{{nav?home=projects}}
 			</div>
 			<div class="titleDiv">
-				<h1>Particle explosion simulator</h1>
+				<h1 style="margin-bottom: 10px">Particle explosion simulator</h1>
+				<button class="bottomLeftItem" id="toggleButton" type="button" name="hide">Hide options</button>
 			</div>
-			<div class="bodyDiv">
+			<div class="slidersDiv">
+				<!-- quality -->
+				<div class="sliderContainer">
+					<h3 class="infoText">Explosion quality</h3>
+					<div class="centerDiv">
+						<span class="defaultSpan" id="qualityDisplay">quality: 00000</span>
+						<input class="slider" id="qualitySlider" type="range" min="10" max="10000" value="1000" step="10">
+					</div>
+				</div>
+				<!-- friction -->
+				<div class="sliderContainer">
+					<h3 class="infoText">Explosion friction</h3>
+					<div class="centerDiv">
+						<span class="defaultSpan" id="frictionDisplay">friction: 0.00</span>
+						<input class="slider" id="frictionSlider" type="range" min="0" max="1" value="0.4" step="0.01">
+					</div>
+				</div>
+				<!-- retention -->
+				<div class="sliderContainer">
+					<h3 class="infoText">Explosion retention</h3>
+					<div class="centerDiv">
+						<span class="defaultSpan" id="retentionDisplay">retention: 00.0</span>
+						<input class="slider" id="retentionSlider" type="range" min="0" max="10" value="0.4" step="0.1">
+					</div>
+				</div>
+				<!-- type -->
+			</div>
+			<div class="selectDiv">
+				<span class="defaultSpan">Explosion type: </span>
+				<select id="typeSelect">
+					<option value="boom">boom</option>
+					<option value="fountain">fountain</option>
+					<option value="nuke">nuke</option>
+					<option value="meguNuke" disabled>meguNuke</option>
+				</select>
+			</div>
+			<div class="bodyDiv" style="overflow:hidden">
 				<canvas id="canvas"></canvas>
 			</div>
 			</div>
