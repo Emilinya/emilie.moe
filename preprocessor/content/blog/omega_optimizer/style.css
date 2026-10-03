@@ -12,7 +12,7 @@ blockquote {
     border: 8px solid #23323D;
     border-radius: 8px;
     margin: 8px;
-    overflow-x: scroll;
+    overflow-x: auto;
     overflow-y: hidden;
 }
 
@@ -31,6 +31,6 @@ pre.sourceCode {
 }
 
 mjx-container {
-    overflow-x: scroll;
+    overflow-x: auto;
     overflow-y: hidden;
 }
