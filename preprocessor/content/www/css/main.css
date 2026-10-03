@@ -14,7 +14,7 @@ html, body {
 
 p, h1, h2, h3, a, li, .defaultSpan {
 	color: var(--foregroundColor);
-	font-family: "Open Sans", sans-serif;
+	font-family: Sans-Serif;
 }
 
 .bold {
@@ -39,6 +39,28 @@ p, h1, h2, h3, a, li, .defaultSpan {
 	order: 2;
 	flex-basis: 100%;
 	text-align: center;
+	overflow: hidden;
+}
+
+.textDiv *:first-child {
+	margin-top: 0px;
+}
+.textDiv *:last-child {
+	margin-bottom: 0px;
+}
+
+.textDiv {
+	max-width: 800px;
+	width: 90%;
+	padding: 10px;
+	display: inline-block;
+	text-align: left;
+	box-shadow: 1px 1px 7px 1px #111;
+	border-radius: 5px;
+}
+
+#canvas {
+	border-color: var(--foregroundColor);
 }
 
 table {

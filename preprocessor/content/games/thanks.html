@@ -4,14 +4,20 @@
 		<meta charset="utf-8">
 		{{head}}
 		<link rel="icon" href="thanks/media/favicon.ico">
+		<link rel="stylesheet" type="text/css" href="thanks/css/style.css">
 		<title>Story</title>
 	</head>
 	<body>
-		<div class="headerDiv">
-			{{nav?home=games}}
-		</div>
-		<div class="headerDiv">
-			{{gameNav?home=thanks}}
+		<div class="mainDiv">
+			<div class="headerDiv">
+				{{nav?home=games}}
+			</div>
+			<div class="headerDiv">
+				{{gameNav?home=thanks}}
+			</div>
+			<div class="bodyDiv">
+				<canvas id="canvas"></canvas>
+			</div>
 		</div>
 		<div style="display:none;">
 			<img id="tank" src="thanks/media/tank.png">
@@ -52,7 +58,6 @@
 			<img id="tpForm" src="thanks/media/tpForm.png">
 			<img id="tpDesert" src="thanks/media/tpDesert.png">
 		</div>
-		<canvas id="canvas" style="border: 3px solid; border-radius: 10px"></canvas>
 		<script src="thanks/js/main.js" type="module"></script>
 	</body>
 </html>
