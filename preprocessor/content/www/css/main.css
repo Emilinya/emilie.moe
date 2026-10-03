@@ -39,7 +39,6 @@ p, h1, h2, h3, a, li, .defaultSpan {
 	order: 2;
 	flex-basis: 100%;
 	text-align: center;
-	overflow: hidden;
 }
 
 .textDiv *:first-child {
