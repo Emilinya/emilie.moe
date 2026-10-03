@@ -1,0 +1,9 @@
+[submodule "preprocessor/content/games/DecentJumpGame"]
+	path = preprocessor/content/games/DecentJumpGame
+	url = https://github.com/Emilinya/DecentJumpGame
+[submodule "preprocessor/content/games/Thanks"]
+	path = preprocessor/content/games/Thanks
+	url = https://github.com/Emilinya/Thanks
+[submodule "preprocessor/content/games/PolygonParagon"]
+	path = preprocessor/content/games/PolygonParagon
+	url = https://github.com/Emilinya/PolygonParagon
