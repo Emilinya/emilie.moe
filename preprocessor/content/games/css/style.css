@@ -1,0 +1,8 @@
+.clickImgDiv {
+	display: inline-block;
+	margin: 5px;
+}
+
+.clickImgDiv:hover {
+	cursor: pointer;
+}

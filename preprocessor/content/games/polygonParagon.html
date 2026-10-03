@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+	<head>
+		<meta charset="utf-8">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		{{head}}
+		<title>Polygon Paragon</title>
+		<!-- ****** faviconit.com favicons ****** -->
+		<link rel="shortcut icon" href="media/favicon/favicon.ico">
+		<link rel="icon" sizes="16x16 32x32 64x64" href="media/favicon/favicon.ico">
+		<link rel="icon" type="image/png" sizes="196x196" href="media/favicon/favicon-192.png">
+		<link rel="icon" type="image/png" sizes="160x160" href="media/favicon/favicon-160.png">
+		<link rel="icon" type="image/png" sizes="96x96" href="media/favicon/favicon-96.png">
+		<link rel="icon" type="image/png" sizes="64x64" href="media/favicon/favicon-64.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="media/favicon/favicon-32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="media/favicon/favicon-16.png">
+		<link rel="apple-touch-icon" href="media/favicon/favicon-57.png">
+		<link rel="apple-touch-icon" sizes="114x114" href="media/favicon/favicon-114.png">
+		<link rel="apple-touch-icon" sizes="72x72" href="media/favicon/favicon-72.png">
+		<link rel="apple-touch-icon" sizes="144x144" href="media/favicon/favicon-144.png">
+		<link rel="apple-touch-icon" sizes="60x60" href="media/favicon/favicon-60.png">
+		<link rel="apple-touch-icon" sizes="120x120" href="media/favicon/favicon-120.png">
+		<link rel="apple-touch-icon" sizes="76x76" href="media/favicon/favicon-76.png">
+		<link rel="apple-touch-icon" sizes="152x152" href="media/favicon/favicon-152.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="media/favicon/favicon-180.png">
+		<meta name="msapplication-TileColor" content="#FFFFFF">
+		<meta name="msapplication-TileImage" content="media/favicon/favicon-144.png">
+		<meta name="msapplication-config" content="media/favicon/browserconfig.xml">
+		<!-- ****** faviconit.com favicons ****** -->
+	</head>
+	<body>
+		<div class="headerDiv">
+			{{nav?home=games}}
+		</div>
+		<div class="headerDiv">
+			{{gameNav?home=polygonParagon}}
+		</div>
+		<canvas id="canvas"></canvas>
+		<script src="polygonParagon/js/noisejs/perlin.js"></script>
+		<script src="polygonParagon/main.js" type="module"></script>
+		<div style="display:none;">
+			<img id="playerWheel" src="polygonParagon/media/playerWheel.png">
+			<img id="fuelCan" src="polygonParagon/media/fuelCan.png">
+		</div>
+	</body>
+</html>

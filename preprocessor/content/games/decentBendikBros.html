@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+	<head>
+		<meta charset="utf-8">
+		{{head}}
+		<link rel="icon" href="../devilCat.ico" type="image/x-icon"/>
+		<title>GoodGameFollowMyPatreon</title>
+		<style>
+			canvas {
+				margin: auto;
+				margin-top: 5px;
+				display: block;
+				border: 2px solid #000000;
+				border-radius: 16px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="headerDiv">
+			{{nav?home=games}}
+		</div>
+		<div class="headerDiv">
+			{{gameNav?home=decentBendikBros}}
+		</div>
+		<canvas id="canvas" width="1100" height="550"></canvas>
+		<script src="decentBendikBros/js/proceduralMain.js" type="module"></script>
+	</body>
+</html>
