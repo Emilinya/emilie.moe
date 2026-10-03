@@ -1,3 +1,7 @@
+body {
+    font-size: 18px;
+}
+
 .titleBoxDiv {
     display: flex;
     align-items: center;
@@ -5,7 +9,7 @@
 }
 
 .flagImg {
-    height: 26px;
+    height: 42px;
 }
 
 .flagImg.left {
@@ -21,6 +25,13 @@
     align-items: center;
     justify-content: center;
     grid-area: image;
+}
+
+.listToggleButton {
+    font-size: 32px;
+    margin: 10px;
+    padding: 4px;
+    color: var(--foregroundColor);
 }
 
 @media all and (orientation: landscape) {

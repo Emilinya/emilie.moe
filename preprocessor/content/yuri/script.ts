@@ -41,100 +41,132 @@ class Manga {
     this.comments = comments;
     this.source = source;
   }
+}
 
-  to_html(element: HTMLElement) {
-    var gridDiv = document.createElement("div");
-    gridDiv.className = "gridDiv";
-
-    var split_path = this.image.split(".");
-    var extension = split_path.pop();
-    var body = split_path.join(".");
-
-    // Image
-    var wide_source = document.createElement("source");
-    wide_source.media = "(orientation: portrait)";
-    wide_source.srcset = `${body}_wide.${extension}`;
-
-    var tall_source = document.createElement("source");
-    tall_source.media = "(orientation: landscape)";
-    tall_source.srcset = `${body}_tall.${extension}`;
-
-    var img = document.createElement("img");
-    img.src = "";
-    img.setAttribute("width", "100%");
-    img.alt = "";
-
-    var picture = document.createElement("picture");
-    picture.appendChild(wide_source);
-    picture.appendChild(tall_source);
-    picture.appendChild(img);
-
-    var imageDiv = document.createElement("div");
-    imageDiv.className = "imgDiv";
-    imageDiv.appendChild(picture);
-    gridDiv.appendChild(imageDiv);
-
-    // Title
-    var finished_str = this.finished ? "Finished" : "Ongoing";
-    var title = document.createElement("h2");
-    title.innerHTML = `<b>${this.title} (${finished_str})</b>`;
-    var titleDiv = document.createElement("div");
-    titleDiv.className = "titleDiv";
-    titleDiv.appendChild(title);
-    gridDiv.appendChild(titleDiv);
-
-    // info
-    var synopsisTitle = document.createElement("h3");
-    synopsisTitle.innerHTML = "<em>Synopsis</em>";
-    var synopsis = document.createElement("p");
-    synopsis.innerHTML = this.synopsis.replace(/\n/g, "<br>");
-
-    var commentsTitle = document.createElement("h3");
-    commentsTitle.innerHTML = "<em>Comments</em>";
-    var comments = document.createElement("p");
-    comments.innerHTML = this.comments.replace(/\n/g, "<br>");
-
-    var pronoun = " It"
-    if (this.comments == "") {
-      pronoun = "This manga"
-    }
-
-    var link = `<a target="_blank" class="listLink" href="${this.source.link.link}">${this.source.link.name}</a>`;
-
-    if (this.source.licensed) {
-      comments.innerHTML += `${pronoun} is officially licensed by ${link}.`;
-    } else {
-      comments.innerHTML += `${pronoun} has no official translation, but a fan translation is available on ${link}.`;
-    }
-
-    var infoDiv = document.createElement("div");
-    infoDiv.className = "infoDiv";
-    infoDiv.appendChild(synopsisTitle);
-    infoDiv.appendChild(synopsis);
-    infoDiv.appendChild(commentsTitle);
-    infoDiv.appendChild(comments);
-    gridDiv.appendChild(infoDiv);
-
-    element.appendChild(gridDiv);
-    var hr = document.createElement("hr");
-    element.appendChild(hr);
+function getElementById(id: string): HTMLElement {
+  var element = document.getElementById(id);
+  if (element === null) {
+    throw new Error(`Could not fid element with id ${id}`);
   }
+  return element;
+}
+
+function escapeTitle(title: string): string {
+  return title.toLowerCase().replace(" ", "_");
+}
+
+function addLinkToList(manga: Manga, list: HTMLElement) {
+  var item = document.createElement("li");
+  item.style.margin = "3px 0px 3px 0px";
+  var link = document.createElement("a");
+  link.className = "listLink";
+  link.href = `#${escapeTitle(manga.title)}`;
+  link.appendChild(document.createTextNode(manga.title));
+  item.appendChild(link);
+  list.appendChild(item);
+}
+
+function addMangaToDiv(manga: Manga, div: HTMLElement) {
+  var gridDiv = document.createElement("div");
+  gridDiv.className = "gridDiv";
+  gridDiv.id = escapeTitle(manga.title);
+
+  var split_path = manga.image.split(".");
+  var extension = split_path.pop();
+  var body = split_path.join(".");
+
+  // Image
+  var wide_source = document.createElement("source");
+  wide_source.media = "(orientation: portrait)";
+  wide_source.srcset = `${body}_wide.${extension}`;
+
+  var tall_source = document.createElement("source");
+  tall_source.media = "(orientation: landscape)";
+  tall_source.srcset = `${body}_tall.${extension}`;
+
+  var img = document.createElement("img");
+  img.src = "";
+  img.setAttribute("width", "100%");
+  img.alt = "";
+
+  var picture = document.createElement("picture");
+  picture.appendChild(wide_source);
+  picture.appendChild(tall_source);
+  picture.appendChild(img);
+
+  var imageDiv = document.createElement("div");
+  imageDiv.className = "imgDiv";
+  imageDiv.appendChild(picture);
+  gridDiv.appendChild(imageDiv);
+
+  // Title
+  var finished_str = manga.finished ? "Finished" : "Ongoing";
+  var title = document.createElement("h2");
+  title.innerHTML = `<b>${manga.title} (${finished_str})</b>`;
+  var titleDiv = document.createElement("div");
+  titleDiv.className = "titleDiv";
+  titleDiv.appendChild(title);
+  gridDiv.appendChild(titleDiv);
+
+  // info
+  var synopsisTitle = document.createElement("h3");
+  synopsisTitle.innerHTML = "<em>Synopsis</em>";
+  var synopsis = document.createElement("p");
+  synopsis.innerHTML = manga.synopsis.replace(/\n/g, "<br>");
+
+  var commentsTitle = document.createElement("h3");
+  commentsTitle.innerHTML = "<em>Comments</em>";
+  var comments = document.createElement("p");
+  comments.innerHTML = manga.comments.replace(/\n/g, "<br>");
+
+  var pronoun = " It";
+  if (manga.comments == "") {
+    pronoun = "This manga";
+  }
+
+  var link = `<a target="_blank" class="listLink" href="${manga.source.link.link}">${manga.source.link.name}</a>`;
+
+  if (manga.source.licensed) {
+    comments.innerHTML += `${pronoun} is officially licensed by ${link}.`;
+  } else {
+    comments.innerHTML += `${pronoun} has no official translation, but a fan translation is available on ${link}.`;
+  }
+
+  var infoDiv = document.createElement("div");
+  infoDiv.className = "infoDiv";
+  infoDiv.appendChild(synopsisTitle);
+  infoDiv.appendChild(synopsis);
+  infoDiv.appendChild(commentsTitle);
+  infoDiv.appendChild(comments);
+  gridDiv.appendChild(infoDiv);
+
+  div.appendChild(gridDiv);
+  var hr = document.createElement("hr");
+  div.appendChild(hr);
 }
 
 function createYuriList(ranking: string[], mangas: Manga[]) {
-  var div = document.getElementById("yuriList");
-  if (div === null) {
-    throw new Error("Could not fid element with id 'yuriList'");
-  }
+  var list = getElementById("summaryList");
+  var div = getElementById("yuriList");
 
   // I love O(n^2) algorithms!
   for (const name of ranking) {
     for (const manga of mangas) {
       if (manga.title === name) {
-        manga.to_html(div);
+        addLinkToList(manga, list);
+        addMangaToDiv(manga, div);
         break;
       }
     }
+  }
+}
+
+function toggleSummaryDiv() {
+  var summaryDiv = getElementById("summaryDiv");
+  if (summaryDiv.style.display === "none") {
+    summaryDiv.style.display = "block";
+  } else {
+    summaryDiv.style.display = "none";
   }
 }
 
@@ -1177,7 +1209,10 @@ with her to rekindle their (more than?) friendship.`,
     `This manga suffers from a somewhat rushed ending, but is otherwise good.`,
     new Source(
       false,
-      new Link("Mangadex", "https://mangadex.org/title/b553b7c3-cee3-4689-aa54-fbc1bc1da71d/pocha-climb")
+      new Link(
+        "Mangadex",
+        "https://mangadex.org/title/b553b7c3-cee3-4689-aa54-fbc1bc1da71d/pocha-climb"
+      )
     )
   ),
 ];
