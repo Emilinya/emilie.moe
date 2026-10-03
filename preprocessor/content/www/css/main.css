@@ -1,9 +1,9 @@
 :root {
 	--borderSize: 2px;
 	--backgroundColor: #33424D;
-	--foregroundColor: #CCCEC7;
-	--textHighlightColor: #EEEF99;
-	--listHighlightColor: #97C49A;
+	--foregroundColor: #E1E3DE;
+	--textHighlightColor: #F5A9B8;
+	--listHighlightColor: #5BCEFA;
 }
 
 html, body {
@@ -73,6 +73,7 @@ sub {
 }
 
 .textDiv {
+	overflow-wrap: break-word;
 	max-width: 800px;
 	width: 90%;
 	padding: 10px;
@@ -80,6 +81,10 @@ sub {
 	text-align: left;
 	box-shadow: 1px 1px 7px 1px #111;
 	border-radius: 5px;
+}
+
+.textDiv.bottom {
+	margin-bottom: 50vh;
 }
 
 .listDiv {
@@ -175,6 +180,10 @@ th, td {
 	border: none;
 	font-weight: normal;
 	padding: 0px 4px 0px 4px;
+}
+
+.listTop {
+	margin-bottom: 0px;
 }
 
 .navLink {

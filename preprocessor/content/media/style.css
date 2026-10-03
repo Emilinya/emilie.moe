@@ -1,0 +1,30 @@
+:root {
+  --grid-columns: 1;
+}
+
+.gridDiv {
+	display: grid;
+	grid-template-columns: 0% auto;
+}
+
+.blockDiv {
+	display: grid;
+	grid-template-columns: repeat(var(--grid-columns), 1fr);
+	padding: 5px;
+}
+
+.imgContainer {
+	display: inline flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.gridImg {
+	border: 3px solid black;
+	width: 100%
+}
+
+.smallgridImg {
+	border: 3px solid black;
+	width: calc(100vw/var(--grid-columns)); 
+}
