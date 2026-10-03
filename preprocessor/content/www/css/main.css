@@ -17,6 +17,14 @@ p, h1, h2, h3, a, li, .defaultSpan {
 	font-family: Sans-Serif;
 }
 
+.subP {
+	margin-top: 0px;
+}
+
+.supP {
+	margin-bottom: 5px;
+}
+
 .bold {
 	font-weight: bold;
 }
