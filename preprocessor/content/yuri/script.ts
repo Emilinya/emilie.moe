@@ -226,7 +226,7 @@ Adventurers seek to take the demon queen's head, but a love-struck young female 
 to take her hand. Join us won't you, for this bawdy tale of love and persistence set inside \
 a real-life RPG.`,
     `\
-A funny love story. It start off very silly, but becomes more serious eventually. It also \
+In addition to the gay main character, this webcomic also \
 features a trans princess as a side character.`,
     new Source(
       true,
@@ -273,9 +273,8 @@ Nanami turn down a suitor with such maturity that she's inspired to ask her for 
 when the next person to confess to Yuu is Nanami herself, has her shoujo romance finally \
 begun?`,
     `\
-This is one of the most famous lesbian manga. It is adapted into an anime, which covers \
-about half of the story. The anime is very good, so I would recommend watching that \
-initially.`,
+This is one of the most famous lesbian manga. It is also adapted \
+into a very good anime, which covers about half of the story.`,
     new Source(
       true,
       new Link(
@@ -295,9 +294,7 @@ Romance-super-fan Rei Chan is ready for her first boyfriend and she knows just w
 the most handsome boy in school, Hansum Ochinchin. But her plans for the perfect love story \
 are derailed when the most popular girl in class declares herself a rival....for Rei's \
 heart?! This is the year her not so shoujo love story begins!`,
-    `\
-This is a very silly, but also very cute, comic. The main character suffers from comphet, so \
-it takes a while for her to understand her feelings.`,
+    ``,
     new Source(
       true,
       new Link(
@@ -315,7 +312,7 @@ it takes a while for her to understand her feelings.`,
     `\
 Nanoha and Chidori are students at an all-girls school who are dating but trying to keep \
 this a secret from all of their classmates.`,
-    `This is a very cute slice of life story.`,
+    ``,
     new Source(
       false,
       new Link(
@@ -335,9 +332,7 @@ Mel, a renowned heart surgeon, lives a carefree life with sex being a tool for j
 than a show of affection. Then she meets someone that turns her view of love and life upside \
 down. This story is about two people that meet with minimal expectations but soon become \
 enthralled in a relationship that changes everything about themselves.`,
-    `\
-This comic has a lot of explicit lesbian sex, so keep that in mind. It is very dramatic, \
-which I typically don't like, but the main couple is very cute, and it does have a happy ending.`,
+    `This series has a lot of explicit lesbian sex, so keep that in mind.`,
     new Source(
       true,
       new Link(
@@ -395,9 +390,9 @@ exam! How does Nagisa deal with these complicated emotions?`,
     "media/wifewife.png",
     true,
     `\
-Sumi and Kinana have just moved in together. This is the refreshing and hilarious story of \
-their (romantic) everyday life.`,
-    `This is a short and sweet story about a couple moving in together.`,
+Sumi and Kinana have just moved in together. This is the refreshing \
+and hilarious story of their (romantic) everyday life.`,
+    ``,
     new Source(
       false,
       new Link(
@@ -416,7 +411,7 @@ their (romantic) everyday life.`,
 Mari's girlfriend, Arisa, loses her memories of the past three years, including all memory \
 of their life together. However, it turns out that being crazy in love with someone \
 transcends all realms of possibility.`,
-    `This manga is a bit too unserious for my tastes, but is is still cute.`,
+    ``,
     new Source(
       false,
       new Link(
@@ -436,7 +431,7 @@ A vampire that has been asleep for almost two hundred years, Maria, has been awa
 wolf girl passing by, Xing Lan. When the casket was opened, a curse fell upon Xing Lan. \
 Instead of being scared, the naïve Xing Lan instead believed she has found an amazing \
 companion, and the two embark on a journey to the city.`,
-    `Very cute.`,
+    ``,
     new Source(
       true,
       new Link("Bilibili Comics", "https://www.bilibilicomics.com/detail/mc88")
@@ -451,10 +446,10 @@ companion, and the two embark on a journey to the city.`,
     `\
 Hell yeah! A major publisher wants Mai Sohn to write a webcomic on relationships. But she's \
 struck with heartbreak as her girlfriend abruptly dumps her. It's hard writing about \
-relationships without being in one, so she needs to find the inspiration for love — and find \
+relationships without being in one, so she needs to find the inspiration for love - and find \
 it fast. And what's up with her possibly homophobic neighbor? Why is she cool with Mai \
 one minute and then so awkward and weird to her the next?! Can't a girl catch a break?`,
-    `I read this story long ago, so I don't remember much of it, but I do remember it being good.`,
+    `I read this story long ago, so I don't remember much of it, but I do think it was good.`,
     new Source(
       true,
       new Link("Tapas", "https://tapas.io/series/ringmybell/info")
@@ -472,9 +467,7 @@ happiness of others at the cost of her own emotional well-being. Running into he
 school crush, Aerie, and reaching a breaking point with her family and work, Joy's \
 long-overdue goals of leaving home are placed into action. Will Joy be able to find her way \
 in the world, and resolve the long overdue issues that have haunted her ordinary life?`,
-    `\
-This story is heavy, with references to sexual assault and familial abuse, but it a very \
-good and touching story.`,
+    `This story is heavy, with references to sexual assault and familial abuse, so keep that in mind.`,
     new Source(
       true,
       new Link("Comiko", "https://comiko.net/title/86394-a-joyful-life")
@@ -496,7 +489,7 @@ After school ends, a good honor student is threatened by the class's green tea b
 
 A cute romance that stems from a misunderstanding begins in That Time I Was Blackmailed By \
 the Class's Green Tea Bitch!`,
-    `This is a fun and gay story, but it unfortunately suffers from a rushed ending`,
+    `This manga does unfortunately suffer from a rushed ending.`,
     new Source(
       false,
       new Link(
@@ -514,7 +507,7 @@ the Class's Green Tea Bitch!`,
     `\
 Seowoo, president of the film club, is standing outside in the rain, a welcome break \
 from the noisy and chaotic bar behind her, when a girl with orange hair stumbles out \
-the doors and practically into her arms. Then she begins singing “Dancing in the Rain” \
+the doors and practically into her arms. Then she begins singing "Dancing in the Rain" \
 while... dancing in the rain. It's a minute encounter, really, but Seowoo has seen the \
 greatest romances bloom from the smallest moments in the movies. So when Hayoung shows \
 up to join the film club, Seowoo - who's not even sure what she herself is feeling - \
@@ -536,8 +529,8 @@ finds her heart skipping a beat.`,
     true,
     `\
 Uno Hinako throws herself into makeup, fashion, and falling in love, hoping that will make \
-her seem “normal” to the other people at her job. But no matter how hard she tries, she's \
-a self-doubting mess inside, and her attempts at “normal” romance with men just keep failing. \
+her seem "normal" to the other people at her job. But no matter how hard she tries, she's \
+a self-doubting mess inside, and her attempts at "normal" romance with men just keep failing. \
 When she starts to think she might be alone forever, a new normal presents itself in the form of \
 her relationship with Asahi Sato, a level-headed woman who works at her company. It starts as \
 respect, and then it becomes far more intimate.`,
@@ -782,8 +775,8 @@ through 2-D artworks. Find out how their college lives start involving a daily d
     `\
 Morimoto, a young professional woman in Japan, is tired of fending off her parents' questions about her being single. \
 They want her to marry a man and settle down, and they'll insist on nitpicking her choice of groom to death. In an \
-unexpected move, another woman in the office—who has a crush on her—offers to be her wife in a sham marriage, which \
-might make her parents back off. But this “fake” marriage could unearth something very real!`,
+unexpected move, another woman in the office-who has a crush on her-offers to be her wife in a sham marriage, which \
+might make her parents back off. But this "fake" marriage could unearth something very real!`,
     `If you for whatever reason decide to read this story on mangadex, note that chapter 3.5 is an unrelated oneshot.`,
     new Source(
       true,
@@ -1065,9 +1058,9 @@ girl looks so much more mature than her, Mayuki ends up asking Rin to teach her 
     true,
     `\
 Fujishiro Nanaki is super cute, super popular, and super annoyed with anyone as plain as her classmate Kurokawa Kanade. \
-When Nanaki finds out her boyfriend's cheating on her, however, her life makes a complete 180—as does her \
+When Nanaki finds out her boyfriend's cheating on her, however, her life makes a complete 180-as does her \
 relationship with Kanade. This all-new yuri manga series explores the budding romance between the \
-cool girl in school and the “plain” girl she once brushed off!`,
+cool girl in school and the "plain" girl she once brushed off!`,
     ``,
     new Source(
       true,
