@@ -99,7 +99,7 @@ class Manga {
     if (this.source.licenced) {
       comments.innerHTML += ` It is officially liscenced by ${link}.`;
     } else {
-      comments.innerHTML += ` It has no official tranlation, but a fan translation is available at ${link}.`;
+      comments.innerHTML += ` It has no official tranlation, but a fan translation is available on ${link}.`;
     }
 
     var infoDiv = document.createElement("div");
@@ -136,19 +136,22 @@ function createYuriList(ranking: string[], mangas: Manga[]) {
 const ranking = [
   "Adachi and Shimamura",
   "Mage & Demon Queen",
-  "Lily",
+  "Blooming Sequence",
   "Bloom Into You",
+  "Doughnuts Under a Crescent Moon",
   "Not so Shoujo Love Story",
-  "Hana ni Arashi",
   "Pulse",
-  "Can't Defy the Lonely Girl",
-  "Anemone Is in Heat",
-  "Wife & Wife",
-  "Cheerful Amnesia",
-  "My Food Looks Very Cute",
   "Ring my Bell",
   "A Joyful Life",
+  "Hana ni Arashi",
+  "Lily",
+  "If We Leave on the Dot",
   "That Time I Was Blackmailed By the Class's Green Tea Bitch",
+  "My Food Looks Very Cute",
+  "Anemone Is in Heat",
+  "Can't Defy the Lonely Girl",
+  "Cheerful Amnesia",
+  "Wife & Wife",
 ];
 
 const mangas = [
@@ -442,7 +445,7 @@ good and touching story.`,
   // --- That Time I Was Blackmailed By the Class's Green Tea Bitch ---
   new Manga(
     "That Time I Was Blackmailed By the Class's Green Tea Bitch",
-    "media/joyful_life.png",
+    "media/blackmail.jpg",
     true,
     `\
 Green Tea Bitch (n.): A woman who pretends to be pure and innocent but in fact is \
@@ -461,6 +464,69 @@ the Class's Green Tea Bitch!`,
         "MangaDex",
         "https://mangadex.org/title/73965527-b393-4f65-9bc3-2439ec44935a/that-time-i-was-blackmailed-by-the-class-s-green-tea-bitch"
       )
+    )
+  ),
+  //
+  // --- Blooming Sequence ---
+  new Manga(
+    "Blooming Sequence",
+    "media/blooming.jpg",
+    true,
+    `\
+    Seowoo, president of the film club, is standing outside in the rain, a welcome break \
+    from the noisy and chaotic bar behind her, when a girl with orange hair stumbles out \
+    the doors and practically into her arms. Then she begins singing “Dancing in the Rain” \
+    while… dancing in the rain. It's a minute encounter, really, but Seowoo has seen the \
+    greatest romances bloom from the smallest moments in the movies. So when Hayoung shows \
+    up to join the film club, Seowoo - who's not even sure what she herself is feeling - \
+    finds her heart skipping a beat.`,
+    ``,
+    new Source(
+      false,
+      new Link(
+        "MangaDex",
+        "https://mangadex.org/title/243711a2-9455-4459-a00d-300e25fd8af0/blooming-sequence"
+      )
+    )
+  ),
+  //
+  // --- Doughnuts Under a Crescent Moon ---
+  new Manga(
+    "Doughnuts Under a Crescent Moon",
+    "media/doughnuts.jpg",
+    true,
+    `\
+    Uno Hinako throws herself into makeup, fashion, and falling in love, hoping that will make \
+    her seem “normal” to the other people at her job. But no matter how hard she tries, she's \
+    a self-doubting mess inside, and her attempts at “normal” romance with men just keep failing. \
+    When she starts to think she might be alone forever, a new normal presents itself in the form of \
+    her relationship with Asahi Sato, a level-headed woman who works at her company. It starts as \
+    respect, and then it becomes far more intimate.`,
+    ``,
+    new Source(
+      true,
+      new Link(
+        "Seven Seas Entertainment",
+        "https://sevenseasentertainment.com/series/doughnuts-under-a-crescent-moon/"
+      )
+    )
+  ),
+  //
+  // --- If We Leave on the Dot ---
+  new Manga(
+    "If We Leave on the Dot",
+    "media/on_the_dot.webp",
+    true,
+    `\
+    The woman she's interested in carries around the scent of vanilla.
+    They would always communicate through exchanging pieces of notes that would be placed inside their coats' pockets.
+    'When the weather turns warmer, will everything end?'
+    The quiet and cute, Yukawa-san and the beautiful lady, Mizuki-san, where will their love go?
+    An exciting and heart-pounding OL Yuri Manga`,
+    ``,
+    new Source(
+      true,
+      new Link("Manga Planet", "https://mangaplanet.com/comic/5fe434a974859")
     )
   ),
 ];
