@@ -47,20 +47,25 @@ async function getImgSrcResult(state) {
 		method: "POST",
 		body: imgSrc,
 	};
-
-	let response = await fetch(
-		`http://api.bendik.moe/strip?center_frac=${center_frac}&center=${center}`,
-		options
-	);
+	try {
+		var response = await fetch(
+			`http://api.bendik.moe/strip?center_frac=${center_frac}&center=${center}`,
+			options
+		);
+	} catch (e) {
+		window.alert("Something went wrong");
+		return "";
+	}
 	let body = await response.text();
 	if (body !== "TimeoutError") {
 		body = body.replace(/&#39;/g, "").replace(/b/, "");
 		return body;
 	} else {
-		// Handle error?
+		window.alert("Request timed out");
 		return "";
 	}
 }
+
 
 function download(filename, text) {
 	var element = document.createElement('a');

@@ -1,5 +1,5 @@
-import { h, Component, render } from 'https://unpkg.com/preact?module';
-import htm from 'https://unpkg.com/htm?module';
+import { h, Component, render } from "./preact.js";
+import htm from "./htm.js";
 
 const html = htm.bind(h);
 
@@ -51,6 +51,7 @@ class BodyDivContent extends Component {
 			barIsClicked: false,
 			barPos: 0,
 			centerFrac: 0.5,
+			isGettingResult: false,
 			displayResult: false,
 			imgSrcResult: "",
 		};
@@ -95,12 +96,21 @@ class BodyDivContent extends Component {
 
 	onStripButtonClick = async _ => {
 		let state = this.state;
-		state.imgSrcResult = await getImgSrcResult(this.state);
+		state.isGettingResult = true;
+		this.setState(state);
+
+		let imgSrcResult = await getImgSrcResult(this.state);
+		if (imgSrcResult !== state.imgSrcResult) {
+			state.imgSrcResult = imgSrcResult
+		} else {
+			state.isGettingResult = false;
+		}
 		this.setState(state);
 	}
 	onImgResultLoad = _ => {
 		let state = this.state;
 		state.displayResult = true;
+		state.isGettingResult = false;
 		this.setState(state);
 	}
 
@@ -120,6 +130,7 @@ class BodyDivContent extends Component {
 		let displayResultH3 = state.imgSrcResult !== "" ? "block" : "none";
 		let displayResultImg = state.imgSrcResult !== "" ? "inline" : "none";
 		let displayDownloadButton = state.displayResult ? "inline" : "none";
+		let displayLoadingDiv = state.isGettingResult ? "block" : "none";
 		return html`
 			<h1 style="margin-bottom: 0px">Remove whitespace from image</h1>
 			<a class="listLink" href="https://github.com/Benito1001/bendik.moe/blob/master/server/strippinator.py" target="_blank">Link to source code</a>
@@ -137,6 +148,7 @@ class BodyDivContent extends Component {
 			<h1 style="display: ${displayResultH3}; margin-bottom: 5px">Result:</h1>
 			<img src="${state.imgSrcResult}" class="bigImg" onLoad=${this.onImgResultLoad} style="display: ${displayResultImg}" /><br/>
 			<button type="button" id="downloadButton" style="display: ${displayDownloadButton}" onClick=${this.onDownloadButtonClick}>Download Image</button>
+			<div style="position: absolute; top: 0px; width: 100vw; height: 100vh; cursor: progress; display: ${displayLoadingDiv}"></div>
 		`;
 	}
 
