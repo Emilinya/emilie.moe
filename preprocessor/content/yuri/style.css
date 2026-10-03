@@ -1,17 +1,62 @@
-.gridDiv {
-    display: grid;
-    grid-template-columns: 20% auto;
-    grid-template-areas: "left right";
-    padding-bottom: 5px;
+.titleBoxDiv {
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+
+.flagImg {
+    height: 26px;
+}
+
+.flagImg.left {
+    padding-left: 5vw;
+}
+
+.flagImg.right {
+    padding-right: 5vw;
 }
 
 .imgDiv {
-    padding-right: 1vw;
     display: flex;
     align-items: center;
-    grid-area: "left";
+    justify-content: center;
+    grid-area: image;
+}
+
+@media all and (orientation: landscape) {
+    .gridDiv {
+        display: grid;
+        grid-template-columns: 20% auto;
+        grid-template-areas: 
+            "image title"
+            "image info"
+            "image .";
+    }
+
+    .imgDiv {
+        padding-right: 1vw;
+    }
+}
+
+@media all and (orientation: portrait) {
+    .gridDiv {
+        display: grid;
+        grid-template-areas:
+            "title"
+            "image"
+            "info";
+    }
+}
+
+.titleDiv {
+    text-align: center;
+    grid-area: title;
 }
 
 .infoDiv {
-    grid-area: "right";
+    grid-area: info;
+}
+
+hr {
+    margin: 16px 0px 16px 0px;
 }
