@@ -62,6 +62,7 @@ sub {
 	order: 2;
 	flex-basis: 100%;
 	text-align: center;
+	overflow-y: auto;
 }
 
 .textDiv *:first-child {
