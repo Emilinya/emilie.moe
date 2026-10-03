@@ -1,5 +1,6 @@
 var topDiv = document.getElementById("topDiv");
 var video = document.getElementById("animVideo");
+video.addEventListener("loadeddata", resize);
 
 // I would hope there is a simpler, pure-css way of doing this, but who knows
 function resize() {
@@ -8,8 +9,6 @@ function resize() {
     var availableHeight = innerHeight - topDiv.offsetHeight;
     var availableWidth = topDiv.offsetWidth;
     var availableRatio = availableWidth/availableHeight;
-
-    console.log(availableHeight, availableWidth, availableRatio, ratio);
 
     if (ratio > availableRatio) {
         // image is wider than available space, limit by width
@@ -20,5 +19,7 @@ function resize() {
         video.style.width = "auto";
         video.style.height = availableHeight+"px";
     }
+
+    video.style.display = "";
 }
 window.addEventListener("resize", resize);
