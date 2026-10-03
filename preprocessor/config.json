@@ -5,16 +5,20 @@
 			"games": "//games.emilie.moe",
 			"media": "//media.emilie.moe",
 			"about": "//about.emilie.moe",
+			"blog": "//blog.emilie.moe",
 			"projects": "//www.emilie.moe/projects",
 			"math": "//www.emilie.moe/projects/math",
 			"css": "//www.emilie.moe/css/main.css",
 			"icon": "//www.emilie.moe/media/favicon",
-			"decentDørumBros": "//games.emilie.moe/decentDørumBros.html",
+			"decentJumpGame": "//games.emilie.moe/decentJumpGame.html",
 			"thanks": "//games.emilie.moe/thanks.html",
 			"polygonParagon": "//games.emilie.moe/polygonParagon.html",
 			"diffSolver": "//www.emilie.moe/projects/math/diffSolver.html",
 			"lcmFinder": "//www.emilie.moe/projects/math/lcmFinder.html",
-			"taylorSeries": "//www.emilie.moe/projects/math/taylorSeries.html"
+			"taylorSeries": "//www.emilie.moe/projects/math/taylorSeries.html",
+			"schrodingerMain": "//www.emilie.moe/projects/schrodinger/index.html",
+			"2slits": "//www.emilie.moe/projects/schrodinger/2slits.html",
+			"3slits": "//www.emilie.moe/projects/schrodinger/3slits.html"
 		},
 		"if": {
 			"home": "path==args['home']"
@@ -26,16 +30,20 @@
 			"games": "games/index.html",
 			"media": "media/index.html",
 			"about": "about/index.html",
+			"blog": "blog/index.html",
 			"projects": "www/projects/index.html",
 			"math": "www/projects/math/index.html",
 			"css": "www/css/main.css",
 			"icon": "www/media/favicon",
-			"decentDørumBros": "games/decentDørumBros.html",
+			"decentJumpGame": "games/decentJumpGame.html",
 			"thanks": "games/thanks.html",
 			"polygonParagon": "games/polygonParagon.html",
 			"diffSolver": "www/projects/math/diffSolver.html",
 			"lcmFinder": "www/projects/math/lcmFinder.html",
-			"taylorSeries": "www/projects/math/taylorSeries.html"
+			"taylorSeries": "www/projects/math/taylorSeries.html",
+			"schrodingerMain": "www/projects/schrodinger/index.html",
+			"2slits": "www/projects/schrodinger/2slits.html",
+			"3slits": "www/projects/schrodinger/3slits.html"
 		},
 		"if": {
 			"home": "path==args['home']"

@@ -205,3 +205,11 @@ a {
 a:hover {
 		text-decoration: underline;
 }
+
+code {
+    color: var(--foregroundColor);
+}
+code *:first-child {
+	background-color:#232e35;
+	border-radius: 5px;
+}

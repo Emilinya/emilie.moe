@@ -111,7 +111,7 @@ form.addEventListener("submit", async event => {
 	updateData({key: "Enter"})
 	if (funcData.length === initialsData.length) {
 		let response = await fetch(
-			`http://api.bendik.moe/diff?initials=${initialsData.join(",")}
+			`http://api.emilie.moe/diff?initials=${initialsData.join(",")}
 			&functions=${funcData.join(",")}&N=${nData}&rightSide=0&display=full`
 		);
 		let body = await response.text();

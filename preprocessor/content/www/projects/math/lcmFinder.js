@@ -13,7 +13,7 @@ form.addEventListener("submit", async event => {
 		}
 		digits.push(values[i]);
 	}
-	let response = await fetch(`http://api.bendik.moe/lcm?values=${digits.join(",")}`);
+	let response = await fetch(`http://api.emilie.moe/lcm?values=${digits.join(",")}`);
 	let body = await response.text();
 	if (body === "None") {
 		input.setCustomValidity('Request timed out, lcm is too big');

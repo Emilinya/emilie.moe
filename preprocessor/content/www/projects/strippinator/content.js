@@ -133,7 +133,7 @@ class BodyDivContent extends Component {
 		let displayLoadingDiv = state.isGettingResult ? "block" : "none";
 		return html`
 			<h1 style="margin-bottom: 0px">Remove whitespace from image</h1>
-			<a class="listLink" href="https://github.com/Benito1001/bendik.moe/blob/master/server/strippinator.py" target="_blank">Link to source code</a>
+			<a class="listLink" href="https://github.com/Emilinya/emilie.moe/blob/master/server/strippinator.py" target="_blank">Link to source code</a>
 			<br/><br/>
 			<button type="button" onClick=${this.onImgButtonClick} style="margin-bottom: 10px">upload image</button><span id="imgNameSpan"> ${state.imgName}</span><br/>
 			<input type="file" accept="image/*" id=imgInput onChange=${this.onImgInputChange} hidden />
