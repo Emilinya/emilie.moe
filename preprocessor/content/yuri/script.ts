@@ -100,46 +100,49 @@ function addMangaToDiv(manga: Manga, div: HTMLElement) {
   gridDiv.appendChild(imageDiv);
 
   // Title
-  var finished_str = manga.finished ? "Finished" : "Ongoing";
   var title = document.createElement("h2");
-  title.innerHTML = `<b>${manga.title} (${finished_str})</b>`;
+  title.innerHTML = `<b>${manga.title}</b>`;
   var titleDiv = document.createElement("div");
   titleDiv.className = "titleDiv";
   titleDiv.appendChild(title);
   gridDiv.appendChild(titleDiv);
 
-  // info
+  var infoDiv = document.createElement("div");
+  infoDiv.className = "infoDiv";
+
+  // synopsis
   var synopsisTitle = document.createElement("h3");
   synopsisTitle.innerHTML = "<em>Synopsis</em>";
   var synopsis = document.createElement("p");
   synopsis.innerHTML = manga.synopsis.replace(/\n/g, "<br>");
-
-  var commentsTitle = document.createElement("h3");
-  commentsTitle.innerHTML = "<em>Comments</em>";
-  var comments = document.createElement("p");
-  comments.innerHTML = manga.comments.replace(/\n/g, "<br>");
-
-  var pronoun = " It";
-  if (manga.comments == "") {
-    pronoun = "This manga";
-  }
-
-  var link = `<a target="_blank" class="listLink" href="${manga.source.link.link}">${manga.source.link.name}</a>`;
-
-  if (manga.source.licensed) {
-    comments.innerHTML += `${pronoun} is officially licensed by ${link}.`;
-  } else {
-    comments.innerHTML += `${pronoun} has no official translation, but a fan translation is available on ${link}.`;
-  }
-
-  var infoDiv = document.createElement("div");
-  infoDiv.className = "infoDiv";
   infoDiv.appendChild(synopsisTitle);
   infoDiv.appendChild(synopsis);
-  infoDiv.appendChild(commentsTitle);
-  infoDiv.appendChild(comments);
-  gridDiv.appendChild(infoDiv);
 
+  // comments
+  if (manga.comments.length !== 0) {
+    var commentsTitle = document.createElement("h3");
+    commentsTitle.innerHTML = "<em>Comments</em>";
+    var comments = document.createElement("p");
+    comments.innerHTML = manga.comments.replace(/\n/g, "<br>");
+    infoDiv.appendChild(commentsTitle);
+    infoDiv.appendChild(comments);
+  }
+
+  // publication status
+  var statusTitle = document.createElement("h3");
+  statusTitle.innerHTML = "<em>Publication Status</em>";
+  var status = document.createElement("p");
+  status.innerText = `This story is ${manga.finished ? "complete" : "ongoing"}`;
+  var link = `<a target="_blank" class="listLink" href="${manga.source.link.link}">${manga.source.link.name}</a>`;
+  if (manga.source.licensed) {
+    status.innerHTML += `, and is officially licensed by ${link}.`;
+  } else {
+    status.innerHTML += `. It has no official translation, but a fan translation is available on ${link}.`;
+  }
+  infoDiv.appendChild(statusTitle);
+  infoDiv.appendChild(status);
+
+  gridDiv.appendChild(infoDiv);
   div.appendChild(gridDiv);
   var hr = document.createElement("hr");
   div.appendChild(hr);
@@ -219,6 +222,8 @@ const ranking = [
   "Failed Princesses",
   "Girl Friends",
   "Come Rain or Shine",
+  "Girls Wedding Omnibus",
+  "White Lilies in Love - BRIDE's Newlywed Yuri Anthology",
   "Pocha Climb!",
   "Cooking in Summer",
   "Ayaka is in Love with Hiroko!",
@@ -1215,6 +1220,57 @@ with her to rekindle their (more than?) friendship.`,
       )
     )
   ),
+  //
+  // --- Girls Wedding Omnibus ---
+  new Manga(
+    "Girls Wedding Omnibus",
+    "media/yurikon.jpg",
+    true,
+    `Omnibus series about several lesbian marriages.`,
+    ``,
+    new Source(
+      false,
+      new Link(
+        "Mangadex",
+        "https://mangadex.org/title/e7d79572-4b27-4c1e-befa-3d310e7c81fe/yurikon"
+      )
+    )
+  ),
+  //
+  // --- White Lilies in Love - BRIDE's Newlywed Yuri Anthology ---
+  new Manga(
+    "White Lilies in Love - BRIDE's Newlywed Yuri Anthology",
+    "media/brides.jpg",
+    true,
+    `This is an anthology full of newlywed yuri themed stories.`,
+    ``,
+    new Source(
+      false,
+      new Link(
+        "Mangadex",
+        "https://mangadex.org/title/5c68f443-2153-42ed-b835-3c3962ad088b/white-lilies-in-love-bride-s-newlywed-yuri-anthology"
+      )
+    )
+  ),
+  //
+  // --- Vampire x Junior ---
+  //   new Manga(
+  //     "Vampire x Junior",
+  //     "media/junior.jpg",
+  //     true,
+  //     `\
+  // Ayafuji Sara transferred to the private Fujigamine Academy. She suffers from extreme blushing and dreamed of making friends \
+  // at the academy and having an "ordinary student life." However, having met at the scene, Kazari Iris set her eyes on her. \
+  // Will her dream crumble away…?! A sweet master-servant Girls' Love series, the curtains are raised now.`,
+  //     `Warning: this is a tragedy. It is very sad, don't read it!`,
+  //     new Source(
+  //       false,
+  //       new Link(
+  //         "Mangadex",
+  //         "https://mangadex.org/title/1f24a535-a2ec-40b4-9add-3bca5b3e32bf/vampire-x-junior"
+  //       )
+  //     )
+  //   ),
 ];
 
 createYuriList(ranking, mangas);
