@@ -809,7 +809,7 @@ The time when they wanted to grow up quickly and the present when they don't wan
 
 A slightly bittersweet but very sweet love story that depicts the shape of the two's love as it changes with the passage of time.`,
     `\
-This manga does not even have a translated title or description on mangadex, so the description is from the \
+This manga does not have a translated title or description on mangadex, so the description is from the \
 Japanese Amazon page, and the title is translated (probably incorrectly) by me.`,
     new Source(
       false,
@@ -826,9 +826,9 @@ Japanese Amazon page, and the title is translated (probably incorrectly) by me.`
     "media/recipe.jpg",
     true,
     `\
-The only first-year member of the struggling cooking club, an irreverent manipulative airhead, comes to the prim and proper new
-club president, pressuring her for "advice" (a trial girl-girl kiss). Supposedly, the newbie has recently developed feelings for
-an unspecified girl and suspects herself of being lesbian. Unless proven wrong, she will quit the club, since cooking was
+The only first-year member of the struggling cooking club, an irreverent manipulative airhead, comes to the prim and proper new \
+club president, pressuring her for "advice" (a trial girl-girl kiss). Supposedly, the newbie has recently developed feelings for \
+an unspecified girl and suspects herself of being lesbian. Unless proven wrong, she will quit the club, since cooking was \
 only ever for raising appeal to potential future husbands anyway...`,
     ``,
     new Source(
@@ -846,8 +846,8 @@ only ever for raising appeal to potential future husbands anyway...`,
     "media/noise.jpg",
     true,
     `\
-Nakano's moved out of home for uni, but she's freaked out by the weird noises coming from the room next door!
-Can this naïve kid survive getting wrapped up in big-city ideas of female friendship and love?
+Nakano's moved out of home for uni, but she's freaked out by the weird noises coming from the room next door! \
+Can this naïve kid survive getting wrapped up in big-city ideas of female friendship and love? \
 It's the start of a "Neighborhood Yuri Romcom"!`,
     ``,
     new Source(
@@ -1178,8 +1178,8 @@ Rin's, family. She begins to learn about the rules of the vampire world from Rin
     "media/pocha.jpg",
     true,
     `\
-Tsugumi is a high school girl trapped between her desire to lose weight and her love for doughnuts.
-She has an unexpected reunion with Aira, her childhood friend, and joins the bouldering club
+Tsugumi is a high school girl trapped between her desire to lose weight and her love for doughnuts. \
+She has an unexpected reunion with Aira, her childhood friend, and joins the bouldering club \
 with her to rekindle their (more than?) friendship.`,
     `This manga suffers from a somewhat rushed ending, but is otherwise good.`,
     new Source(
