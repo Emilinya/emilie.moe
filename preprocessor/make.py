@@ -163,14 +163,14 @@ def main():
         for i in range(1, len(folders)):
             folder = "/".join(folders[:i])
             try:
-                os.mkdir(f"../{output_folder}/{folder}")
+                os.makedirs(f"../{output_folder}/{folder}")
             except FileExistsError:
                 pass
 
-        extention = os.path.splitext(file_name)[1].lower()
+        extension = os.path.splitext(file_name)[1].lower()
 
         # If the file is a html file, read line for line, else copy bytes
-        if extention == ".html":
+        if extension == ".html":
             outfile = open(f"../{output_folder}/{file_name}", "w", encoding="utf-8")
             with open(f"{content_path}/{file_name}", "r", encoding="utf-8") as infile:
                 for line in infile:
@@ -178,7 +178,7 @@ def main():
             outfile.close()
         else:
             # for faster execution, ignore images
-            if cmd_args.fast and extention in (".jpg", ".jpeg", ".png"):
+            if cmd_args.fast and extension in (".jpg", ".jpeg", ".png", ".webp"):
                 continue
             with open(f"../{output_folder}/{file_name}", "wb") as outfile:
                 with open(f"{content_path}/{file_name}", "rb") as infile:
