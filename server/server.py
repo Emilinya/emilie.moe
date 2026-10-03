@@ -20,15 +20,24 @@ app = Flask(__name__)
 
 @app.route('/lcm')
 def lcmify():
-	values = request.args.get("values")
-	values = [int(value) for value in values.split(",")]
-	return f'{escape(timeout(lcm, 1, values))}'
+	try:
+		values = request.args.get("values")
+		values = [int(value) for value in values.split(",")]
+		return f'{escape(timeout(lcm, 1, values))}'
+	except Exception:
+		return f'{escape("Error")}'
 
 @app.route('/diff')
 def diffify():
-	values = request.args.get("values")
-	values = [int(value) for value in values.split(",")]
-	return f'{escape(timeout(diff_solver, 1, values))}!'
+	try:
+		init_cons = [int(init) for init in request.args.get("initials").split(",")]
+		functions = [int(func) for func in request.args.get("functions").split(",")]
+		N = int(request.args.get("N"))
+		right_side = int(request.args.get("rightSide"))
+		display_type = request.args.get("display")
+		return f'{escape(timeout(diff_solver, 1, init_cons, functions, N, right_side, display_type))}'
+	except Exception:
+		return f'{escape("Error")}'
 
 @app.after_request
 def after_request(response):
