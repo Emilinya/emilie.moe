@@ -13,7 +13,7 @@ html, body {
 	background-color: var(--backgroundColor);
 }
 
-p, h1, h2, h3, a, li, th, td, span, label {
+p, h1, h2, h3, h4, h5, a, li, th, td, span, label {
 	color: var(--foregroundColor);
 	font-family: Sans-Serif;
 }
@@ -67,7 +67,6 @@ sub {
 	order: 2;
 	flex-basis: 100%;
 	text-align: center;
-	overflow-y: auto;
 }
 
 .textDiv {
