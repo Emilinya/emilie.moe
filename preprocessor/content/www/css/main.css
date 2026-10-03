@@ -2,6 +2,7 @@
 	--borderSize: 2px;
 	--backgroundColor: #33424D;
 	--foregroundColor: #E1E3DE;
+	--foregroundGrayColor: #a3a4a1;
 	--textHighlightColor: #F5A9B8;
 	--listHighlightColor: #5BCEFA;
 }
@@ -15,6 +16,10 @@ html, body {
 p, h1, h2, h3, a, li, th, td, span, label {
 	color: var(--foregroundColor);
 	font-family: Sans-Serif;
+}
+
+.gray {
+	color: var(--foregroundGrayColor)
 }
 
 .subP {

@@ -17,6 +17,67 @@ function getDate(dateStr) {
 	return new Date(year, month - 1, day, hour, minute, second)
 }
 
+function getDates(img_data_array) {
+	dates = {};
+	for (let img_data of img_data_array) {
+		let date = img_data.DateTime.split(" ")[0];
+		let [year, month, day] = date.split(":");
+		if (!dates[year]) {
+			dates[year] = {};
+		}
+		if (!dates[year][month]) {
+			dates[year][month] = {};
+		}
+		dates[year][month][day] = true;
+	}
+	return dates;
+}
+
+function toDateStr(date, format) {
+	config = {}
+	if (!format) {
+		config = { year: "numeric", month: "long", day: "numeric" };
+	} else {
+		types = format.split(" ")
+		if (types.includes("year")) {
+			config.year = "numeric";
+		}
+		if (types.includes("month")) {
+			config.month = "long";
+		}
+		if (types.includes("day")) {
+			config.day = "numeric"
+		}
+	}
+	return date.toLocaleDateString("en", config);
+}
+
+function getDateRangeString(firstDate, lastDate) {
+	sameYear = firstDate.getFullYear() === lastDate.getFullYear();
+	sameMonth = firstDate.getMonth() === lastDate.getMonth();
+	sameDay = firstDate.getDay() === lastDate.getDay();
+
+	if (sameYear) {
+		if (sameMonth) {
+			if (sameDay) {
+				return toDateStr(lastDate);
+			} else {
+				year = toDateStr(lastDate, "year");
+				month = toDateStr(lastDate, "month");
+				dayRange = lastDate.getDate() + "-" + firstDate.getDate();
+				return month + " " + dayRange + ", " + year;
+			}
+		} else {
+			year = toDateStr(lastDate, "year");
+			firstMonth = toDateStr(firstDate, "month day");
+			lastMonth = toDateStr(lastDate, "month day");
+			return firstMonth + " - " + lastMonth + ", " + year;
+		}
+	} else {
+		return toDateStr(lastDate) + " - " + toDateStr(firstDate);
+	}
+}
+
 function compareImgTimes(imgData1, imgData2) {
 	date1 = getDate(imgData1.DateTime);
 	date2 = getDate(imgData2.DateTime);
@@ -41,33 +102,23 @@ function getPos(PosInfo) {
 	return [country, city];
 }
 
-function getDates(img_data_array) {
-	dates = {};
-	for (let img_data of img_data_array) {
-		let date = img_data.DateTime.split(" ")[0];
-		let [year, month, day] = date.split(":");
-		if (!dates[year]) {
-			dates[year] = {};
-		}
-		if (!dates[year][month]) {
-			dates[year][month] = {};
-		}
-		dates[year][month][day] = true;
-	}
-	return dates;
-}
-
 function getBlocks(img_data_array) {
 	img_blocks = [];
 	block_index = 0;
 	while (true) {
 		block_pos = getPos(img_data_array[block_index].PosInfo);
-		block_imgs = [{ name: img_data_array[block_index].name, size: img_data_array[block_index].size, index: block_index }];
+		block_imgs = [{
+			name: img_data_array[block_index].name, dateStr: img_data_array[block_index].DateTime,
+			size: img_data_array[block_index].size, index: block_index
+		}];
 		reached_end = true;
 		for (let i = block_index + 1; i < img_data_array.length; i++) {
 			pos = getPos(img_data_array[i].PosInfo);
 			if (pos[1] === block_pos[1]) {
-				block_imgs.push({ name: img_data_array[i].name, size: img_data_array[i].size, index: i });
+				block_imgs.push({
+					name: img_data_array[i].name, dateStr: img_data_array[i].DateTime,
+					size: img_data_array[i].size, index: i
+				});
 			} else {
 				block_index = i;
 				img_blocks.push({ pos: block_pos, imgs: block_imgs });
@@ -115,14 +166,29 @@ img_dates = getDates(img_data_array);
 
 for (let block of img_blocks) {
 	let [country, city] = block.pos;
+
+	// location
 	h1 = document.createElement("h1");
 	h1.appendChild(document.createTextNode(city + ", " + country));
+	h1.style.marginBottom = "5px";
 	imageDiv.appendChild(h1);
+
+	// time
+	firstDate = getDate(block.imgs[0].dateStr);
+	lastDate = getDate(block.imgs[block.imgs.length - 1].dateStr);
+
+	h3 = document.createElement("h3");
+	h3.appendChild(document.createTextNode(getDateRangeString(firstDate, lastDate)));
+	h3.style.marginTop = "5px";
+	h3.className = "gray"
+	imageDiv.appendChild(h3);
+
+	// images
 	blockDiv = document.createElement("div");
 	blockDiv.className = "blockDiv";
 	let limitHeight = false;
 	if (block.imgs.length < gridColumns) {
-		blockDiv.style.gridTemplateColumns = "repeat(" + block.imgs.length + ", 1fr)";
+		blockDiv.className = "";
 		limitHeight = true;
 	}
 	for (let img of block.imgs) {
@@ -130,24 +196,3 @@ for (let block of img_blocks) {
 	}
 	imageDiv.appendChild(blockDiv);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//
