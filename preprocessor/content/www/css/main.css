@@ -70,13 +70,6 @@ sub {
 	overflow-y: auto;
 }
 
-.textDiv *:first-child {
-	margin-top: 0px;
-}
-.textDiv *:last-child {
-	margin-bottom: 0px;
-}
-
 .textDiv {
 	overflow-wrap: break-word;
 	max-width: 800px;
@@ -90,6 +83,21 @@ sub {
 
 .textDiv.bottom {
 	margin-bottom: 50vh;
+}
+
+.textDiv *:first-child {
+	margin-top: 0px;
+}
+
+.textDiv *:last-child {
+	margin-bottom: 0px;
+}
+
+.blockDiv {
+	overflow-wrap: break-word;
+	width: 90%;
+	padding-left: 5%;
+	text-align: left;
 }
 
 .listDiv {
