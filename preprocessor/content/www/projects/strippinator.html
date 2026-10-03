@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+	<head>
+		<meta charset="utf-8">
+		{{head}}
+		<link rel="stylesheet" type="text/css" href="strippinator.css">
+	</head>
+	<body style="overflow: hidden">
+		<div class="mainDiv">
+			<div class="headerDiv">
+				{{nav?home=projects}}
+			</div>
+			<div class="bodyDiv">
+				<h1>Remove whitespace from image</h1>
+				<a class="listLink" href="https://github.com/Benito1001/bendik.moe/blob/master/server/strippinator.py" target="_blank">Link to source code</a>
+				<button type="button" id="inputButton">upload image</button><span id="imgNameSpan"></span>
+				<br>
+				<h3>Stripping options:</h3>
+				<div style="display: inline-block; text-align: right">
+					<label>Strip top and bottom only<input type="radio" name="stripType" value="noStrip" checked></input></label><br>
+					<label>Strip sides, keep center<input type="radio" name="stripType" value="centerStrip"></input></label><br>
+					<label>Strip sides with custom center<input type="radio" name="stripType" value="customStrip"></input></label><br>
+					<label>Fully strip sides<input type="radio" name="stripType" value="fullStrip" style="margin-bottom: 10px"></input></label>
+				</div>
+				<input type="file" accept="image/*" id=imgInput hidden>
+				<br>
+				<div id="imgDiv">
+					<div style="grid-area: 1 / 1" class="noPointer">
+						<img id="resultImg" class="noPointer">
+					</div>
+				</div>
+				<p id=percentP style="display: none"></p>
+				<br>
+				<button type="button" id="stripButton" disabled>Strip Image</button>
+			</div>
+			<script src="strippinator.js" charset="utf-8"></script>
+		</div>
+	</body>
+</html>
