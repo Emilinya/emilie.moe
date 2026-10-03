@@ -170,11 +170,11 @@ const ranking = [
   "Shiki-senpai is too Handsome!",
   "Everyday Lily",
   "I Married My Best Friend to Shut My Parents Up",
-  "Moon and Love Waxes and Wanes",
+  "The Moon and Love Waxes and Wanes",
   "The Secret Recipe",
   "There's Weird Voices Coming from the Room Next Door!",
   "Cooking in Summer",
-  "Holic",
+  "Shoujo Holic",
   "Mr. Right Turned Out To Be A Younger Woman!?",
   "Ayaka is in Love with Hiroko!",
   "Your True Color",
@@ -572,7 +572,7 @@ An exciting and heart-pounding OL Yuri Manga`,
   // --- Hino-san is a Dummy ---
   new Manga(
     "Hino-san is a Dummy",
-    "media/on_the_dot.webp",
+    "media/baka.jpg",
     true,
     `\
 Class president and overall good girl Koguma is concerned that her classmate Hino often skips classes \
@@ -593,7 +593,7 @@ that this manga is problematic, but I liked it a lot.`,
   // --- Still Sick ---
   new Manga(
     "Still Sick",
-    "media/on_the_dot.webp",
+    "media/stillsick.jpg",
     true,
     `\
 Shimizu Makoto, a well-paid R&D lead for an industrial firm, has a secret - she draws and sells gay \
@@ -613,7 +613,7 @@ realizations... and deal with just how much of a weirdo Maekawa is!`,
   // --- Let's Love Girlfriends and Secrets ---
   new Manga(
     "Let's Love Girlfriends and Secrets",
-    "media/on_the_dot.webp",
+    "media/secrets.jpg",
     true,
     `\
 A yuri comedy between two girls who seem different but are actually quite similar, each with a secret of her own.`,
@@ -630,7 +630,7 @@ A yuri comedy between two girls who seem different but are actually quite simila
   // --- The Regular Customer's Goal is...? ---
   new Manga(
     "The Regular Customer's Goal is...?",
-    "media/on_the_dot.webp",
+    "media/customer.png",
     true,
     `The goal of the regular customer who come everyday is...`,
     `On Mangadex, you should not read the first chapter (Ch. 0) as it is just a worse version of chapter 1.`,
@@ -646,7 +646,7 @@ A yuri comedy between two girls who seem different but are actually quite simila
   // --- Senpai, Does It Taste Good? ---
   new Manga(
     "Senpai, Does It Taste Good?",
-    "media/on_the_dot.webp",
+    "media/oishii.jpg",
     true,
     `\
 Miho is a university student who bears trauma relating to food. Suddenly, she finds herself with a pretend partner. \
@@ -665,7 +665,7 @@ socializing story presented through food by the author of Fuzuroi no Renri!`,
   // --- Breasts Are My Favorite Things in the World! ---
   new Manga(
     "Breasts Are My Favorite Things in the World!",
-    "media/on_the_dot.webp",
+    "media/oppai.jpg",
     true,
     `\
 Chiaki Ichihara is the princely heartthrob all the girls crush on, but she's got a not-so-charming secret: \
@@ -686,7 +686,7 @@ partnership bloom into a bosom bond like no other?`,
   // --- About a College Girl Who Gets Picked Up at a Mixer by an Older Girl ---
   new Manga(
     "About a College Girl Who Gets Picked Up at a Mixer by an Older Girl",
-    "media/on_the_dot.webp",
+    "media/mixer.png",
     true,
     `\
 College girl Kawada Rika gets roped into going to a mixer where she meets an older \
@@ -704,7 +704,7 @@ girl named Suda Natsuko and they are immediately enamored with each other.`,
   // --- Demi Life! ---
   new Manga(
     "Demi Life!",
-    "media/on_the_dot.webp",
+    "media/demi.jpg",
     true,
     `\
 Azuma Manaka enrolled in a school filled with demis?! She'll be learning along them. \
@@ -724,7 +724,7 @@ different and that's fine. Manaka's life with the demis is starting!`,
   // --- I Hope It's Sunny Tomorrow ---
   new Manga(
     "I Hope It's Sunny Tomorrow",
-    "media/on_the_dot.webp",
+    "media/sunny.jpg",
     true,
     `A oneshot about parents and their daughter.`,
     `This is so cute!`,
@@ -740,7 +740,7 @@ different and that's fine. Manaka's life with the demis is starting!`,
   // --- Shiki-senpai is too Handsome! ---
   new Manga(
     "Shiki-senpai is too Handsome!",
-    "media/on_the_dot.webp",
+    "media/handsome.jpg",
     true,
     `\
 A high school freshman bumps into a cool and beautiful upperclassman and falls in love at first \
@@ -759,7 +759,7 @@ takes it as her wanting to join the club.`,
   // --- Everyday Lily ---
   new Manga(
     "Everyday Lily",
-    "media/on_the_dot.webp",
+    "media/everyday.jpg",
     true,
     `\
 A realist lesbian accidentally comes out to a closeted lesbian, whose only lesbian experience was \
@@ -794,10 +794,10 @@ might make her parents back off. But this “fake” marriage could unearth some
     )
   ),
   //
-  // --- Moon and Love Waxes and Wanes ---
+  // --- The Moon and Love Waxes and Wanes ---
   new Manga(
     "The Moon and Love Waxes and Wanes",
-    "media/on_the_dot.webp",
+    "media/moon.jpg",
     true,
     `\
 Yamabe Kanoko and Mizuno Shiori have been best friends since childhood.
@@ -823,7 +823,7 @@ Japanese Amazon page, and the title is translated (probably incorrectly) by me.`
   // --- The Secret Recipe ---
   new Manga(
     "The Secret Recipe",
-    "media/on_the_dot.webp",
+    "media/recipe.jpg",
     true,
     `\
 The only first-year member of the struggling cooking club, an irreverent manipulative airhead, comes to the prim and proper new
@@ -843,7 +843,7 @@ only ever for raising appeal to potential future husbands anyway...`,
   // --- There's Weird Voices Coming from the Room Next Door! ---
   new Manga(
     "There's Weird Voices Coming from the Room Next Door!",
-    "media/on_the_dot.webp",
+    "media/noise.jpg",
     true,
     `\
 Nakano's moved out of home for uni, but she's freaked out by the weird noises coming from the room next door!
@@ -862,7 +862,7 @@ It's the start of a "Neighborhood Yuri Romcom"!`,
   // --- Cooking in Summer ---
   new Manga(
     "Cooking in Summer",
-    "media/on_the_dot.webp",
+    "media/summer.png",
     true,
     `\
 Cooking in the summer is hard work. Going to the store for ingredients, doing something in front of the fire, or even \
@@ -883,7 +883,7 @@ Why does it feel like a connection now, unlike last time, and is it okay to star
   // --- Shoujo Holic ---
   new Manga(
     "Shoujo Holic",
-    "media/on_the_dot.webp",
+    "media/holic.jpg",
     true,
     `\
 A girl's father is relocated by his job. She's recently found the "boy of her dreams" and decides that she's staying no \
@@ -903,7 +903,7 @@ quite an interest in her.`,
   // --- Mr. Right Turned Out To Be A Younger Woman!? ---
   new Manga(
     "Mr. Right Turned Out To Be A Younger Woman!?",
-    "media/on_the_dot.webp",
+    "media/junior.jpg",
     true,
     `\
 Still single at age 33, Haruki Shiina is standing at the biggest crossroads of her life. While unlucky in love, \
@@ -924,7 +924,7 @@ does Risa always seem to be watching her...?`,
   // --- Ayaka is in Love with Hiroko! ---
   new Manga(
     "Ayaka is in Love with Hiroko!",
-    "media/on_the_dot.webp",
+    "media/love.jpg",
     true,
     `\
 Soft and bubbly office lady Ayaka is madly in love with her senior at work, Hiroko! Two lovestruck coworkers who both \
@@ -939,7 +939,7 @@ think the other is straight totally crush on each other... popular Twitter artis
   // --- Your True Color ---
   new Manga(
     "Your True Color",
-    "media/on_the_dot.webp",
+    "media/color.jpg",
     true,
     `Hinata idolizes the dazzling actress Sumika, until one day she happens to meet the real deal, who is not at all like her ideal.`,
     ``,
@@ -955,7 +955,7 @@ think the other is straight totally crush on each other... popular Twitter artis
   // --- Aqua Blue Cinema ---
   new Manga(
     "Aqua Blue Cinema",
-    "media/on_the_dot.webp",
+    "media/cinema.jpg",
     true,
     `Aqua Blue Cinema is about an actress and a girl she meets through unusual circumstances.`,
     ``,
@@ -971,7 +971,7 @@ think the other is straight totally crush on each other... popular Twitter artis
   // --- Swap ⇔ Swap ---
   new Manga(
     "Swap ⇔ Swap",
-    "media/on_the_dot.webp",
+    "media/swap.jpg",
     true,
     `\
 Two girls, Ichinose Haruko and Nikaido Natsuko, bump into each other by accident, resulting in a kiss that would change their lives...`,
@@ -988,7 +988,7 @@ Two girls, Ichinose Haruko and Nikaido Natsuko, bump into each other by accident
   // --- 2DK, G-pen, Alarm clock ---
   new Manga(
     "2DK, G-pen, Alarm clock",
-    "media/on_the_dot.webp",
+    "media/2dk.jpg",
     true,
     `\
 A mangaka and her salarywoman roommate come to realize that their feelings of friendship might actually be something quite different.`,
@@ -1005,7 +1005,7 @@ A mangaka and her salarywoman roommate come to realize that their feelings of fr
   // --- Only One Way to Keep Her From Taking the Last Train Home ---
   new Manga(
     "Only One Way to Keep Her From Taking the Last Train Home",
-    "media/on_the_dot.webp",
+    "media/train.jpg",
     false,
     `\
 Nanako Morito fell in love with her senpai Ayaka Segawa when Ayaka led Nanako's new employee orientation session. \
@@ -1023,7 +1023,7 @@ Morito kept her feelings to herself until she was jolted by the news that Segawa
   // --- Silent Snow ---
   new Manga(
     "Silent Snow",
-    "media/on_the_dot.webp",
+    "media/snow.png",
     true,
     ``,
     `I don't typically recommend oneshots, but this one is so good I had to include it.`,
@@ -1039,7 +1039,7 @@ Morito kept her feelings to herself until she was jolted by the news that Segawa
   // --- An Easy Introduction to Love Triangles (To Pass the Exam!) ---
   new Manga(
     "An Easy Introduction to Love Triangles (To Pass the Exam!)",
-    "media/on_the_dot.webp",
+    "media/triangles.jpg",
     true,
     `\
 Middle-schooler Mayuki wants to enter Ohtomo high school to join her beloved senpai Akira. Problem is: \
@@ -1061,7 +1061,7 @@ girl looks so much more mature than her, Mayuki ends up asking Rin to teach her 
   // --- Failed Princesses ---
   new Manga(
     "Failed Princesses",
-    "media/on_the_dot.webp",
+    "media/princesses.jpg",
     true,
     `\
 Fujishiro Nanaki is super cute, super popular, and super annoyed with anyone as plain as her classmate Kurokawa Kanade. \
@@ -1081,7 +1081,7 @@ cool girl in school and the “plain” girl she once brushed off!`,
   // --- Under One Roof Today ---
   new Manga(
     "Under One Roof Today",
-    "media/on_the_dot.webp",
+    "media/roof.jpg",
     true,
     `\
 A heartwarming autobiographical comic offering a peek into the daily life of Inui Ayu and her girlfriend, Kon-san.`,
@@ -1098,7 +1098,7 @@ A heartwarming autobiographical comic offering a peek into the daily life of Inu
   // --- Girl Friends ---
   new Manga(
     "Girl Friends",
-    "media/on_the_dot.webp",
+    "media/girlfriends.jpg",
     true,
     `\
 When it comes to grades, bookish high school student Mariko Kumakura is at the top of her class. Socially, however, \
@@ -1121,7 +1121,7 @@ destroy the budding relationship between Mariko and Akko, or will it turn into s
   // --- High School Girl and Her Male Classmate's Mom ---
   new Manga(
     "High School Girl and Her Male Classmate's Mom",
-    "media/on_the_dot.webp",
+    "media/muromaki.jpg",
     true,
     `Nakashima Yuka falls in love with her male classmate Toi Takuya's mother, Mihoko. Gay hilarity ensues.`,
     `This story does feature a sketchy age-gap, but I think it is handled well enough?`,
@@ -1137,7 +1137,7 @@ destroy the budding relationship between Mariko and Akko, or will it turn into s
   // --- Come Rain or Shine ---
   new Manga(
     "Come Rain or Shine",
-    "media/on_the_dot.webp",
+    "media/shine.jpg",
     true,
     `\
 Country-born Mikoto and student council member Ren have always spent their time after school together. \
@@ -1156,7 +1156,7 @@ the love and youth of these impressionable young girls is about to begin!`,
   // --- Uniformed Vampiress Lord ---
   new Manga(
     "Uniformed Vampiress Lord",
-    "media/on_the_dot.webp",
+    "media/vampiress.jpg",
     true,
     `\
 Normal high school girl Irie Yuunagi suddenly has her blood sucked by a strange man one night. \
@@ -1175,7 +1175,7 @@ Rin's, family. She begins to learn about the rules of the vampire world from Rin
   // --- Pocha Climb! ---
   new Manga(
     "Pocha Climb!",
-    "media/on_the_dot.webp",
+    "media/pocha.jpg",
     true,
     `\
 Tsugumi is a high school girl trapped between her desire to lose weight and her love for doughnuts.
