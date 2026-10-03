@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="no" dir="ltr">
+	<head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" type="text/css" href="//www.bendik.moe/css/main.css">
+		<link rel="stylesheet" type="text/css" href="css/style.css">
+		<title>Games</title>
+	</head>
+	<body>
+		<div class="mainDiv">
+			<div class="headerDiv">
+				<a href="//www.bendik.moe">Main page</a> |
+				<a href="//games.bendik.moe"><b>Games</b></a>
+			</div>
+			<div class="bodyDiv">
+				<div style="margin-top: 10px">
+					<div class="clickImgDiv" id="decentBendikBros" style="margin: 5px">
+						<img class="gameIcon" src="decentBendikBros/icon.png" height="200px">
+						<h3>decentBendikBros <span style="color:#555555">(H2017)</span></h3>
+					</div>
+					<div class="clickImgDiv" id="thanks" style="margin: 5px">
+						<img class="gameIcon" src="thanks/icon.png" height="200px">
+						<h3>thanks <span style="color:#555555">(H2018)</span></h3>
+					</div>
+					<div class="clickImgDiv" id="polygonParagon" style="margin: 5px">
+						<img class="gameIcon" src="polygonParagon/icon.png" height="200px">
+						<h3>polygonParagon <span style="color:#555555">(V2019)</span></h3>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			Array.from(document.getElementsByClassName("clickImgDiv")).forEach(div => {
+				div.addEventListener("click", event => {
+					window.location.href = `${div.id}/index.html`;
+				});
+			});
+
+			gameIcons = Array.from(document.getElementsByClassName('gameIcon'));
+			function resize() {
+				gameIcons.forEach(icon => {
+					icon.style.height = (innerWidth-38)/(gameIcons.length*1.5) + "px";
+				});
+			}
+			resize()
+			window.addEventListener("resize", resize);
+
+		</script>
+	</body>
+</html>

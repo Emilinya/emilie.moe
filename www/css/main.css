@@ -1,0 +1,52 @@
+:root {
+	--floatMargin: 1px;
+}
+
+html, body {
+	height: calc(100% - 2*var(--floatMargin));
+	margin: var(--floatMargin);
+}
+
+.mainDiv {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+.headerDiv {
+	order: 1;
+	flex: 1;
+	text-align: center;
+	border: 1px solid;
+	margin-bottom: var(--floatMargin);
+}
+
+.bodyDiv {
+	order: 2;
+	flex-basis: 100%;
+	text-align: center;
+	border: 1px solid;
+	overflow: hidden;
+}
+
+table {
+	border-collapse: collapse;
+	margin: auto;
+	margin-top: 2px;
+}
+
+th, td {
+	border: 1px solid;
+	text-align: left;
+	padding: 4px;
+}
+
+a {
+	font-size: 20px;
+	color: #008888;
+	background-color: transparent;
+	text-decoration: none;
+	}
+a:hover {
+		text-decoration: underline;
+}

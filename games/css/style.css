@@ -1,0 +1,7 @@
+.clickImgDiv {
+	display: inline-block;
+}
+
+.clickImgDiv:hover {
+	cursor: pointer;
+}
