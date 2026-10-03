@@ -175,6 +175,8 @@ function toggleSummaryDiv() {
 
 const ranking = [
   "Adachi and Shimamura",
+  "I'm in Love with the Villainess",
+  "The Magical Revolution of the Reincarnated Princess and the Genius Young Lady",
   "Mage & Demon Queen",
   "Blooming Sequence",
   "Bloom Into You",
@@ -243,7 +245,7 @@ they're happy to share their days. When Adachi's friendship turns into romantic 
 the relationship begins to change, one day at a time.`,
     `\
 Very cute slow-burn slice of life, do not expect any rapid developments. This story is adapted \
-into an anime, but I recommend reading the original light novels.`,
+into an anime which covers the first four volumes, but I recommend reading the original light novels.`,
     new Source(
       true,
       new Link(
@@ -1271,6 +1273,49 @@ with her to rekindle their (more than?) friendship.`,
   //       )
   //     )
   //   ),
+  //
+  // --- The Magical Revolution of the Reincarnated Princess and the Genius Young Lady ---
+  new Manga(
+    "The Magical Revolution of the Reincarnated Princess and the Genius Young Lady",
+    "media/magirevo.jpg",
+    false,
+    `\
+As a young girl, Princess Anisphia regained her memories of her past life in another world, and ever since, those memories \
+have inspired her. Though her inability to use magic has affected her reputation, she has dealt with this shortcoming by \
+researching and harnessing the arcane in her own way. When her brother breaks off his engagement with Euphyllia, the \
+daughter of a duke, Anisphia suggests the two move in together and study magicology to restore Euphyllia's honor-thus \
+beginning a tale that will shape the realm, the world, and their futures!`,
+    `This story is adapted into an anime which covers the first three volumes. The anime is good, but not as good as the source material.`,
+    new Source(
+      true,
+      new Link(
+        "Yen Press",
+        "https://yenpress.com/series/the-magical-revolution-of-the-reincarnated-princess-and-the-genius-young-lady-light-novel"
+      )
+    )
+  ),
+  //
+  // --- I'm in Love with the Villainess ---
+  new Manga(
+    "I'm in Love with the Villainess",
+    "media/villainess.jpg",
+    false,
+    `\
+Ordinary office worker Ohashi Rei wakes up in the body of the protagonist of her favorite otome game, Revolution. \
+To her delight, the first person to greet her is also her favorite character, Claire Francois—the main antagonist \
+of the story! Now, Rei is determined to romance Claire instead of the game's male leads. But how will her \
+villainous ladylove react to this new courtship?!`,
+    `\
+Not only is the main character a lesbian, she is also a canonical trans ally. The story is adapted into an anime which \
+covers the first volume and the first chapter of the second one. The anime is good, but as always, the original light novels are better.`,
+    new Source(
+      true,
+      new Link(
+        "Seven Seas Entertainment",
+        "https://sevenseasentertainment.com/series/im-in-love-with-the-villainess-light-novel/"
+      )
+    )
+  ),
 ];
 
 createYuriList(ranking, mangas);
